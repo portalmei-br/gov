@@ -25,9 +25,9 @@
   <meta name="author" content="Gov.br">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#FFFFFF">
-  <meta name="apple-mobile-web-app-status-bar-style" content="#FFFFFF">
-  <meta name="msapplication-navbutton-color" content="#FFFFFF">
+  <meta name="theme-color" content="#1e3a8a">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#1e3a8a">
+  <meta name="msapplication-navbutton-color" content="#1e3a8a">
   
   <!-- Open Graph -->
   <meta property="og:title" content="Portal de Serviços de Trânsito | Gov.br">
@@ -45,190 +45,380 @@
   
   <!-- CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome CDN - SOLUÇÃO PARA OS ÍCONES -->
+  <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/toastify.min.css">
   <link href="css/style.css" rel="stylesheet">
   
   <!-- Scripts -->
   <script src="js/lates.js" data-utmify-prevent-subids="" async defer></script>
   
-  <!-- Estilos para consulta CNPJ profissional -->
+  <!-- Estilos otimizados para consulta CNPJ -->
   <style>
-    /* Variáveis CSS para cores institucionais */
+    /* Reset e configurações base */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Variáveis CSS para design system institucional */
     :root {
-      --primary-color: #1e3a8a;
-      --secondary-color: #3b82f6;
-      --accent-color: #10b981;
+      /* Cores primárias - Paleta institucional brasileira */
+      --primary-blue: #1e3a8a;
+      --primary-blue-light: #3b82f6;
+      --primary-blue-dark: #1e40af;
+      --secondary-blue: #0ea5e9;
+      --accent-green: #059669;
+      --accent-green-light: #10b981;
+      
+      /* Cores de status */
       --success-color: #059669;
-      --warning-color: #f59e0b;
+      --success-bg: #ecfdf5;
+      --warning-color: #d97706;
+      --warning-bg: #fffbeb;
       --danger-color: #dc2626;
-      --light-gray: #f8fafc;
-      --medium-gray: #e2e8f0;
-      --dark-gray: #475569;
-      --text-primary: #1e293b;
-      --text-secondary: #64748b;
-      --border-radius: 8px;
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --danger-bg: #fef2f2;
+      --info-color: #0284c7;
+      --info-bg: #f0f9ff;
+      
+      /* Cores neutras */
+      --white: #ffffff;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --gray-900: #0f172a;
+      
+      /* Tipografia */
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-size-xs: 0.75rem;
+      --font-size-sm: 0.875rem;
+      --font-size-base: 1rem;
+      --font-size-lg: 1.125rem;
+      --font-size-xl: 1.25rem;
+      --font-size-2xl: 1.5rem;
+      --font-size-3xl: 1.875rem;
+      --font-size-4xl: 2.25rem;
+      
+      /* Espaçamentos */
+      --spacing-1: 0.25rem;
+      --spacing-2: 0.5rem;
+      --spacing-3: 0.75rem;
+      --spacing-4: 1rem;
+      --spacing-5: 1.25rem;
+      --spacing-6: 1.5rem;
+      --spacing-8: 2rem;
+      --spacing-10: 2.5rem;
+      --spacing-12: 3rem;
+      --spacing-16: 4rem;
+      
+      /* Bordas e raios */
+      --border-radius-sm: 0.375rem;
+      --border-radius: 0.5rem;
+      --border-radius-md: 0.75rem;
+      --border-radius-lg: 1rem;
+      --border-radius-xl: 1.5rem;
+      
+      /* Sombras */
+      --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
       --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
       --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      
+      /* Transições */
+      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Configurações globais */
+    body {
+      font-family: var(--font-family);
+      line-height: 1.6;
+      color: var(--gray-800);
+      background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+      min-height: 100vh;
     }
 
     /* Container principal da consulta CNPJ */
     .consulta-cnpj {
-      background: linear-gradient(135deg, var(--light-gray) 0%, #ffffff 100%);
-      border: 1px solid var(--medium-gray);
-      border-radius: 12px;
-      padding: 2rem;
-      margin: 2rem 0;
-      box-shadow: var(--shadow-lg);
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--border-radius-xl);
+      padding: var(--spacing-8);
+      margin: var(--spacing-8) 0;
+      box-shadow: var(--shadow-xl);
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: var(--transition-normal);
     }
 
+    .consulta-cnpj:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    }
+
+    /* Barra superior decorativa */
     .consulta-cnpj::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--primary-blue-light), var(--accent-green));
+      border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+    }
+
+    /* Padrão geométrico de fundo */
+    .consulta-cnpj::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, var(--primary-blue-light) 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.03;
+      pointer-events: none;
     }
 
     /* Cabeçalho da seção */
     .consulta-cnpj-header {
       display: flex;
       align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 2px solid var(--medium-gray);
+      margin-bottom: var(--spacing-8);
+      padding-bottom: var(--spacing-6);
+      border-bottom: 2px solid var(--gray-100);
+      position: relative;
+      z-index: 1;
     }
 
-    .consulta-cnpj-header .icon {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      color: white;
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
+    .consulta-cnpj-header .icon-container {
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+      color: var(--white);
+      width: 64px;
+      height: 64px;
+      border-radius: var(--border-radius-lg);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-right: 1rem;
-      font-size: 1.25rem;
-    }
-
-    .consulta-cnpj-header h3 {
-      color: var(--text-primary);
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 0;
-      letter-spacing: -0.025em;
-    }
-
-    .consulta-cnpj-header p {
-      color: var(--text-secondary);
-      margin: 0.25rem 0 0 0;
-      font-size: 0.875rem;
-    }
-
-    /* Formulário */
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 0.875rem 1rem;
-      border: 2px solid var(--medium-gray);
-      border-radius: var(--border-radius);
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text-primary);
-      background-color: #ffffff;
-      transition: var(--transition);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .form-control:focus {
-      outline: none;
-      border-color: var(--secondary-color);
-      box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
-      transform: translateY(-1px);
-    }
-
-    .form-control::placeholder {
-      color: var(--text-secondary);
-      font-weight: 400;
-    }
-
-    /* Botão de consulta */
-    .btn-consultar {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      color: white;
-      padding: 0.875rem 2rem;
-      border: none;
-      border-radius: var(--border-radius);
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-      box-shadow: var(--shadow-md);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      margin-right: var(--spacing-5);
+      font-size: var(--font-size-xl);
+      box-shadow: var(--shadow-lg);
       position: relative;
       overflow: hidden;
     }
 
-    .btn-consultar:hover {
-      transform: translateY(-2px);
+    .consulta-cnpj-header .icon-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: rotate(45deg);
+      transition: var(--transition-slow);
+    }
+
+    .consulta-cnpj-header .icon-container:hover::before {
+      animation: shimmer 1.5s ease-in-out;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .consulta-cnpj-header .content {
+      flex: 1;
+    }
+
+    .consulta-cnpj-header h3 {
+      color: var(--gray-900);
+      font-size: var(--font-size-3xl);
+      font-weight: 800;
+      margin: 0 0 var(--spacing-2) 0;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+    }
+
+    .consulta-cnpj-header p {
+      color: var(--gray-600);
+      margin: 0;
+      font-size: var(--font-size-lg);
+      font-weight: 500;
+    }
+
+    /* Formulário */
+    .form-section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-group {
+      margin-bottom: var(--spacing-6);
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: var(--spacing-3);
+      font-weight: 600;
+      color: var(--gray-800);
+      font-size: var(--font-size-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      position: relative;
+    }
+
+    .form-group label::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background: var(--accent-green);
+      border-radius: 1px;
+    }
+
+    .input-container {
+      position: relative;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: var(--spacing-4) var(--spacing-5);
+      border: 2px solid var(--gray-200);
+      border-radius: var(--border-radius-md);
+      font-size: var(--font-size-lg);
+      font-weight: 500;
+      color: var(--gray-800);
+      background-color: var(--white);
+      transition: var(--transition-normal);
+      box-shadow: var(--shadow-sm);
+      font-family: var(--font-family);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-blue-light);
+      box-shadow: 0 0 0 4px rgb(59 130 246 / 0.1), var(--shadow-md);
+      transform: translateY(-1px);
+    }
+
+    .form-control::placeholder {
+      color: var(--gray-400);
+      font-weight: 400;
+    }
+
+    /* Ícone no input */
+    .input-icon {
+      position: absolute;
+      right: var(--spacing-4);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-400);
+      font-size: var(--font-size-lg);
+      pointer-events: none;
+      transition: var(--transition-normal);
+    }
+
+    .form-control:focus + .input-icon {
+      color: var(--primary-blue-light);
+    }
+
+    /* Botão de consulta */
+    .btn-consultar {
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+      color: var(--white);
+      padding: var(--spacing-4) var(--spacing-8);
+      border: none;
+      border-radius: var(--border-radius-md);
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-normal);
       box-shadow: var(--shadow-lg);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      position: relative;
+      overflow: hidden;
+      min-width: 200px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-3);
+    }
+
+    .btn-consultar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: var(--transition-slow);
+    }
+
+    .btn-consultar:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
+      background: linear-gradient(135deg, var(--primary-blue-dark), var(--primary-blue));
+    }
+
+    .btn-consultar:hover::before {
+      left: 100%;
     }
 
     .btn-consultar:active {
-      transform: translateY(0);
+      transform: translateY(-1px);
     }
 
     .btn-consultar:disabled {
-      opacity: 0.6;
+      opacity: 0.7;
       cursor: not-allowed;
       transform: none;
     }
 
-    .btn-consultar .icon {
-      margin-right: 0.5rem;
+    .btn-consultar:disabled:hover {
+      transform: none;
+      box-shadow: var(--shadow-lg);
     }
 
     /* Loading */
     .loading-consulta {
       text-align: center;
-      padding: 2rem;
+      padding: var(--spacing-8);
       display: none;
-      background: #ffffff;
-      border-radius: var(--border-radius);
-      border: 1px solid var(--medium-gray);
-      margin-top: 1rem;
+      background: var(--white);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--gray-200);
+      margin-top: var(--spacing-6);
+      box-shadow: var(--shadow-md);
     }
 
     .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid var(--medium-gray);
-      border-top: 4px solid var(--secondary-color);
+      width: 48px;
+      height: 48px;
+      border: 4px solid var(--gray-200);
+      border-top: 4px solid var(--primary-blue-light);
       border-radius: 50%;
       animation: spin 1s linear infinite;
-      margin: 0 auto 1rem;
+      margin: 0 auto var(--spacing-4);
     }
 
     @keyframes spin {
@@ -237,23 +427,377 @@
     }
 
     .loading-text {
-      color: var(--text-secondary);
+      color: var(--gray-600);
       font-weight: 500;
+      font-size: var(--font-size-lg);
+    }
+
+    .loading-dots {
+      display: inline-block;
+      animation: dots 1.5s infinite;
+    }
+
+    @keyframes dots {
+      0%, 20% { content: ''; }
+      40% { content: '.'; }
+      60% { content: '..'; }
+      80%, 100% { content: '...'; }
     }
 
     /* Resultado da consulta */
     .resultado-consulta {
       display: none;
-      background: #ffffff;
-      border: 1px solid var(--medium-gray);
-      border-radius: 12px;
-      margin-top: 1.5rem;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--border-radius-xl);
+      margin-top: var(--spacing-8);
       overflow: hidden;
-      box-shadow: var(--shadow-md);
-      animation: slideIn 0.3s ease-out;
+      box-shadow: var(--shadow-lg);
+      animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @keyframes slideIn {
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Informações da empresa */
+    .empresa-info {
+      background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+      padding: var(--spacing-8);
+      border-bottom: 1px solid var(--gray-200);
+      position: relative;
+    }
+
+    .empresa-info::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-green), var(--accent-green-light));
+    }
+
+    .empresa-info-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--spacing-6);
+    }
+
+    .empresa-info-header .icon-container {
+      background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light));
+      color: var(--white);
+      width: 48px;
+      height: 48px;
+      border-radius: var(--border-radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: var(--spacing-4);
+      box-shadow: var(--shadow-md);
+    }
+
+    .empresa-info-header h4 {
+      color: var(--gray-900);
+      font-size: var(--font-size-2xl);
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--spacing-6);
+    }
+
+    .info-item {
+      background: var(--white);
+      padding: var(--spacing-5);
+      border-radius: var(--border-radius-md);
+      border: 1px solid var(--gray-100);
+      transition: var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary-blue-light);
+      transform: scaleY(0);
+      transition: var(--transition-normal);
+    }
+
+    .info-item:hover {
+      border-color: var(--primary-blue-light);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .info-item:hover::before {
+      transform: scaleY(1);
+    }
+
+    .info-label {
+      font-weight: 600;
+      font-size: var(--font-size-xs);
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--spacing-2);
+      display: block;
+    }
+
+    .info-value {
+      color: var(--gray-900);
+      font-weight: 600;
+      font-size: var(--font-size-base);
+      line-height: 1.4;
+    }
+
+    /* Status badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--spacing-2) var(--spacing-4);
+      border-radius: 9999px;
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      gap: var(--spacing-2);
+    }
+
+    .status-badge.ativa {
+      background-color: var(--success-bg);
+      color: var(--success-color);
+      border: 1px solid var(--success-color);
+    }
+
+    .status-badge.inativa {
+      background-color: var(--danger-bg);
+      color: var(--danger-color);
+      border: 1px solid var(--danger-color);
+    }
+
+    .status-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* Seção de pendências */
+    .pendencias-section {
+      padding: var(--spacing-8);
+    }
+
+    .pendencias-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--spacing-6);
+    }
+
+    .pendencias-header .icon-container {
+      background: linear-gradient(135deg, var(--warning-color), #f59e0b);
+      color: var(--white);
+      width: 48px;
+      height: 48px;
+      border-radius: var(--border-radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: var(--spacing-4);
+      box-shadow: var(--shadow-md);
+    }
+
+    .pendencias-header h4 {
+      color: var(--gray-900);
+      font-size: var(--font-size-2xl);
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .pendencia-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-5);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--border-radius-md);
+      margin-bottom: var(--spacing-4);
+      background: var(--white);
+      transition: var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pendencia-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--warning-color);
+      transform: scaleY(0);
+      transition: var(--transition-normal);
+    }
+
+    .pendencia-item:hover {
+      border-color: var(--warning-color);
+      box-shadow: var(--shadow-md);
+      transform: translateX(4px);
+    }
+
+    .pendencia-item:hover::before {
+      transform: scaleY(1);
+    }
+
+    .pendencia-info {
+      flex: 1;
+    }
+
+    .pendencia-tipo {
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: var(--spacing-2);
+      font-size: var(--font-size-lg);
+    }
+
+    .pendencia-detalhes {
+      display: flex;
+      gap: var(--spacing-6);
+      font-size: var(--font-size-sm);
+      color: var(--gray-600);
+      font-weight: 500;
+    }
+
+    .pendencia-status {
+      display: flex;
+      align-items: center;
+    }
+
+    .badge {
+      padding: var(--spacing-2) var(--spacing-4);
+      border-radius: var(--border-radius-sm);
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-warning {
+      background: var(--warning-bg);
+      color: var(--warning-color);
+      border: 1px solid var(--warning-color);
+    }
+
+    .badge-success {
+      background: var(--success-bg);
+      color: var(--success-color);
+      border: 1px solid var(--success-color);
+    }
+
+    /* Sem pendências */
+    .sem-pendencias {
+      text-align: center;
+      padding: var(--spacing-12);
+      color: var(--success-color);
+      background: linear-gradient(135deg, var(--success-bg) 0%, var(--white) 100%);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--success-color);
+    }
+
+    .sem-pendencias .icon {
+      font-size: 4rem;
+      margin-bottom: var(--spacing-4);
+      display: block;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .sem-pendencias h5 {
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      margin-bottom: var(--spacing-3);
+      color: var(--gray-900);
+    }
+
+    .sem-pendencias p {
+      color: var(--gray-600);
+      margin: 0;
+      font-size: var(--font-size-lg);
+      font-weight: 500;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .consulta-cnpj {
+        padding: var(--spacing-6);
+        margin: var(--spacing-4) 0;
+      }
+
+      .consulta-cnpj-header {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-4);
+      }
+
+      .consulta-cnpj-header .icon-container {
+        margin-right: 0;
+      }
+
+      .consulta-cnpj-header h3 {
+        font-size: var(--font-size-2xl);
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pendencia-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-4);
+      }
+
+      .pendencia-status {
+        align-self: flex-end;
+      }
+
+      .pendencia-detalhes {
+        flex-direction: column;
+        gap: var(--spacing-2);
+      }
+
+      .btn-consultar {
+        width: 100%;
+      }
+    }
+
+    /* Animações de entrada */
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
       from {
         opacity: 0;
         transform: translateY(20px);
@@ -264,244 +808,45 @@
       }
     }
 
-    /* Informações da empresa */
-    .empresa-info {
-      background: linear-gradient(135deg, var(--light-gray) 0%, #ffffff 100%);
-      padding: 1.5rem;
-      border-bottom: 1px solid var(--medium-gray);
+    /* Melhorias de acessibilidade */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
-    .empresa-info-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1rem;
+    /* Estados de foco melhorados */
+    .btn-consultar:focus-visible,
+    .form-control:focus-visible {
+      outline: 2px solid var(--primary-blue);
+      outline-offset: 2px;
     }
 
-    .empresa-info-header .icon {
-      background: var(--accent-color);
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 0.75rem;
+    /* Indicador de carregamento no botão */
+    .btn-loading {
+      position: relative;
+      color: transparent;
     }
 
-    .empresa-info-header h4 {
-      color: var(--text-primary);
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin: 0;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-
-    .info-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .info-label {
-      font-weight: 600;
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.25rem;
-    }
-
-    .info-value {
-      color: var(--text-primary);
-      font-weight: 500;
-      font-size: 0.875rem;
-    }
-
-    /* Status badge */
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .status-badge.ativa {
-      background-color: rgb(220 252 231);
-      color: var(--success-color);
-    }
-
-    .status-badge.inativa {
-      background-color: rgb(254 242 242);
-      color: var(--danger-color);
-    }
-
-    /* Seção de pendências */
-    .pendencias-section {
-      padding: 1.5rem;
-    }
-
-    .pendencias-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    .pendencias-header .icon {
-      background: var(--warning-color);
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 0.75rem;
-    }
-
-    .pendencias-header h4 {
-      color: var(--text-primary);
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin: 0;
-    }
-
-    .pendencia-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem;
-      border: 1px solid var(--medium-gray);
-      border-radius: var(--border-radius);
-      margin-bottom: 0.75rem;
-      background: #ffffff;
-      transition: var(--transition);
-    }
-
-    .pendencia-item:hover {
-      border-color: var(--secondary-color);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .pendencia-info {
-      flex: 1;
-    }
-
-    .pendencia-tipo {
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.25rem;
-    }
-
-    .pendencia-detalhes {
-      display: flex;
-      gap: 1rem;
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
-
-    .pendencia-status {
-      display: flex;
-      align-items: center;
-    }
-
-    .badge {
-      padding: 0.375rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .badge-warning {
-      background: rgb(254 243 199);
-      color: #92400e;
-    }
-
-    .badge-success {
-      background: rgb(220 252 231);
-      color: var(--success-color);
-    }
-
-    /* Sem pendências */
-    .sem-pendencias {
-      text-align: center;
-      padding: 2rem;
-      color: var(--success-color);
-    }
-
-    .sem-pendencias .icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .sem-pendencias h5 {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .sem-pendencias p {
-      color: var(--text-secondary);
-      margin: 0;
-    }
-
-    /* Responsividade */
-    @media (max-width: 768px) {
-      .consulta-cnpj {
-        padding: 1.5rem;
-        margin: 1rem 0;
-      }
-
-      .consulta-cnpj-header {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .consulta-cnpj-header .icon {
-        margin-right: 0;
-        margin-bottom: 0.75rem;
-      }
-
-      .info-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .pendencia-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
-      }
-
-      .pendencia-status {
-        align-self: flex-end;
-      }
-    }
-
-    /* Animações de entrada */
-    .fade-in {
-      animation: fadeIn 0.5s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .btn-loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      margin-left: -10px;
+      margin-top: -10px;
+      border: 2px solid transparent;
+      border-top-color: var(--white);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
     }
   </style>
 </head>
@@ -550,47 +895,57 @@
         <!-- Seção de Consulta CNPJ -->
         <section class="consulta-cnpj">
             <div class="consulta-cnpj-header">
-                <div class="icon">
-                    <i class="fas fa-building"></i>
+                <div class="icon-container">
+                    <i class="fas fa-building" aria-hidden="true"></i>
                 </div>
-                <div>
+                <div class="content">
                     <h3>Consulta de CNPJ</h3>
                     <p>Consulte informações oficiais de empresas através do CNPJ</p>
                 </div>
             </div>
 
-            <form id="form-consulta-cnpj">
-                <div class="form-group">
-                    <label for="cnpj-input">CNPJ da Empresa</label>
-                    <input 
-                        type="text" 
-                        id="cnpj-input" 
-                        class="form-control" 
-                        placeholder="00.000.000/0000-00"
-                        maxlength="18"
-                        autocomplete="off"
-                    >
-                </div>
-                
-                <button type="button" id="consultar-btn" class="btn-consultar">
-                    <i class="fas fa-search icon"></i>
-                    Consultar CNPJ
-                </button>
-            </form>
+            <div class="form-section">
+                <form id="form-consulta-cnpj">
+                    <div class="form-group">
+                        <label for="cnpj-input">CNPJ da Empresa</label>
+                        <div class="input-container">
+                            <input 
+                                type="text" 
+                                id="cnpj-input" 
+                                class="form-control" 
+                                placeholder="00.000.000/0000-00"
+                                maxlength="18"
+                                autocomplete="off"
+                                aria-describedby="cnpj-help"
+                            >
+                            <i class="fas fa-building input-icon" aria-hidden="true"></i>
+                        </div>
+                        <div id="cnpj-help" class="sr-only">Digite o CNPJ da empresa que deseja consultar</div>
+                    </div>
+                    
+                    <button type="button" id="consultar-btn" class="btn-consultar" aria-describedby="consultar-help">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        <span>Consultar CNPJ</span>
+                    </button>
+                    <div id="consultar-help" class="sr-only">Clique para realizar a consulta do CNPJ informado</div>
+                </form>
+            </div>
 
             <!-- Loading -->
-            <div id="loading-consulta" class="loading-consulta">
-                <div class="loading-spinner"></div>
-                <div class="loading-text">Consultando dados na Receita Federal...</div>
+            <div id="loading-consulta" class="loading-consulta" role="status" aria-live="polite">
+                <div class="loading-spinner" aria-hidden="true"></div>
+                <div class="loading-text">
+                    Consultando dados na Receita Federal<span class="loading-dots"></span>
+                </div>
             </div>
 
             <!-- Resultado da consulta -->
-            <div id="resultado-consulta" class="resultado-consulta">
+            <div id="resultado-consulta" class="resultado-consulta" role="region" aria-label="Resultado da consulta">
                 <!-- Informações da empresa -->
                 <div class="empresa-info">
                     <div class="empresa-info-header">
-                        <div class="icon">
-                            <i class="fas fa-building"></i>
+                        <div class="icon-container">
+                            <i class="fas fa-building" aria-hidden="true"></i>
                         </div>
                         <h4>Informações da Empresa</h4>
                     </div>
@@ -628,18 +983,18 @@
                 <!-- Seção de pendências -->
                 <div class="pendencias-section">
                     <div class="pendencias-header">
-                        <div class="icon">
-                            <i class="fas fa-exclamation-triangle"></i>
+                        <div class="icon-container">
+                            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
                         </div>
                         <h4>Pendências Financeiras</h4>
                     </div>
                     
-                    <div id="pendencias-lista">
+                    <div id="pendencias-lista" role="list">
                         <!-- Pendências serão inseridas aqui via JavaScript -->
                     </div>
                     
                     <div id="sem-pendencias" class="sem-pendencias" style="display: none;">
-                        <i class="fas fa-check-circle icon"></i>
+                        <i class="fas fa-check-circle icon" aria-hidden="true"></i>
                         <h5>Nenhuma Pendência Encontrada</h5>
                         <p>Esta empresa não possui pendências financeiras registradas.</p>
                     </div>
@@ -730,6 +1085,73 @@ document.addEventListener("DOMContentLoaded", function() {
         e.target.value = formatarCNPJ(e.target.value);
     });
     
+    // Função para mostrar notificação
+    function mostrarNotificacao(mensagem, tipo = 'error') {
+        // Criar elemento de notificação
+        const notificacao = document.createElement('div');
+        notificacao.className = `notificacao notificacao-${tipo}`;
+        notificacao.innerHTML = `
+            <i class="fas fa-${tipo === 'error' ? 'exclamation-circle' : 'check-circle'}"></i>
+            <span>${mensagem}</span>
+        `;
+        
+        // Adicionar estilos
+        notificacao.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${tipo === 'error' ? 'var(--danger-bg)' : 'var(--success-bg)'};
+            color: ${tipo === 'error' ? 'var(--danger-color)' : 'var(--success-color)'};
+            padding: var(--spacing-4) var(--spacing-6);
+            border-radius: var(--border-radius-md);
+            border: 1px solid ${tipo === 'error' ? 'var(--danger-color)' : 'var(--success-color)'};
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            font-weight: 600;
+            animation: slideInRight 0.3s ease-out;
+        `;
+        
+        document.body.appendChild(notificacao);
+        
+        // Remover após 5 segundos
+        setTimeout(() => {
+            notificacao.style.animation = 'slideOutRight 0.3s ease-out';
+            setTimeout(() => {
+                document.body.removeChild(notificacao);
+            }, 300);
+        }, 5000);
+    }
+    
+    // Adicionar estilos para animações de notificação
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideOutRight {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
     // Função para consultar CNPJ na Brasil API
     async function consultarCNPJ() {
         const cnpj = document.getElementById('cnpj-input').value;
@@ -738,12 +1160,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const consultarBtn = document.getElementById('consultar-btn');
         
         if (!cnpj) {
-            alert('Por favor, digite um CNPJ válido.');
+            mostrarNotificacao('Por favor, digite um CNPJ válido.', 'error');
+            cnpjInput.focus();
             return;
         }
         
         if (!validarCNPJ(cnpj)) {
-            alert('CNPJ inválido. Por favor, verifique os dados digitados.');
+            mostrarNotificacao('CNPJ inválido. Por favor, verifique os dados digitados.', 'error');
+            cnpjInput.focus();
             return;
         }
         
@@ -751,7 +1175,8 @@ document.addEventListener("DOMContentLoaded", function() {
         loadingDiv.style.display = 'block';
         resultadoDiv.style.display = 'none';
         consultarBtn.disabled = true;
-        consultarBtn.innerHTML = '<i class="fas fa-spinner fa-spin icon"></i>Consultando...';
+        consultarBtn.classList.add('btn-loading');
+        consultarBtn.innerHTML = '<span>Consultando...</span>';
         
         try {
             // Remover formatação do CNPJ para a API
@@ -801,14 +1226,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 ];
                 
                 let pendenciasHtml = '';
-                pendenciasSimuladas.forEach(function(pendencia) {
+                pendenciasSimuladas.forEach(function(pendencia, index) {
                     pendenciasHtml += `
-                        <div class="pendencia-item fade-in">
+                        <div class="pendencia-item fade-in" role="listitem" style="animation-delay: ${index * 0.1}s">
                             <div class="pendencia-info">
                                 <div class="pendencia-tipo">${pendencia.tipo}</div>
                                 <div class="pendencia-detalhes">
-                                    <span>Valor: ${pendencia.valor}</span>
-                                    <span>Vencimento: ${pendencia.vencimento}</span>
+                                    <span><strong>Valor:</strong> ${pendencia.valor}</span>
+                                    <span><strong>Vencimento:</strong> ${pendencia.vencimento}</span>
                                 </div>
                             </div>
                             <div class="pendencia-status">
@@ -828,14 +1253,25 @@ document.addEventListener("DOMContentLoaded", function() {
             resultadoDiv.style.display = 'block';
             resultadoDiv.classList.add('fade-in');
             
+            // Scroll suave para o resultado
+            setTimeout(() => {
+                resultadoDiv.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 300);
+            
+            mostrarNotificacao('Consulta realizada com sucesso!', 'success');
+            
         } catch (error) {
             console.error('Erro na consulta:', error);
-            alert('Erro ao consultar CNPJ. Verifique se o número está correto e tente novamente.');
+            mostrarNotificacao('Erro ao consultar CNPJ. Verifique se o número está correto e tente novamente.', 'error');
         } finally {
             // Ocultar loading e reabilitar botão
             loadingDiv.style.display = 'none';
             consultarBtn.disabled = false;
-            consultarBtn.innerHTML = '<i class="fas fa-search icon"></i>Consultar CNPJ';
+            consultarBtn.classList.remove('btn-loading');
+            consultarBtn.innerHTML = '<i class="fas fa-search" aria-hidden="true"></i><span>Consultar CNPJ</span>';
         }
     }
     
@@ -848,6 +1284,15 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
             consultarCNPJ();
         }
+    });
+    
+    // Adicionar feedback visual ao input
+    cnpjInput.addEventListener('focus', function() {
+        this.parentElement.style.transform = 'scale(1.02)';
+    });
+    
+    cnpjInput.addEventListener('blur', function() {
+        this.parentElement.style.transform = 'scale(1)';
     });
 });
 </script>
