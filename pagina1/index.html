@@ -232,21 +232,21 @@
         <div class="como-solicitar">
             <h2>Como solicitar o agendamento online?</h2>
             <div class="cards-como d-flex align-items-stretch justify-content-between flex-wrap">
-                <div class="card-como">
+                <div class="card-como col-md-4">
                     <div class="content-card">
                         <div class="icone"><i class="fa-solid fa-user-tie"></i></div>
                         <h3>Preencha o formulário</h3>
                         <p>Clique no botão inicial para ter acesso ao formulário. Preencha seus dados até o fim para chegar na tela de pagamento.</p>
                     </div>
                 </div>
-                <div class="card-como">
+                <div class="card-como col-md-4">
                     <div class="content-card">
                         <div class="icone"><i class="fa-solid fa-money-bill-wave"></i></div>
                         <h3>Realize o pagamento</h3>
-                        <p>Realize o pagamento do pedido. Após compensado o pagamento, ir receber um e-mail de confirmaão.</p>
+                        <p>Realize o pagamento do pedido. Após compensado o pagamento, ir receber um e-mail de confirmação.</p>
                     </div>
                 </div>
-                <div class="card-como">
+                <div class="card-como col-md-4">
                     <div class="content-card">
                         <div class="icone"><i class="fa-solid fa-envelope"></i></div>
                         <h3>Receba tudo por e-mail</h3>
@@ -266,82 +266,232 @@
                 <p class="collapse" id="collapse02">Não. Só vá ao posto de atendimento com o protocolo de atendimento que enviaremos ao seu e-mail. Este protocolo é a confirmação de que o dia e horário desejado foi devidamente agendado com o posto.</p>
             </div>
             <div class="duvida">
-                <h4 data-bs-toggle="collapse" href="#collapse03" role="button" aria-expanded="false" aria-controls="collapse03">Alm da taxa de serviço será cobrado mais algum valor?<i class="fa-solid fa-chevron-down"></i></h4>
-                <p class="collapse" id="collapse03">Para emissão de 1ª via não há outras taxas. Entretando, se for emissão de 2ª via do documento, será cobrado uma taxa de emissão.</p>
+                <h4 data-bs-toggle="collapse" href="#collapse03" role="button" aria-expanded="false" aria-controls="collapse03">Além da taxa de serviço será cobrado mais algum valor?<i class="fa-solid fa-chevron-down"></i></h4>
+                <p class="collapse" id="collapse03">Para emissão de 1ª via não há outras taxas. Entretanto, se for emissão de 2ª via do documento, será cobrado uma taxa de emissão.</p>
             </div>
             <div class="duvida">
                 <h4 data-bs-toggle="collapse" href="#collapse04" role="button" aria-expanded="false" aria-controls="collapse04">Posso desistir após pagar?<i class="fa-solid fa-chevron-down"></i></h4>
-                <p class="collapse" id="collapse04">Sim! Caso o servio ainda não tenha sido realizado, basta entrar em contato em nossos canais de atendimento que faremos o estorno.</p>
+                <p class="collapse" id="collapse04">Sim! Caso o serviço ainda não tenha sido realizado, basta entrar em contato em nossos canais de atendimento que faremos o estorno.</p>
             </div>
             <div class="duvida">
                 <h4 class="collapse" data-bs-toggle="collapse" href="#collapse05" role="button" aria-expanded="false" aria-controls="collapse05">Posso realizar o agendamento sem a assessoria do site?<i class="fa-solid fa-chevron-down"></i></h4>
-                <p class="collapse" id="collapse05">Não. Este  o único canal oficial para realizar o agendamento dos seus documentos. Para sua segurança e garantia do serviço, realize o agendamento somente através deste portal governamental.</p>
+                <p class="collapse" id="collapse05">Não. Este é o único canal oficial para realizar o agendamento dos seus documentos. Para sua segurança e garantia do serviço, realize o agendamento somente através deste portal governamental.</p>
             </div>
         </div>
     </div>
 </section>
 
-
+<!-- Bootstrap JS e dependências -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
 <script>
-    document.getElementById('consultarCnpj').addEventListener('click', function() {
-        const cnpj = document.getElementById('cnpjInput').value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+    document.getElementById("consultarCnpj").addEventListener("click", function() {
+        const cnpj = document.getElementById("cnpjInput").value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
 
         if (cnpj.length !== 14) {
-            alert('Por favor, digite um CNPJ válido com 14 dígitos.');
+            alert("Por favor, digite um CNPJ válido com 14 dígitos.");
             return;
         }
 
         // Simulação de busca de dados
         const dadosCnpj = {
-            '00000000000100': {
-                razaoSocial: 'EMPRESA TESTE LTDA',
-                nomeFantasia: 'TESTE MEI',
-                situacaoCadastral: 'Ativa',
-                pendencias: ['DAS em atraso (01/2024)', 'Declaração Anual não entregue (2023)']
+            "00000000000100": {
+                razaoSocial: "EMPRESA TESTE LTDA",
+                nomeFantasia: "TESTE MEI",
+                situacaoCadastral: "Ativa",
+                pendencias: ["DAS em atraso (01/2024)", "Declaração Anual não entregue (2023)"]
             },
-            '11111111111111': {
-                razaoSocial: 'OUTRA EMPRESA LTDA',
-                nomeFantasia: 'OUTRO MEI',
-                situacaoCadastral: 'Ativa',
+            "11111111111111": {
+                razaoSocial: "OUTRA EMPRESA LTDA",
+                nomeFantasia: "OUTRO MEI",
+                situacaoCadastral: "Ativa",
                 pendencias: []
             },
-            '22222222222222': {
-                razaoSocial: 'EMPRESA COM PENDENCIA',
-                nomeFantasia: 'MEI PENDENTE',
-                situacaoCadastral: 'Ativa',
-                pendencias: ['DAS em atraso (02/2024)']
+            "22222222222222": {
+                razaoSocial: "EMPRESA COM PENDENCIA",
+                nomeFantasia: "MEI PENDENTE",
+                situacaoCadastral: "Ativa",
+                pendencias: ["DAS em atraso (02/2024)"]
             }
         };
 
         const resultado = dadosCnpj[cnpj];
-        const resultadoConsultaDiv = document.getElementById('resultadoConsulta');
-        const listaPendenciasUl = document.getElementById('listaPendencias');
+        const resultadoConsultaDiv = document.getElementById("resultadoConsulta");
+        const listaPendenciasUl = document.getElementById("listaPendencias");
 
         if (resultado) {
-            document.getElementById('razaoSocial').textContent = resultado.razaoSocial;
-            document.getElementById('nomeFantasia').textContent = resultado.nomeFantasia;
-            document.getElementById('situacaoCadastral').textContent = resultado.situacaoCadastral;
+            document.getElementById("razaoSocial").textContent = resultado.razaoSocial;
+            document.getElementById("nomeFantasia").textContent = resultado.nomeFantasia;
+            document.getElementById("situacaoCadastral").textContent = resultado.situacaoCadastral;
 
-            listaPendenciasUl.innerHTML = ''; // Clear previous pendencies
+            listaPendenciasUl.innerHTML = ""; // Clear previous pendencies
             if (resultado.pendencias.length > 0) {
                 resultado.pendencias.forEach(pendencia => {
-                    const li = document.createElement('li');
+                    const li = document.createElement("li");
                     li.textContent = pendencia;
                     listaPendenciasUl.appendChild(li);
                 });
             } else {
-                const li = document.createElement('li');
-                li.textContent = 'Nenhuma pendência ativa encontrada.';
+                const li = document.createElement("li");
+                li.textContent = "Nenhuma pendência ativa encontrada.";
                 listaPendenciasUl.appendChild(li);
             }
-            resultadoConsultaDiv.style.display = 'block';
+            resultadoConsultaDiv.style.display = "block";
         } else {
-            alert('CNPJ não encontrado na base de dados simulada. Tente 00.000.000/0001-00, 11.111.111/1111-11 ou 22.222.222/2222-22.');
-            resultadoConsultaDiv.style.display = 'none';
+            alert("CNPJ não encontrado na base de dados simulada. Tente 00.000.000/0001-00, 11.111.111/1111-11 ou 22.222.222/2222-22.");
+            resultadoConsultaDiv.style.display = "none";
         }
     });
 </script>
+
+  <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            max-width: 960px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .card-consulta, .card-como {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-consulta:hover, .card-como:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+        .card-consulta h3, .card-como h3 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            padding: 10px 15px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 8px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        #resultadoConsulta {
+            background-color: #e9f7ef;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+        }
+        #resultadoConsulta h4 {
+            color: #28a745;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        #resultadoConsulta p strong {
+            color: #555;
+        }
+        #listaPendencias {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        #listaPendencias li {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            color: #856404;
+            font-size: 0.95em;
+        }
+        #listaPendencias li:last-child {
+            margin-bottom: 0;
+        }
+        #listaPendencias li:contains("Nenhuma pendência") {
+            background-color: #d4edda;
+            border-left-color: #28a745;
+            color: #155724;
+        }
+        .como-solicitar .card-como .icone {
+            font-size: 3em;
+            color: #007bff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .como-solicitar .card-como h3 {
+            text-align: center;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        .como-solicitar .card-como p {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #666;
+        }
+        .duvidas .duvida {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .duvidas .duvida h4 {
+            padding: 18px 25px;
+            margin: 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #333;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .duvidas .duvida h4:hover {
+            background-color: #f8f9fa;
+        }
+        .duvidas .duvida h4 i {
+            transition: transform 0.3s ease;
+        }
+        .duvidas .duvida h4[aria-expanded="true"] i {
+            transform: rotate(180deg);
+        }
+        .duvidas .duvida p {
+            padding: 0 25px 20px;
+            margin: 0;
+            color: #555;
+            line-height: 1.7;
+        }
+    </style>
 
 <footer>
     <div class="container">
