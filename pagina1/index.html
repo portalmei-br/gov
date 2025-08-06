@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CYPSPHG7"></script>
@@ -52,361 +53,461 @@
   <!-- Scripts -->
   <script src="js/lates.js" data-utmify-prevent-subids="" async defer></script>
   
-  <!-- JavaScript para consulta CNPJ -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        function salvarParametrosNoLocalStorage() {
-            const params = new URLSearchParams(window.location.search);
-            const googleData = {};
-            googleData.utm_source = 'organic';
-            params.forEach((value, key) => {
-                googleData[key] = value;
-            });
-            localStorage.setItem('google', JSON.stringify(googleData));
-            console.log(googleData);
-        }
-        salvarParametrosNoLocalStorage();
-        
-        // Função para formatar CNPJ
-        function formatarCNPJ(cnpj) {
-            cnpj = cnpj.replace(/\D/g, '');
-            cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
-            cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-            cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
-            cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
-            return cnpj;
-        }
-        
-        // Função para validar CNPJ
-        function validarCNPJ(cnpj) {
-            cnpj = cnpj.replace(/[^\d]+/g,'');
-            if(cnpj == '') return false;
-            if (cnpj.length != 14) return false;
-            
-            // Elimina CNPJs invalidos conhecidos
-            if (cnpj == "00000000000000" || 
-                cnpj == "11111111111111" || 
-                cnpj == "22222222222222" || 
-                cnpj == "33333333333333" || 
-                cnpj == "44444444444444" || 
-                cnpj == "55555555555555" || 
-                cnpj == "66666666666666" || 
-                cnpj == "77777777777777" || 
-                cnpj == "88888888888888" || 
-                cnpj == "99999999999999")
-                return false;
-                
-            // Valida DVs
-            var tamanho = cnpj.length - 2
-            var numeros = cnpj.substring(0,tamanho);
-            var digitos = cnpj.substring(tamanho);
-            var soma = 0;
-            var pos = tamanho - 7;
-            for (var i = tamanho; i >= 1; i--) {
-              soma += numeros.charAt(tamanho - i) * pos--;
-              if (pos < 2)
-                    pos = 9;
-            }
-            var resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-            if (resultado != digitos.charAt(0))
-                return false;
-                
-            tamanho = tamanho + 1;
-            numeros = cnpj.substring(0,tamanho);
-            soma = 0;
-            pos = tamanho - 7;
-            for (var i = tamanho; i >= 1; i--) {
-              soma += numeros.charAt(tamanho - i) * pos--;
-              if (pos < 2)
-                    pos = 9;
-            }
-            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-            if (resultado != digitos.charAt(1))
-                  return false;
-                  
-            return true;
-        }
-        
-        // Aplicar máscara no campo CNPJ
-        const cnpjInput = document.getElementById('cnpj-input');
-        cnpjInput.addEventListener('input', function(e) {
-            e.target.value = formatarCNPJ(e.target.value);
-        });
-        
-        // Função para simular consulta de pendências
-        function consultarPendencias() {
-            const cnpj = document.getElementById('cnpj-input').value;
-            const resultadoDiv = document.getElementById('resultado-consulta');
-            const loadingDiv = document.getElementById('loading-consulta');
-            
-            if (!cnpj) {
-                alert('Por favor, digite um CNPJ válido.');
-                return;
-            }
-            
-            if (!validarCNPJ(cnpj)) {
-                alert('CNPJ inválido. Por favor, verifique os dados digitados.');
-                return;
-            }
-            
-            // Mostrar loading
-            loadingDiv.style.display = 'block';
-            resultadoDiv.style.display = 'none';
-            
-            // Simular delay da consulta
-            setTimeout(function() {
-                loadingDiv.style.display = 'none';
-                
-                // Dados simulados baseados no CNPJ
-                const cnpjLimpo = cnpj.replace(/\D/g, '');
-                const empresasSimuladas = {
-                    '11222333000181': {
-                        razaoSocial: 'EMPRESA EXEMPLO LTDA',
-                        nomeFantasia: 'Exemplo Transportes',
-                        situacao: 'ATIVA',
-                        dataAbertura: '15/03/2010',
-                        endereco: 'RUA DAS FLORES, 123 - CENTRO - SÃO PAULO/SP',
-                        pendencias: [
-                            { tipo: 'Multa de Trânsito', valor: 'R$ 195,23', vencimento: '15/12/2024' },
-                            { tipo: 'Taxa de Licenciamento', valor: 'R$ 87,38', vencimento: '31/01/2025' }
-                        ]
-                    },
-                    '22333444000195': {
-                        razaoSocial: 'TRANSPORTADORA ABC S/A',
-                        nomeFantasia: 'ABC Logística',
-                        situacao: 'ATIVA',
-                        dataAbertura: '22/08/2005',
-                        endereco: 'AV. BRASIL, 456 - INDUSTRIAL - RIO DE JANEIRO/RJ',
-                        pendencias: []
-                    }
-                };
-                
-                // Usar dados simulados ou gerar dados genéricos
-                let dadosEmpresa;
-                if (empresasSimuladas[cnpjLimpo]) {
-                    dadosEmpresa = empresasSimuladas[cnpjLimpo];
-                } else {
-                    // Gerar dados genéricos para qualquer CNPJ válido
-                    dadosEmpresa = {
-                        razaoSocial: 'EMPRESA CONSULTADA LTDA',
-                        nomeFantasia: 'Empresa Consultada',
-                        situacao: 'ATIVA',
-                        dataAbertura: '01/01/2015',
-                        endereco: 'RUA EXEMPLO, 789 - CENTRO - BRASÍLIA/DF',
-                        pendencias: Math.random() > 0.5 ? [
-                            { tipo: 'Multa de Trânsito', valor: 'R$ 130,16', vencimento: '20/01/2025' }
-                        ] : []
-                    };
-                }
-                
-                // Exibir resultado
-                document.getElementById('empresa-razao').textContent = dadosEmpresa.razaoSocial;
-                document.getElementById('empresa-fantasia').textContent = dadosEmpresa.nomeFantasia;
-                document.getElementById('empresa-cnpj').textContent = cnpj;
-                document.getElementById('empresa-situacao').textContent = dadosEmpresa.situacao;
-                document.getElementById('empresa-abertura').textContent = dadosEmpresa.dataAbertura;
-                document.getElementById('empresa-endereco').textContent = dadosEmpresa.endereco;
-                
-                const pendenciasDiv = document.getElementById('pendencias-lista');
-                if (dadosEmpresa.pendencias.length > 0) {
-                    let pendenciasHtml = '';
-                    dadosEmpresa.pendencias.forEach(function(pendencia) {
-                        pendenciasHtml += `
-                            <div class="pendencia-item">
-                                <div class="pendencia-info">
-                                    <strong>${pendencia.tipo}</strong>
-                                    <span>Valor: ${pendencia.valor}</span>
-                                    <span>Vencimento: ${pendencia.vencimento}</span>
-                                </div>
-                                <div class="pendencia-status">
-                                    <span class="badge badge-warning">PENDENTE</span>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    pendenciasDiv.innerHTML = pendenciasHtml;
-                    document.getElementById('sem-pendencias').style.display = 'none';
-                } else {
-                    pendenciasDiv.innerHTML = '';
-                    document.getElementById('sem-pendencias').style.display = 'block';
-                }
-                
-                resultadoDiv.style.display = 'block';
-            }, 2000);
-        }
-        
-        // Adicionar evento ao botão
-        document.getElementById('consultar-btn').addEventListener('click', consultarPendencias);
-        
-        // Permitir consulta ao pressionar Enter
-        cnpjInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                consultarPendencias();
-            }
-        });
-    });
-  </script>
-  
+  <!-- Estilos para consulta CNPJ profissional -->
   <style>
+    /* Variáveis CSS para cores institucionais */
+    :root {
+      --primary-color: #1e3a8a;
+      --secondary-color: #3b82f6;
+      --accent-color: #10b981;
+      --success-color: #059669;
+      --warning-color: #f59e0b;
+      --danger-color: #dc2626;
+      --light-gray: #f8fafc;
+      --medium-gray: #e2e8f0;
+      --dark-gray: #475569;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --border-radius: 8px;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Container principal da consulta CNPJ */
     .consulta-cnpj {
-        background: #f8f9fa;
-        padding: 30px;
-        border-radius: 8px;
-        margin-bottom: 30px;
+      background: linear-gradient(135deg, var(--light-gray) 0%, #ffffff 100%);
+      border: 1px solid var(--medium-gray);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
     }
-    
+
+    .consulta-cnpj::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+    }
+
+    /* Cabeçalho da seção */
+    .consulta-cnpj-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--medium-gray);
+    }
+
+    .consulta-cnpj-header .icon {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .consulta-cnpj-header h3 {
+      color: var(--text-primary);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: -0.025em;
+    }
+
+    .consulta-cnpj-header p {
+      color: var(--text-secondary);
+      margin: 0.25rem 0 0 0;
+      font-size: 0.875rem;
+    }
+
+    /* Formulário */
     .form-group {
-        margin-bottom: 20px;
+      margin-bottom: 1.5rem;
     }
-    
+
     .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 600;
-        color: #333;
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
-    
+
     .form-control {
-        width: 100%;
-        padding: 12px 15px;
-        border: 2px solid #ddd;
-        border-radius: 6px;
-        font-size: 16px;
-        transition: border-color 0.3s;
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid var(--medium-gray);
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      background-color: #ffffff;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
     }
-    
+
     .form-control:focus {
-        outline: none;
-        border-color: #007bff;
-        box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+      outline: none;
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
+      transform: translateY(-1px);
     }
-    
+
+    .form-control::placeholder {
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    /* Botão de consulta */
     .btn-consultar {
-        background: #28a745;
-        color: white;
-        padding: 12px 30px;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 0.875rem 2rem;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      position: relative;
+      overflow: hidden;
     }
-    
+
     .btn-consultar:hover {
-        background: #218838;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
     }
-    
+
+    .btn-consultar:active {
+      transform: translateY(0);
+    }
+
+    .btn-consultar:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-consultar .icon {
+      margin-right: 0.5rem;
+    }
+
+    /* Loading */
     .loading-consulta {
-        text-align: center;
-        padding: 20px;
-        display: none;
+      text-align: center;
+      padding: 2rem;
+      display: none;
+      background: #ffffff;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--medium-gray);
+      margin-top: 1rem;
     }
-    
-    .loading-consulta img {
-        width: 50px;
-        height: 50px;
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--medium-gray);
+      border-top: 4px solid var(--secondary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
     }
-    
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Resultado da consulta */
     .resultado-consulta {
-        display: none;
-        background: white;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 25px;
-        margin-top: 20px;
+      display: none;
+      background: #ffffff;
+      border: 1px solid var(--medium-gray);
+      border-radius: 12px;
+      margin-top: 1.5rem;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      animation: slideIn 0.3s ease-out;
     }
-    
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Informações da empresa */
     .empresa-info {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 6px;
-        margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--light-gray) 0%, #ffffff 100%);
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--medium-gray);
     }
-    
-    .empresa-info h4 {
-        color: #007bff;
-        margin-bottom: 15px;
+
+    .empresa-info-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
     }
-    
-    .info-row {
-        display: flex;
-        margin-bottom: 8px;
+
+    .empresa-info-header .icon {
+      background: var(--accent-color);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.75rem;
     }
-    
+
+    .empresa-info-header h4 {
+      color: var(--text-primary);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+    }
+
     .info-label {
-        font-weight: 600;
-        min-width: 120px;
-        color: #555;
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
     }
-    
+
     .info-value {
-        color: #333;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.875rem;
     }
-    
-    .pendencias-section h4 {
-        color: #dc3545;
-        margin-bottom: 15px;
+
+    /* Status badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
-    
+
+    .status-badge.ativa {
+      background-color: rgb(220 252 231);
+      color: var(--success-color);
+    }
+
+    .status-badge.inativa {
+      background-color: rgb(254 242 242);
+      color: var(--danger-color);
+    }
+
+    /* Seção de pendências */
+    .pendencias-section {
+      padding: 1.5rem;
+    }
+
+    .pendencias-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .pendencias-header .icon {
+      background: var(--warning-color);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.75rem;
+    }
+
+    .pendencias-header h4 {
+      color: var(--text-primary);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
     .pendencia-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        margin-bottom: 10px;
-        background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border: 1px solid var(--medium-gray);
+      border-radius: var(--border-radius);
+      margin-bottom: 0.75rem;
+      background: #ffffff;
+      transition: var(--transition);
     }
-    
-    .pendencia-info strong {
-        display: block;
-        color: #333;
-        margin-bottom: 5px;
+
+    .pendencia-item:hover {
+      border-color: var(--secondary-color);
+      box-shadow: var(--shadow-sm);
     }
-    
-    .pendencia-info span {
-        display: block;
-        color: #666;
-        font-size: 14px;
+
+    .pendencia-info {
+      flex: 1;
     }
-    
+
+    .pendencia-tipo {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .pendencia-detalhes {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .pendencia-status {
+      display: flex;
+      align-items: center;
+    }
+
     .badge {
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
+      padding: 0.375rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
-    
+
     .badge-warning {
-        background: #ffc107;
-        color: #212529;
+      background: rgb(254 243 199);
+      color: #92400e;
     }
-    
+
     .badge-success {
-        background: #28a745;
-        color: white;
+      background: rgb(220 252 231);
+      color: var(--success-color);
     }
-    
+
+    /* Sem pendências */
     .sem-pendencias {
-        text-align: center;
-        padding: 30px;
-        color: #28a745;
-        font-size: 18px;
-        font-weight: 600;
+      text-align: center;
+      padding: 2rem;
+      color: var(--success-color);
     }
-    
-    .sem-pendencias i {
-        font-size: 48px;
-        margin-bottom: 15px;
-        display: block;
+
+    .sem-pendencias .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .sem-pendencias h5 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .sem-pendencias p {
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .consulta-cnpj {
+        padding: 1.5rem;
+        margin: 1rem 0;
+      }
+
+      .consulta-cnpj-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .consulta-cnpj-header .icon {
+        margin-right: 0;
+        margin-bottom: 0.75rem;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pendencia-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+
+      .pendencia-status {
+        align-self: flex-end;
+      }
+    }
+
+    /* Animações de entrada */
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
   
-<body><header id="site-header">
+<body>
+<header id="site-header">
     <div class="header-wrapper container">
         <div class="br-header">
             <div class="header-top">
@@ -434,25 +535,7 @@
                         </div>
                         <div class="wrapper svelte-ippqk1">
                             <div class="button-badge svelte-ippqk1">
-                                <button class="br-button circle small false false cookies svelte-ippqk1" type="button" aria-label="Cookies"><i class="fas fa-cookie-bite svelte-ippqk1" aria-hidden="true"></i></button> 
-                            </div>
-                        </div>
-                        <div class="wrapper svelte-ippqk1">
-                            <div class="button-badge svelte-ippqk1">
-                                <button class="br-button circle small false false contrast-button svelte-ippqk1" type="button" aria-label="Alto contraste"><i class="fas fa-adjust svelte-ippqk1" aria-hidden="true"></i></button>
-                            </div>
-                        </div>
-                        <div class="wrapper svelte-ippqk1">
-                            <div class="button-badge svelte-ippqk1">
-                                <button class="br-button circle small false false slideBarAnonima svelte-ippqk1" type="button" aria-label="Sistemas."><i class="fas fa-th svelte-ippqk1" aria-hidden="true"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="wrapper-login">
-                        <div class="header-sign-in">
-                            <div class="cta-wrapper svelte-7keokj">
-                                <button class="br-sign-in primary ml-2 false svelte-7keokj d-none d-lg-block d-xl-block" type="button"><i class="fas fa-user" aria-hidden="true"></i> Entrar com gov.br</button>
-                                <button class="br-sign-in primary ml-2 false svelte-7keokj d-block d-lg-none d-xl-none" type="button"><i class="fas fa-user" aria-hidden="true"></i> Entrar</button>
+                                <button class="br-button circle small false svelte-ippqk1" type="button" aria-label="Acesso à conta"><i class="fas fa-user" aria-hidden="true"></i></button>
                             </div>
                         </div>
                     </div>
@@ -460,187 +543,315 @@
             </div>
         </div>
     </div>
-    <div class="main">
-        <div class="header-wrapper container">
-            <div class="site-name-wrapper">
-                <a class="ico-navegacao toggle-main-navigation" href="javascript:void(0)">
-                    <span class="sr-only">Abrir menu principal de navegação</span>
-                    <span class="fa fa-bars" aria-hidden="true"></span>
-                    <span class="fa fa-times" aria-hidden="true"></span>
-                </a>
-                <div class="site-name">
-                    <a href="javascript:void(0)">Portal de Serviços de Trânsito</a>
-                </div>
-            </div>
-            <div class="govbr-busca-header">
-                <div id="govbr-busca-input">
-                    <div class="aa-Autocomplete" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="searchtext-label">
-                        <form class="aa-Form" action="" novalidate="" role="search"><div class="aa-InputWrapperPrefix"><div class="aa-LoadingIndicator" hidden=""><svg class="aa-LoadingIcon" viewBox="0 0 100 100" width="20" height="20"><circle cx="50" cy="50" fill="none" r="35" stroke="currentColor" stroke-dasharray="164.93361431346415 56.97787143782138" stroke-width="6"><animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;90 50 50;180 50 50;360 50 50" keyTimes="0;0.40;0.65;1"></animateTransform></circle></svg>
-                    </div>
-                    <button class="aa-SubmitButton" type="submit" title="Submit">
-                        <i class="fa-solid fa-magnifying-glass"></i></button>
-                    </div>
-                    <div class="aa-InputWrapper">
-                        <input class="aa-Input" aria-autocomplete="both" aria-labelledby="searchtext-label" id="searchtext-input" autocomplete="off" autocorrect="off" autocapitalize="none" enterkeyhint="search" spellcheck="false" placeholder="O que você procura?" maxlength="512" type="search">
-                    </div>
-                    <div class="aa-InputWrapperSuffix">
-                        <button class="aa-ClearButton" type="reset" title="Clear" hidden=""><svg class="aa-ClearIcon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <button type="button" class="govbr-busca-toggle" aria-label="Fechar busca"><span class="fas fa-search"></span></button>
-    </div>
-            </div>
-        </div>
 </header>
 
-<div id="loading-form">
-    <div class="image">
-        <img src="images/loading.svg" alt="Carregando">
-    </div>
-</div>
-<div id="portal-breadcrumbs-wrapper">
-    <nav id="breadcrumbs" class="container" aria-label="Histórico de navegação (Breadcrumbs)">
-        <div class="content">
-            <span class="sr-only">Voc está aqui:</span>
-            <span class="home">
-                <a href="javascript:void(0)">
-                    <span class="fas fa-home" aria-hidden="true"></span>
-                    <span class="sr-only">Página Inicial</span>
-                </a>
-            </span>
-            <span dir="ltr" id="breadcrumbs-1">
-                <a href="javascript:void(0)">DETRAN</a>
-            </span>
-        </div>
-    </nav>
-</div>
-<section id="inicio">
+<main>
     <div class="container">
-        <div class="servicos">
-            <h2>Consulta de Pendências</h2>
-            <div class="card-servicos">
-                <div class="content-card">
-                    <div class="consulta-cnpj">
-                        <h3><i class="fas fa-search"></i> Consultar Pendências por CNPJ</h3>
-                        <p>Digite o CNPJ da empresa para consultar pendências de trânsito e documentação.</p>
-                        
-                        <div class="form-group">
-                            <label for="cnpj-input">CNPJ da Empresa:</label>
-                            <input type="text" id="cnpj-input" class="form-control" placeholder="00.000.000/0000-00" maxlength="18">
+        <!-- Seção de Consulta CNPJ -->
+        <section class="consulta-cnpj">
+            <div class="consulta-cnpj-header">
+                <div class="icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div>
+                    <h3>Consulta de CNPJ</h3>
+                    <p>Consulte informações oficiais de empresas através do CNPJ</p>
+                </div>
+            </div>
+
+            <form id="form-consulta-cnpj">
+                <div class="form-group">
+                    <label for="cnpj-input">CNPJ da Empresa</label>
+                    <input 
+                        type="text" 
+                        id="cnpj-input" 
+                        class="form-control" 
+                        placeholder="00.000.000/0000-00"
+                        maxlength="18"
+                        autocomplete="off"
+                    >
+                </div>
+                
+                <button type="button" id="consultar-btn" class="btn-consultar">
+                    <i class="fas fa-search icon"></i>
+                    Consultar CNPJ
+                </button>
+            </form>
+
+            <!-- Loading -->
+            <div id="loading-consulta" class="loading-consulta">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Consultando dados na Receita Federal...</div>
+            </div>
+
+            <!-- Resultado da consulta -->
+            <div id="resultado-consulta" class="resultado-consulta">
+                <!-- Informações da empresa -->
+                <div class="empresa-info">
+                    <div class="empresa-info-header">
+                        <div class="icon">
+                            <i class="fas fa-building"></i>
                         </div>
-                        
-                        <button type="button" id="consultar-btn" class="btn-consultar">
-                            <i class="fas fa-search"></i> Consultar Agora
-                        </button>
-                        
-                        <div id="loading-consulta" class="loading-consulta">
-                            <img src="images/loading.svg" alt="Carregando">
-                            <p>Consultando pendências...</p>
+                        <h4>Informações da Empresa</h4>
+                    </div>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Razão Social</span>
+                            <span class="info-value" id="empresa-razao">-</span>
                         </div>
-                        
-                        <div id="resultado-consulta" class="resultado-consulta">
-                            <div class="empresa-info">
-                                <h4><i class="fas fa-building"></i> Informações da Empresa</h4>
-                                <div class="info-row">
-                                    <span class="info-label">Razão Social:</span>
-                                    <span class="info-value" id="empresa-razao">-</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">Nome Fantasia:</span>
-                                    <span class="info-value" id="empresa-fantasia">-</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">CNPJ:</span>
-                                    <span class="info-value" id="empresa-cnpj">-</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">Situação:</span>
-                                    <span class="info-value" id="empresa-situacao">-</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">Data de Abertura:</span>
-                                    <span class="info-value" id="empresa-abertura">-</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">Endereço:</span>
-                                    <span class="info-value" id="empresa-endereco">-</span>
+                        <div class="info-item">
+                            <span class="info-label">Nome Fantasia</span>
+                            <span class="info-value" id="empresa-fantasia">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">CNPJ</span>
+                            <span class="info-value" id="empresa-cnpj">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Situação</span>
+                            <span class="info-value">
+                                <span id="empresa-situacao" class="status-badge ativa">-</span>
+                            </span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Data de Abertura</span>
+                            <span class="info-value" id="empresa-abertura">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Endereço</span>
+                            <span class="info-value" id="empresa-endereco">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção de pendências -->
+                <div class="pendencias-section">
+                    <div class="pendencias-header">
+                        <div class="icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h4>Pendências Financeiras</h4>
+                    </div>
+                    
+                    <div id="pendencias-lista">
+                        <!-- Pendências serão inseridas aqui via JavaScript -->
+                    </div>
+                    
+                    <div id="sem-pendencias" class="sem-pendencias" style="display: none;">
+                        <i class="fas fa-check-circle icon"></i>
+                        <h5>Nenhuma Pendência Encontrada</h5>
+                        <p>Esta empresa não possui pendências financeiras registradas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- JavaScript para consulta CNPJ -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    function salvarParametrosNoLocalStorage() {
+        const params = new URLSearchParams(window.location.search);
+        const googleData = {};
+        googleData.utm_source = 'organic';
+        params.forEach((value, key) => {
+            googleData[key] = value;
+        });
+        localStorage.setItem('google', JSON.stringify(googleData));
+        console.log(googleData);
+    }
+    salvarParametrosNoLocalStorage();
+    
+    // Função para formatar CNPJ
+    function formatarCNPJ(cnpj) {
+        cnpj = cnpj.replace(/\D/g, '');
+        cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
+        cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+        cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
+        cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
+        return cnpj;
+    }
+    
+    // Função para validar CNPJ
+    function validarCNPJ(cnpj) {
+        cnpj = cnpj.replace(/[^\d]+/g,'');
+        if(cnpj == '') return false;
+        if (cnpj.length != 14) return false;
+        
+        // Elimina CNPJs invalidos conhecidos
+        if (cnpj == "00000000000000" || 
+            cnpj == "11111111111111" || 
+            cnpj == "22222222222222" || 
+            cnpj == "33333333333333" || 
+            cnpj == "44444444444444" || 
+            cnpj == "55555555555555" || 
+            cnpj == "66666666666666" || 
+            cnpj == "77777777777777" || 
+            cnpj == "88888888888888" || 
+            cnpj == "99999999999999")
+            return false;
+            
+        // Valida DVs
+        var tamanho = cnpj.length - 2
+        var numeros = cnpj.substring(0,tamanho);
+        var digitos = cnpj.substring(tamanho);
+        var soma = 0;
+        var pos = tamanho - 7;
+        for (var i = tamanho; i >= 1; i--) {
+          soma += numeros.charAt(tamanho - i) * pos--;
+          if (pos < 2)
+                pos = 9;
+        }
+        var resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+        if (resultado != digitos.charAt(0))
+            return false;
+            
+        tamanho = tamanho + 1;
+        numeros = cnpj.substring(0,tamanho);
+        soma = 0;
+        pos = tamanho - 7;
+        for (var i = tamanho; i >= 1; i--) {
+          soma += numeros.charAt(tamanho - i) * pos--;
+          if (pos < 2)
+                pos = 9;
+        }
+        resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+        if (resultado != digitos.charAt(1))
+              return false;
+              
+        return true;
+    }
+    
+    // Aplicar máscara no campo CNPJ
+    const cnpjInput = document.getElementById('cnpj-input');
+    cnpjInput.addEventListener('input', function(e) {
+        e.target.value = formatarCNPJ(e.target.value);
+    });
+    
+    // Função para consultar CNPJ na Brasil API
+    async function consultarCNPJ() {
+        const cnpj = document.getElementById('cnpj-input').value;
+        const resultadoDiv = document.getElementById('resultado-consulta');
+        const loadingDiv = document.getElementById('loading-consulta');
+        const consultarBtn = document.getElementById('consultar-btn');
+        
+        if (!cnpj) {
+            alert('Por favor, digite um CNPJ válido.');
+            return;
+        }
+        
+        if (!validarCNPJ(cnpj)) {
+            alert('CNPJ inválido. Por favor, verifique os dados digitados.');
+            return;
+        }
+        
+        // Mostrar loading e desabilitar botão
+        loadingDiv.style.display = 'block';
+        resultadoDiv.style.display = 'none';
+        consultarBtn.disabled = true;
+        consultarBtn.innerHTML = '<i class="fas fa-spinner fa-spin icon"></i>Consultando...';
+        
+        try {
+            // Remover formatação do CNPJ para a API
+            const cnpjLimpo = cnpj.replace(/\D/g, '');
+            
+            // Fazer requisição para a Brasil API
+            const response = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpjLimpo}`);
+            
+            if (!response.ok) {
+                throw new Error('CNPJ não encontrado ou erro na consulta');
+            }
+            
+            const dadosEmpresa = await response.json();
+            
+            // Preencher informações da empresa
+            document.getElementById('empresa-razao').textContent = dadosEmpresa.razao_social || 'Não informado';
+            document.getElementById('empresa-fantasia').textContent = dadosEmpresa.nome_fantasia || 'Não informado';
+            document.getElementById('empresa-cnpj').textContent = formatarCNPJ(dadosEmpresa.cnpj);
+            
+            // Situação da empresa
+            const situacaoElement = document.getElementById('empresa-situacao');
+            const situacao = dadosEmpresa.situacao_cadastral === 2 ? 'ATIVA' : 'INATIVA';
+            situacaoElement.textContent = situacao;
+            situacaoElement.className = `status-badge ${situacao.toLowerCase()}`;
+            
+            // Data de abertura
+            const dataAbertura = dadosEmpresa.data_inicio_atividade ? 
+                new Date(dadosEmpresa.data_inicio_atividade).toLocaleDateString('pt-BR') : 
+                'Não informado';
+            document.getElementById('empresa-abertura').textContent = dataAbertura;
+            
+            // Endereço
+            const endereco = `${dadosEmpresa.logradouro || ''}, ${dadosEmpresa.numero || 's/n'} ${dadosEmpresa.complemento ? '- ' + dadosEmpresa.complemento : ''} - ${dadosEmpresa.bairro || ''} - ${dadosEmpresa.municipio || ''}/${dadosEmpresa.uf || ''}`;
+            document.getElementById('empresa-endereco').textContent = endereco;
+            
+            // Simular pendências (já que a API não retorna pendências financeiras)
+            const pendenciasDiv = document.getElementById('pendencias-lista');
+            const semPendenciasDiv = document.getElementById('sem-pendencias');
+            
+            // Gerar pendências aleatórias para demonstração
+            const temPendencias = Math.random() > 0.6;
+            
+            if (temPendencias) {
+                const pendenciasSimuladas = [
+                    { tipo: 'Multa de Trânsito', valor: 'R$ 195,23', vencimento: '15/01/2025' },
+                    { tipo: 'Taxa de Licenciamento', valor: 'R$ 87,38', vencimento: '31/01/2025' }
+                ];
+                
+                let pendenciasHtml = '';
+                pendenciasSimuladas.forEach(function(pendencia) {
+                    pendenciasHtml += `
+                        <div class="pendencia-item fade-in">
+                            <div class="pendencia-info">
+                                <div class="pendencia-tipo">${pendencia.tipo}</div>
+                                <div class="pendencia-detalhes">
+                                    <span>Valor: ${pendencia.valor}</span>
+                                    <span>Vencimento: ${pendencia.vencimento}</span>
                                 </div>
                             </div>
-                            
-                            <div class="pendencias-section">
-                                <h4><i class="fas fa-exclamation-triangle"></i> Pendências Encontradas</h4>
-                                <div id="pendencias-lista"></div>
-                                <div id="sem-pendencias" class="sem-pendencias" style="display: none;">
-                                    <i class="fas fa-check-circle"></i>
-                                    Nenhuma pendência encontrada para esta empresa.
-                                </div>
+                            <div class="pendencia-status">
+                                <span class="badge badge-warning">Pendente</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="como-solicitar">
-            <h2>Como funciona a consulta?</h2>
-            <div class="cards-como d-flex align-items-stretch justify-content-between flex-wrap">
-                <div class="card-como">
-                    <div class="content-card">
-                        <div class="icone"><i class="fa-solid fa-edit"></i></div>
-                        <h3>Digite o CNPJ</h3>
-                        <p>Insira o CNPJ da empresa no campo acima. O sistema aplicará automaticamente a formatação correta.</p>
-                    </div>
-                </div>
-                <div class="card-como">
-                    <div class="content-card">
-                        <div class="icone"><i class="fa-solid fa-search"></i></div>
-                        <h3>Consulte as pendências</h3>
-                        <p>Clique em "Consultar Agora" para verificar se existem pendências de trânsito para a empresa.</p>
-                    </div>
-                </div>
-                <div class="card-como">
-                    <div class="content-card">
-                        <div class="icone"><i class="fa-solid fa-file-alt"></i></div>
-                        <h3>Visualize os resultados</h3>
-                        <p>Veja as informações da empresa e todas as pendências encontradas, com valores e datas de vencimento.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+                    `;
+                });
+                pendenciasDiv.innerHTML = pendenciasHtml;
+                semPendenciasDiv.style.display = 'none';
+            } else {
+                pendenciasDiv.innerHTML = '';
+                semPendenciasDiv.style.display = 'block';
+            }
+            
+            // Mostrar resultado
+            resultadoDiv.style.display = 'block';
+            resultadoDiv.classList.add('fade-in');
+            
+        } catch (error) {
+            console.error('Erro na consulta:', error);
+            alert('Erro ao consultar CNPJ. Verifique se o número está correto e tente novamente.');
+        } finally {
+            // Ocultar loading e reabilitar botão
+            loadingDiv.style.display = 'none';
+            consultarBtn.disabled = false;
+            consultarBtn.innerHTML = '<i class="fas fa-search icon"></i>Consultar CNPJ';
+        }
+    }
+    
+    // Adicionar evento ao botão
+    document.getElementById('consultar-btn').addEventListener('click', consultarCNPJ);
+    
+    // Permitir consulta ao pressionar Enter
+    cnpjInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            consultarCNPJ();
+        }
+    });
+});
+</script>
 
-<footer id="site-footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Portal de Serviços</h4>
-                <p>Acesso rápido e seguro aos serviços de trânsito do governo federal.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Links Úteis</h4>
-                <ul>
-                    <li><a href="#">Órgãos do Governo</a></li>
-                    <li><a href="#">Acesso à Informação</a></li>
-                    <li><a href="#">Legislação</a></li>
-                    <li><a href="#">Acessibilidade</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Contato</h4>
-                <p>Central de Atendimento: 0800 123 4567</p>
-                <p>Horário: Segunda a Sexta, 8h às 18h</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Portal de Serviços de Trânsito - Governo Federal</p>
-        </div>
-    </div>
-</footer>
-
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/toastify.min.js"></script>
 </body>
 </html>
 
