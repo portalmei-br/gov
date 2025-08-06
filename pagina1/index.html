@@ -418,7 +418,7 @@
         
         .faq-answer.active {
             padding: var(--spacing-scale-5x);
-            max-height: 200px;
+            max-height: 200px; /* Ajuste conforme necessário para o conteúdo do FAQ */
         }
         
         .faq-answer p {
@@ -437,13 +437,114 @@
                 font-size: 2rem;
             }
             
+            .section-header .subtitle {
+                font-size: var(--font-size-scale-base);
+            }
+            
+            .gov-badge {
+                font-size: var(--font-size-scale-down-02);
+                padding: var(--spacing-scale-2x) var(--spacing-scale-3x);
+            }
+            
             .consulta-card,
             .info-section {
                 padding: var(--spacing-scale-6x);
             }
             
+            .consulta-card h2 {
+                font-size: 1.5rem;
+            }
+            
+            .form-input {
+                padding: var(--spacing-scale-3x);
+                font-size: var(--font-size-scale-down-01);
+            }
+            
+            .btn-primary {
+                padding: var(--spacing-scale-3x) var(--spacing-scale-6x);
+                font-size: var(--font-size-scale-down-01);
+            }
+            
+            .resultado-consulta {
+                padding: var(--spacing-scale-6x);
+            }
+            
+            .resultado-consulta h3 {
+                font-size: 1.125rem;
+            }
+            
+            .dados-empresa .label {
+                min-width: 100px;
+                font-size: var(--font-size-scale-down-01);
+            }
+            
+            .dados-empresa .valor {
+                font-size: var(--font-size-scale-down-01);
+            }
+            
+            .pendencia-item {
+                padding: var(--spacing-scale-3x);
+                font-size: var(--font-size-scale-down-02);
+            }
+            
+            .info-section h2 {
+                font-size: 1.3rem;
+            }
+            
             .cards-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .info-card {
+                padding: var(--spacing-scale-5x);
+            }
+            
+            .info-card .icon {
+                font-size: 2rem;
+            }
+            
+            .info-card h3 {
+                font-size: 1rem;
+            }
+            
+            .info-card p {
+                font-size: var(--font-size-scale-down-02);
+            }
+            
+            .faq-question {
+                padding: var(--spacing-scale-4x);
+                font-size: var(--font-size-scale-down-01);
+            }
+            
+            .faq-answer {
+                padding: 0 var(--spacing-scale-4x);
+            }
+            
+            .faq-answer.active {
+                padding: var(--spacing-scale-4x);
+            }
+            
+            .faq-answer p {
+                font-size: var(--font-size-scale-down-02);
+            }
+        }
+        
+        /* Ajustes para telas muito pequenas (ex: 320px de largura) */
+        @media (max-width: 480px) {
+            .section-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-header .subtitle {
+                font-size: var(--font-size-scale-down-01);
+            }
+            
+            .consulta-card h2 {
+                font-size: 1.3rem;
+            }
+            
+            .dados-empresa .label {
+                min-width: 80px;
             }
         }
     </style>
