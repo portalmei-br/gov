@@ -248,442 +248,160 @@
   </script>
   
   <style>
-    /* DESIGN MELHORADO PARA CONSULTA CNPJ */
     .consulta-cnpj {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 40px;
-        border-radius: 20px;
+        background: #f8f9fa;
+        padding: 30px;
+        border-radius: 8px;
         margin-bottom: 30px;
-        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
-        position: relative;
-        overflow: hidden;
-        animation: slideInUp 0.8s ease-out;
-    }
-    
-    .consulta-cnpj::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-        transform: rotate(45deg);
-        animation: shimmer 3s infinite;
-    }
-    
-    @keyframes shimmer {
-        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-    }
-    
-    @keyframes slideInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .consulta-cnpj h3 {
-        color: white;
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 28px;
-        font-weight: 700;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        position: relative;
-        z-index: 2;
     }
     
     .form-group {
-        margin-bottom: 25px;
-        position: relative;
-        z-index: 2;
+        margin-bottom: 20px;
     }
     
     .form-group label {
         display: block;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
         font-weight: 600;
-        color: white;
-        font-size: 16px;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    }
-    
-    .input-wrapper {
-        position: relative;
-        display: flex;
-        align-items: center;
-    }
-    
-    .input-icon {
-        position: absolute;
-        left: 15px;
-        color: #667eea;
-        font-size: 18px;
-        z-index: 3;
+        color: #333;
     }
     
     .form-control {
         width: 100%;
-        padding: 18px 20px 18px 50px;
-        border: 3px solid rgba(255,255,255,0.2);
-        border-radius: 15px;
-        font-size: 18px;
-        font-weight: 500;
-        background: rgba(255,255,255,0.95);
-        backdrop-filter: blur(10px);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        padding: 12px 15px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s;
     }
     
     .form-control:focus {
         outline: none;
-        border-color: rgba(255,255,255,0.8);
-        background: white;
-        box-shadow: 0 0 0 4px rgba(255,255,255,0.2), 0 12px 40px rgba(0,0,0,0.15);
-        transform: translateY(-2px);
-    }
-    
-    .form-control::placeholder {
-        color: #999;
-        font-weight: 400;
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
     }
     
     .btn-consultar {
-        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        background: #28a745;
         color: white;
-        padding: 18px 40px;
+        padding: 12px 30px;
         border: none;
-        border-radius: 15px;
-        font-size: 18px;
-        font-weight: 700;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
-        position: relative;
-        overflow: hidden;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        width: 100%;
-        margin-top: 10px;
-    }
-    
-    .btn-consultar::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: left 0.5s;
-    }
-    
-    .btn-consultar:hover::before {
-        left: 100%;
+        transition: background-color 0.3s;
     }
     
     .btn-consultar:hover {
-        background: linear-gradient(135deg, #218838 0%, #1ea085 100%);
-        box-shadow: 0 12px 35px rgba(40, 167, 69, 0.6);
-        transform: translateY(-3px);
-    }
-    
-    .btn-consultar:active {
-        transform: translateY(-1px);
-        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        background: #218838;
     }
     
     .loading-consulta {
         text-align: center;
-        padding: 40px;
+        padding: 20px;
         display: none;
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        margin-top: 20px;
-        animation: fadeIn 0.5s ease-out;
     }
     
-    @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.9); }
-        to { opacity: 1; transform: scale(1); }
-    }
-    
-    .loading-consulta .spinner {
-        width: 60px;
-        height: 60px;
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #667eea;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 20px;
-    }
-    
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    
-    .loading-consulta p {
-        color: #667eea;
-        font-size: 18px;
-        font-weight: 600;
-        margin: 0;
+    .loading-consulta img {
+        width: 50px;
+        height: 50px;
     }
     
     .resultado-consulta {
         display: none;
         background: white;
-        border-radius: 20px;
-        padding: 35px;
-        margin-top: 25px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-        animation: slideInUp 0.6s ease-out;
-        border: 1px solid rgba(102, 126, 234, 0.1);
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 25px;
+        margin-top: 20px;
     }
     
     .empresa-info {
-        background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%);
-        padding: 30px;
-        border-radius: 15px;
-        margin-bottom: 25px;
-        border: 2px solid rgba(102, 126, 234, 0.1);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .empresa-info::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #667eea, #764ba2);
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 6px;
+        margin-bottom: 20px;
     }
     
     .empresa-info h4 {
-        color: #667eea;
-        margin-bottom: 20px;
-        font-size: 24px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .empresa-info h4::before {
-        content: '\f1ad';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        font-size: 20px;
+        color: #007bff;
+        margin-bottom: 15px;
     }
     
     .info-row {
         display: flex;
-        margin-bottom: 12px;
-        padding: 8px 0;
-        border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-    }
-    
-    .info-row:last-child {
-        border-bottom: none;
+        margin-bottom: 8px;
     }
     
     .info-label {
-        font-weight: 700;
-        min-width: 140px;
+        font-weight: 600;
+        min-width: 120px;
         color: #555;
-        font-size: 15px;
     }
     
     .info-value {
         color: #333;
-        font-weight: 500;
-        font-size: 15px;
     }
     
     .pendencias-section h4 {
         color: #dc3545;
-        margin-bottom: 20px;
-        font-size: 22px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .pendencias-section h4::before {
-        content: '\f071';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        font-size: 18px;
+        margin-bottom: 15px;
     }
     
     .pendencia-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px;
-        border: 2px solid #ffe6e6;
-        border-radius: 12px;
-        margin-bottom: 15px;
-        background: linear-gradient(135deg, #fff5f5 0%, #ffeaea 100%);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .pendencia-item::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 4px;
-        background: linear-gradient(180deg, #dc3545, #c82333);
-    }
-    
-    .pendencia-item:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(220, 53, 69, 0.15);
-        border-color: #ffcccc;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        background: #fff;
     }
     
     .pendencia-info strong {
         display: block;
-        color: #dc3545;
-        margin-bottom: 8px;
-        font-size: 16px;
-        font-weight: 700;
+        color: #333;
+        margin-bottom: 5px;
     }
     
     .pendencia-info span {
         display: block;
         color: #666;
         font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 3px;
     }
     
     .badge {
-        padding: 8px 16px;
-        border-radius: 20px;
+        padding: 5px 10px;
+        border-radius: 4px;
         font-size: 12px;
-        font-weight: 700;
+        font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
     .badge-warning {
-        background: linear-gradient(135deg, #ffc107 0%, #ff8f00 100%);
-        color: white;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        background: #ffc107;
+        color: #212529;
     }
     
     .badge-success {
-        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        background: #28a745;
         color: white;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
     
     .sem-pendencias {
         text-align: center;
-        padding: 50px 30px;
+        padding: 30px;
         color: #28a745;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 600;
-        background: linear-gradient(135deg, #f0fff4 0%, #e8f5e8 100%);
-        border-radius: 15px;
-        border: 2px solid #d4edda;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .sem-pendencias::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #28a745, #20c997);
     }
     
     .sem-pendencias i {
-        font-size: 64px;
-        margin-bottom: 20px;
+        font-size: 48px;
+        margin-bottom: 15px;
         display: block;
-        color: #28a745;
-        text-shadow: 0 2px 4px rgba(40, 167, 69, 0.2);
-        animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-    }
-    
-    .sem-pendencias p {
-        margin: 0;
-        font-size: 18px;
-    }
-    
-    /* Responsividade */
-    @media (max-width: 768px) {
-        .consulta-cnpj {
-            padding: 25px;
-            border-radius: 15px;
-        }
-        
-        .consulta-cnpj h3 {
-            font-size: 24px;
-        }
-        
-        .form-control {
-            padding: 15px 18px 15px 45px;
-            font-size: 16px;
-        }
-        
-        .btn-consultar {
-            padding: 15px 30px;
-            font-size: 16px;
-        }
-        
-        .resultado-consulta {
-            padding: 25px;
-        }
-        
-        .empresa-info {
-            padding: 20px;
-        }
-        
-        .info-row {
-            flex-direction: column;
-            gap: 5px;
-        }
-        
-        .info-label {
-            min-width: auto;
-            font-size: 14px;
-        }
-        
-        .info-value {
-            font-size: 14px;
-        }
-        
-        .pendencia-item {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 15px;
-        }
     }
   </style>
 </head>
@@ -716,154 +434,213 @@
                         </div>
                         <div class="wrapper svelte-ippqk1">
                             <div class="button-badge svelte-ippqk1">
-                                <button class="br-button circle small false svelte-ippqk1" type="button" aria-label="Acesso à conta gov.br"><i class="fas fa-user" aria-hidden="true"></i></button>
+                                <button class="br-button circle small false false cookies svelte-ippqk1" type="button" aria-label="Cookies"><i class="fas fa-cookie-bite svelte-ippqk1" aria-hidden="true"></i></button> 
+                            </div>
+                        </div>
+                        <div class="wrapper svelte-ippqk1">
+                            <div class="button-badge svelte-ippqk1">
+                                <button class="br-button circle small false false contrast-button svelte-ippqk1" type="button" aria-label="Alto contraste"><i class="fas fa-adjust svelte-ippqk1" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <div class="wrapper svelte-ippqk1">
+                            <div class="button-badge svelte-ippqk1">
+                                <button class="br-button circle small false false slideBarAnonima svelte-ippqk1" type="button" aria-label="Sistemas."><i class="fas fa-th svelte-ippqk1" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper-login">
+                        <div class="header-sign-in">
+                            <div class="cta-wrapper svelte-7keokj">
+                                <button class="br-sign-in primary ml-2 false svelte-7keokj d-none d-lg-block d-xl-block" type="button"><i class="fas fa-user" aria-hidden="true"></i> Entrar com gov.br</button>
+                                <button class="br-sign-in primary ml-2 false svelte-7keokj d-block d-lg-none d-xl-none" type="button"><i class="fas fa-user" aria-hidden="true"></i> Entrar</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="header-bottom">
-                <div class="header-menu">
-                    <div class="header-menu-trigger">
-                        <button class="br-button small circle" type="button" aria-label="Menu do site"><i class="fas fa-bars" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="header-info">
-                        <div class="header-title">Portal de Serviços de Trânsito</div>
-                        <div class="header-subtitle">Governo Federal</div>
-                    </div>
-                </div>
-                <div class="header-search">
-                    <div class="br-input has-icon">
-                        <label for="searchbox-71842" class="sr-only">Buscar no portal</label>
-                        <input id="searchbox-71842" type="text" placeholder="Buscar no portal">
-                        <button class="br-button circle small" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i></button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
+    <div class="main">
+        <div class="header-wrapper container">
+            <div class="site-name-wrapper">
+                <a class="ico-navegacao toggle-main-navigation" href="javascript:void(0)">
+                    <span class="sr-only">Abrir menu principal de navegação</span>
+                    <span class="fa fa-bars" aria-hidden="true"></span>
+                    <span class="fa fa-times" aria-hidden="true"></span>
+                </a>
+                <div class="site-name">
+                    <a href="javascript:void(0)">Portal de Serviços de Trânsito</a>
+                </div>
+            </div>
+            <div class="govbr-busca-header">
+                <div id="govbr-busca-input">
+                    <div class="aa-Autocomplete" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="searchtext-label">
+                        <form class="aa-Form" action="" novalidate="" role="search"><div class="aa-InputWrapperPrefix"><div class="aa-LoadingIndicator" hidden=""><svg class="aa-LoadingIcon" viewBox="0 0 100 100" width="20" height="20"><circle cx="50" cy="50" fill="none" r="35" stroke="currentColor" stroke-dasharray="164.93361431346415 56.97787143782138" stroke-width="6"><animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;90 50 50;180 50 50;360 50 50" keyTimes="0;0.40;0.65;1"></animateTransform></circle></svg>
+                    </div>
+                    <button class="aa-SubmitButton" type="submit" title="Submit">
+                        <i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                    <div class="aa-InputWrapper">
+                        <input class="aa-Input" aria-autocomplete="both" aria-labelledby="searchtext-label" id="searchtext-input" autocomplete="off" autocorrect="off" autocapitalize="none" enterkeyhint="search" spellcheck="false" placeholder="O que você procura?" maxlength="512" type="search">
+                    </div>
+                    <div class="aa-InputWrapperSuffix">
+                        <button class="aa-ClearButton" type="reset" title="Clear" hidden=""><svg class="aa-ClearIcon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <button type="button" class="govbr-busca-toggle" aria-label="Fechar busca"><span class="fas fa-search"></span></button>
+    </div>
+            </div>
+        </div>
 </header>
 
-<main id="main-content">
+<div id="loading-form">
+    <div class="image">
+        <img src="images/loading.svg" alt="Carregando">
+    </div>
+</div>
+<div id="portal-breadcrumbs-wrapper">
+    <nav id="breadcrumbs" class="container" aria-label="Histórico de navegação (Breadcrumbs)">
+        <div class="content">
+            <span class="sr-only">Voc está aqui:</span>
+            <span class="home">
+                <a href="javascript:void(0)">
+                    <span class="fas fa-home" aria-hidden="true"></span>
+                    <span class="sr-only">Página Inicial</span>
+                </a>
+            </span>
+            <span dir="ltr" id="breadcrumbs-1">
+                <a href="javascript:void(0)">DETRAN</a>
+            </span>
+        </div>
+    </nav>
+</div>
+<section id="inicio">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <!-- SEÇÃO DE CONSULTA CNPJ COM DESIGN MELHORADO -->
-                <div class="consulta-cnpj">
-                    <h3><i class="fas fa-search"></i> Consulta de Pendências por CNPJ</h3>
-                    <div class="form-group">
-                        <label for="cnpj-input">Digite o CNPJ da empresa:</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-building input-icon"></i>
-                            <input type="text" id="cnpj-input" class="form-control" placeholder="XX.XXX.XXX/XXXX-XX" maxlength="18">
+        <div class="servicos">
+            <h2>Consulta de Pendências</h2>
+            <div class="card-servicos">
+                <div class="content-card">
+                    <div class="consulta-cnpj">
+                        <h3><i class="fas fa-search"></i> Consultar Pendências por CNPJ</h3>
+                        <p>Digite o CNPJ da empresa para consultar pendências de trânsito e documentação.</p>
+                        
+                        <div class="form-group">
+                            <label for="cnpj-input">CNPJ da Empresa:</label>
+                            <input type="text" id="cnpj-input" class="form-control" placeholder="00.000.000/0000-00" maxlength="18">
                         </div>
-                    </div>
-                    <button id="consultar-btn" class="btn-consultar">
-                        <i class="fas fa-search"></i> Consultar Pendências
-                    </button>
-                </div>
-
-                <!-- LOADING COM DESIGN MELHORADO -->
-                <div id="loading-consulta" class="loading-consulta">
-                    <div class="spinner"></div>
-                    <p>Consultando pendências no sistema...</p>
-                </div>
-
-                <!-- RESULTADO COM DESIGN MELHORADO -->
-                <div id="resultado-consulta" class="resultado-consulta">
-                    <div class="empresa-info">
-                        <h4>Informações da Empresa</h4>
-                        <div class="info-row">
-                            <span class="info-label">Razão Social:</span>
-                            <span id="empresa-razao" class="info-value"></span>
+                        
+                        <button type="button" id="consultar-btn" class="btn-consultar">
+                            <i class="fas fa-search"></i> Consultar Agora
+                        </button>
+                        
+                        <div id="loading-consulta" class="loading-consulta">
+                            <img src="images/loading.svg" alt="Carregando">
+                            <p>Consultando pendências...</p>
                         </div>
-                        <div class="info-row">
-                            <span class="info-label">Nome Fantasia:</span>
-                            <span id="empresa-fantasia" class="info-value"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">CNPJ:</span>
-                            <span id="empresa-cnpj" class="info-value"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Situação:</span>
-                            <span id="empresa-situacao" class="info-value"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Data de Abertura:</span>
-                            <span id="empresa-abertura" class="info-value"></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">Endereço:</span>
-                            <span id="empresa-endereco" class="info-value"></span>
-                        </div>
-                    </div>
-
-                    <div class="pendencias-section">
-                        <h4>Pendências Encontradas</h4>
-                        <div id="pendencias-lista"></div>
-                        <div id="sem-pendencias" class="sem-pendencias">
-                            <i class="fas fa-check-circle"></i>
-                            <p>Nenhuma pendência encontrada para este CNPJ.</p>
+                        
+                        <div id="resultado-consulta" class="resultado-consulta">
+                            <div class="empresa-info">
+                                <h4><i class="fas fa-building"></i> Informações da Empresa</h4>
+                                <div class="info-row">
+                                    <span class="info-label">Razão Social:</span>
+                                    <span class="info-value" id="empresa-razao">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Nome Fantasia:</span>
+                                    <span class="info-value" id="empresa-fantasia">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">CNPJ:</span>
+                                    <span class="info-value" id="empresa-cnpj">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Situação:</span>
+                                    <span class="info-value" id="empresa-situacao">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Data de Abertura:</span>
+                                    <span class="info-value" id="empresa-abertura">-</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Endereço:</span>
+                                    <span class="info-value" id="empresa-endereco">-</span>
+                                </div>
+                            </div>
+                            
+                            <div class="pendencias-section">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Pendências Encontradas</h4>
+                                <div id="pendencias-lista"></div>
+                                <div id="sem-pendencias" class="sem-pendencias" style="display: none;">
+                                    <i class="fas fa-check-circle"></i>
+                                    Nenhuma pendência encontrada para esta empresa.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="como-solicitar">
+            <h2>Como funciona a consulta?</h2>
+            <div class="cards-como d-flex align-items-stretch justify-content-between flex-wrap">
+                <div class="card-como">
+                    <div class="content-card">
+                        <div class="icone"><i class="fa-solid fa-edit"></i></div>
+                        <h3>Digite o CNPJ</h3>
+                        <p>Insira o CNPJ da empresa no campo acima. O sistema aplicará automaticamente a formatação correta.</p>
+                    </div>
+                </div>
+                <div class="card-como">
+                    <div class="content-card">
+                        <div class="icone"><i class="fa-solid fa-search"></i></div>
+                        <h3>Consulte as pendências</h3>
+                        <p>Clique em "Consultar Agora" para verificar se existem pendências de trânsito para a empresa.</p>
+                    </div>
+                </div>
+                <div class="card-como">
+                    <div class="content-card">
+                        <div class="icone"><i class="fa-solid fa-file-alt"></i></div>
+                        <h3>Visualize os resultados</h3>
+                        <p>Veja as informações da empresa e todas as pendências encontradas, com valores e datas de vencimento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</main>
+</section>
 
 <footer id="site-footer">
     <div class="container">
-        <div class="br-footer">
-            <div class="footer-content">
-                <div class="footer-info">
-                    <div class="footer-logo">
-                        <img src="images/logo.png" alt="Logomarca GovBR">
-                    </div>
-                    <div class="footer-text">
-                        <p>Portal de Serviços de Trânsito</p>
-                        <p>Governo Federal do Brasil</p>
-                    </div>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Serviços</h4>
-                        <ul>
-                            <li><a href="#">Carteira de Identidade</a></li>
-                            <li><a href="#">Carteira Nacional de Habilitação</a></li>
-                            <li><a href="#">Consulta de Pendências</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Informações</h4>
-                        <ul>
-                            <li><a href="#">Sobre o Portal</a></li>
-                            <li><a href="#">Termos de Uso</a></li>
-                            <li><a href="#">Política de Privacidade</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Contato</h4>
-                        <ul>
-                            <li><a href="#">Fale Conosco</a></li>
-                            <li><a href="#">Ouvidoria</a></li>
-                            <li><a href="#">Suporte Técnico</a></li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Portal de Serviços</h4>
+                <p>Acesso rápido e seguro aos serviços de trânsito do governo federal.</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Governo Federal. Todos os direitos reservados.</p>
+            <div class="footer-section">
+                <h4>Links Úteis</h4>
+                <ul>
+                    <li><a href="#">Órgãos do Governo</a></li>
+                    <li><a href="#">Acesso à Informação</a></li>
+                    <li><a href="#">Legislação</a></li>
+                    <li><a href="#">Acessibilidade</a></li>
+                </ul>
             </div>
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <p>Central de Atendimento: 0800 123 4567</p>
+                <p>Horário: Segunda a Sexta, 8h às 18h</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Portal de Serviços de Trânsito - Governo Federal</p>
         </div>
     </div>
 </footer>
 
-<!-- Scripts -->
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/toastify.min.js"></script>
-
 </body>
 </html>
 
