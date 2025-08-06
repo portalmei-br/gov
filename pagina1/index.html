@@ -1011,3 +1011,2584 @@ document.addEventListener("click", function(event) {
     }  
 });  
 </script>
+
+<style>
+    /* Adicione o conteúdo do estilo aqui */
+    /* Estilos Gerais */
+    body {
+        background-color: #f3f5f9;
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .checkout-wrapper {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f3f5f9;
+        padding-bottom: 60px;
+    }
+
+    .checkout-header {
+        background-color: #ffffff;
+        width: 100%;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid #d3dce6;
+    }
+
+    .header-content {
+        width: 100%;
+        max-width: 420px;
+        display: flex;
+        align-items: center;
+    }
+
+    .header-logo {
+        height: 30px;
+    }
+
+    .payment-amount-block {
+        background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+        padding: 12px 20px;
+        text-align: center;
+        color: #ffffff;
+        width: 100%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .payment-amount-block .amount-label {
+        font-size: 13px;
+        margin-bottom: 0;
+        opacity: 0.9;
+        font-weight: 500;
+    }
+
+    .payment-amount-block .amount-value {
+        font-size: 26px;
+        margin-top: 0;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .payment-amount-block .subtle-line {
+        width: 80%;
+        height: 2px;
+        background-color: rgba(255, 255, 255, 0.4);
+        border-radius: 1px;
+        margin-top: 5px;
+    }
+
+    .payment-title {
+        font-size: 15px;
+        font-weight: 550;
+        color: #666666;
+        margin-bottom: 15px;
+        text-align: left;
+        width: 100%;
+    }
+
+    .order-details {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .accordion-toggle {
+        background: #1e3a8a;
+        color: #ffffff;
+        padding: 10px;
+        width: 100%;
+        text-align: center;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .accordion-toggle:hover {
+        background: #1e3a8a;
+    }
+
+    .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        background: linear-gradient(135deg, #f9fafb, #e3e8ff);
+        padding: 0 10px;
+        font-size: 14px;
+        color: #333;
+        margin-top: 5px;
+        border-radius: 8px;
+        border: 1px solid #d3dce6;
+    }
+
+    .accordion-content.open {
+        max-height: 200px;
+        padding: 10px;
+    }
+
+    .checkout-block {
+        width: 95%;
+        max-width: 420px;
+        background: #ffffff;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        padding: 25px 20px;
+        position: relative;
+        z-index: 2;
+        top: -18px;
+        border-radius: 10px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group.payment-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 15px;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease, transform 0.2s ease;
+        cursor: pointer;
+    }
+
+    .form-group.payment-option:hover {
+        border-color: #3b82f6;
+        background-color: #f0f8ff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: scale(1.02);
+    }
+
+    .form-group.payment-option input[type="radio"] {
+        display: none;
+    }
+
+    .form-group.payment-option .option-content {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 16px;
+        color: #333;
+        font-weight: 500;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .form-group.payment-option .option-arrow {
+        color: #3b82f6;
+        font-size: 14px;
+        transition: transform 0.3s ease, color 0.3s ease;
+        opacity: 0.5;
+    }
+
+    .form-group.payment-option input[type="radio"]:checked + label .option-arrow {
+        transform: translateX(5px);
+        opacity: 1;
+        font-size: 16px;
+        color: #1e3a8a;
+    }
+
+    .form-group.payment-option i {
+        font-size: 18px;
+        color: #3b82f6;
+    }
+
+    .security-message {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: #6c757d;
+        margin-top: 15px;
+        background-color: #e9ecef;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid #e0e3e7;
+    }
+
+    .security-message i {
+        color: #1e3a8a;
+        font-size: 16px;
+    }
+
+    /* Botão fixo na etapa inicial */
+    .fixed-footer {
+        background: #ffffff;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+        padding: 15px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+    }
+
+    .fixed-footer .continue-button {
+        background: #1e3a8a;
+        color: #ffffff;
+        padding: 14px 0;
+        border-radius: 8px;
+        border: none;
+        font-size: 16px;
+        font-weight: 600;
+        width: 100%;
+        max-width: 420px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .fixed-footer .continue-button:disabled {
+        background-color: #cccccc;
+        color: #777777;
+        cursor: not-allowed;
+    }
+
+    /* Estilo do botão "Confirmar Pagamento" no formulário de cartão */
+    .card-payment-form .continue-button {
+        background: #1e3a8a;
+        color: #ffffff;
+        padding: 12px 0;
+        border-radius: 8px;
+        border: none;
+        font-size: 16px;
+        font-weight: 600;
+        width: 100%;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        margin-top: 20px;
+    }
+
+    .card-payment-form .continue-button:hover {
+        background: #3b82f6;
+        box-shadow: 0 6px 15px rgba(30, 58, 138, 0.3);
+    }
+
+    .input-field::placeholder {
+        color: #b0b8c1; /* Cor ainda mais suave e discreta */
+        font-weight: 300; /* Fonte mais leve para um visual elegante */
+        font-size: 14px; /* Ajuste do tamanho para se alinhar melhor ao texto do campo */
+        font-family: 'Poppins', sans-serif; /* Consistência de fonte */
+        letter-spacing: 0.5px; /* Leve espaçamento para melhor legibilidade */
+        opacity: 1; /* Mantém a cor definida sem transparência */
+    }
+
+    /* CSS para os campos de formulário de pagamento */
+    .input-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .input-icon i {
+        position: absolute;
+        left: 12px;
+        color: #1e3a8a;
+        font-size: 14px;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 12px 12px 12px 36px;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        font-size: 15px;
+        color: #333;
+        transition: border-color 0.3s ease;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .input-field:focus {
+        border-color: #3b82f6;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .form-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .form-group.half {
+        width: 48%;
+    }
+
+    label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    h2 {
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* CSS para a barra de progresso dos métodos de pagamento */
+    .payment-method-progress {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        padding: 5px;
+        background-color: #e3eaf4;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .payment-step {
+        flex: 1;
+        text-align: center;
+        padding: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #6b7280;
+        border-radius: 6px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .payment-step.active {
+        background-color: #1e3a8a;
+        color: #ffffff;
+    }
+.pix-info {
+    margin-top: 15px;
+    background-color: #f5faff;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #1e3a8a;
+    border-bottom: 0.1px solid #666666;
+    position: relative;
+    overflow: hidden;
+}
+
+.pix-info p {
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 12px;
+    font-size: 15px;      
+}
+
+.pix-info ul {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.pix-info li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.pix-info li i {
+    color: #1e3a8a;
+    font-size: 16px;
+}
+
+.pix-info hr {
+    border: none;
+    border-top: 1px solid #e0e7ff;
+    margin: 8px 0;
+    opacity: 0.8;
+}
+
+.pix-option-dropdown {
+        margin-top: 20px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .dropdown {
+        display: flex;
+        align-items: center; /* Alinha verticalmente os itens */
+        justify-content: flex-start; /* Alinha horizontalmente os itens à esquerda */
+        gap: 10px; /* Espaço entre o ícone e o texto */
+        padding: 6px 10px; /* Ajuste interno para espaçamento */
+        width: 180px; /* Define a largura fixa do dropdown */
+        background-color: #f9fbff; /* Cor de fundo suave */
+        border: 1px solid #d1d5db; /* Borda cinza suave */
+        border-radius: 6px; /* Bordas arredondadas */
+        font-size: 14px; /* Tamanho do texto */
+        color: #1e3a8a; /* Cor do texto */
+        font-weight: 500; /* Peso do texto */
+        cursor: pointer; /* Cursor de interação */
+        box-shadow: 0 2px 4px rgba(30, 58, 138, 0.1); /* Sombra leve */
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .dropdown:hover {
+        background-color: #eef2ff; /* Fundo ao passar o mouse */
+        border-color: #3b82f6; /* Borda ao passar o mouse */
+    }
+
+    /* Ícone de Check */
+    .check-icon {
+        display: inline-block;
+        width: 16px; /* Largura do ícone */
+        height: 16px; /* Altura do ícone */
+        background-color: #2563eb; /* Cor de fundo azul */
+        border-radius: 4px; /* Bordas arredondadas */
+        position: relative; /* Para centralizar o ícone de check */
+    }
+
+    .check-icon::after {
+        content: '\2714'; /* Ícone de check */
+        font-size: 12px; /* Tamanho do ícone */
+        color: #ffffff; /* Cor do ícone */
+        position: absolute;
+        top: 50%; /* Centraliza verticalmente */
+        left: 50%; /* Centraliza horizontalmente */
+        transform: translate(-50%, -50%); /* Ajusta o posicionamento */
+    }
+
+    /* Estilo do texto */
+    .dropdown span {
+        text-align: left; /* Alinha o texto à esquerda */
+        line-height: 1; /* Linha mais compacta */
+        flex-grow: 1; /* Expande o texto para ocupar o espaço restante */
+    }
+
+/* Estilos exclusivos para o bloco do código Pix */
+.codigo-pix-container {
+    background-color: #f0f8ff; /* Fundo azul suave */
+    border: 2px solid #00a3e0; /* Borda azul vibrante */
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Título do código Pix */
+.codigo-pix-container h3 {
+    color: #0025d3;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Caixa do input e botão */
+.codigo-pix-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 8px;
+    gap: 8px;
+}
+
+/* Input do código Pix */
+.codigo-pix-input {
+    width: 100%;
+    border: none;
+    background: none;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    outline: none;
+}
+
+/* Botão de copiar */
+.codigo-pix-btn {
+    background-color: #0025d3;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.codigo-pix-btn i {
+    font-size: 14px;
+}
+
+.codigo-pix-btn:hover {
+    background-color: #00a3e0;
+}
+
+.pix-instructions-container {
+    margin-top: -270px; /* Ajuste a distância entre blocos */
+    margin-bottom: 90px; /* Espaço inferior */
+    background-color: transparent; /* Fundo transparente */
+    padding: 0 15px; /* Reduz o espaçamento lateral */
+    font-family: 'Poppins', sans-serif; /* Fonte profissional */
+    color: #374151; /* Texto em cinza escuro */
+    font-size: 13px; /* Reduz o tamanho do texto */
+    line-height: 2.6; /* Espaçamento entre linhas mais compacto */
+    max-width: 340px; /* Largura ainda mais reduzida */
+    margin-left: auto; /* Centraliza horizontalmente */
+    margin-right: auto; /* Centraliza horizontalmente */
+    position: relative; /* Necessário para pseudo-elementos */
+    overflow: hidden; /* Garante que os efeitos não ultrapassem o bloco */
+}
+
+.pix-instructions-container::before {
+    content: ""; /* Necessário para o pseudo-elemento */
+    position: absolute;
+    top: -5%; /* Estende ligeiramente acima */
+    left: 0;
+    bottom: -5%; /* Estende ligeiramente abaixo */
+    width: 3px; /* Largura da borda */
+    background: linear-gradient(
+        to bottom,
+        transparent 0%, /* Transição suave no topo */
+        #2563eb 25%, /* Cor sólida no meio */
+        #2563eb 75%, /* Cor sólida no meio */
+        transparent 100% /* Transição suave na base */
+    );
+    animation: border-effect 2s infinite; /* Animação infinita */
+}
+
+@keyframes border-effect {
+    0% {
+        background-position: 0% 0%; /* Início do gradiente */
+    }
+    100% {
+        background-position: 0% 100%; /* Movimenta o gradiente */
+    }
+}
+
+.pix-instructions-container h3 {
+    font-size: 16px; /* Tamanho ajustado para o título */
+    font-weight: 600; /* Negrito moderado */
+    color: #1e3a8a; /* Azul profissional */
+    margin-bottom: 12px; /* Espaçamento inferior ajustado */
+    text-align: left; /* Alinha título à esquerda */
+}
+
+.pix-instructions-container ul {
+    list-style: none; /* Remove marcadores padrão */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margens */
+}
+
+.pix-instructions-container li {
+    display: flex; /* Ícone e texto alinhados lado a lado */
+    align-items: center; /* Centraliza verticalmente */
+    padding: 6px 0; /* Reduz o espaçamento interno vertical */
+    color: #4b5563; /* Cinza médio para o texto */
+    font-size: 13px; /* Texto compacto e legível */
+    border-bottom: 1px solid #e5e7eb; /* Linha discreta separadora */
+}
+
+.pix-instructions-container li:last-child {
+    border-bottom: none; /* Remove linha do último item */
+}
+
+.pix-instructions-container li i {
+    color: #2563eb; /* Azul para ícones */
+    font-size: 16px; /* Reduz o tamanho dos ícones */
+    margin-right: 8px; /* Espaçamento entre ícone e texto reduzido */
+}
+
+.pix-instructions-container li span {
+    font-weight: 500; /* Negrito leve */
+    color: #374151; /* Cinza escuro para texto */
+}
+
+.pix-instructions-container li:hover {
+    background-color: #f3f4f6; /* Fundo cinza claro ao passar o mouse */
+    border-radius: 4px; /* Suavidade adicional ao hover */
+    cursor: pointer; /* Indica interatividade */
+}
+
+.pix-instructions-container li:hover i {
+    color: #1e3a8a; /* Destaque do ícone ao passar o mouse */
+}
+
+.pix-instructions-container li:hover span {
+    color: #1e3a8a; /* Destaque do texto ao passar o mouse */
+}
+
+/* Adicione este trecho ao final do bloco CSS existente */
+.floating-decorative-line {
+    position: absolute; /* Permite posicionar livremente */
+    top: 50%; /* Ajuste vertical */
+    left: 50%; /* Ajuste horizontal */
+    transform: translate(-50%, -50%); /* Centraliza baseado no ponto inicial */
+    width: 80%; /* Ajuste a largura conforme necessário */
+    height: 2px; /* Altura da linha */
+    background: linear-gradient(90deg, #1e3a8a, #3b82f6); /* Gradiente */
+    border-radius: 1px; /* Bordas arredondadas */
+    z-index: 999; /* Garante que esteja sobre outros elementos */
+}
+
+.timer-container {
+    position: absolute;                     /* Linha fixa na página */
+    top: 413px;                             /* Ajuste da margem superior */
+    left: 50%;                              /* Centraliza horizontalmente */
+    transform: translateX(-50%);            /* Ajusta o posicionamento */
+    width: 0;                               /* Começa com a largura em 0 */
+    height: 12px;                           /* Altura mais perceptível */
+    background: linear-gradient(90deg, #1e3a8a, #2563eb, #3b82f6, #4f46e5); /* Gradiente começando com azul mais escuro */
+    border-radius: 20px;                    /* Cantos arredondados suaves */
+    overflow: hidden;                       /* Esconde partes externas */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5); /* Sombra suave e profunda */
+    z-index: 1000;                          /* Sempre acima dos outros elementos */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Borda sutil e elegante */
+    opacity: 0;                             /* Começa invisível */
+    animation: lineAppear 1s ease-out forwards, movingGradient 6s linear infinite; /* Animação suave e contínua */
+}
+
+@keyframes lineAppear {
+    0% {
+        width: 0;                           /* Início sem largura */
+        opacity: 0;                         /* Invisível */
+    }
+    60% {
+        width: 280px;                       /* Crescimento acelerado */
+        opacity: 0.9;                       /* Quase totalmente visível */
+    }
+    100% {
+        width: 300px;                       /* Largura final */
+        opacity: 1;                         /* Totalmente visível */
+    }
+}
+
+/* Gradiente dinâmico e suave */
+.timer-container::before {
+    content: '';                            /* Elemento decorativo */
+    position: absolute;
+    width: 100%;                            /* Ocupa toda a largura */
+    height: 100%;                           /* Ocupa toda a altura */
+    background: linear-gradient(45deg, #1e3a8a, #2563eb, #3b82f6, #4f46e5); /* Gradiente suave começando com azul escuro */
+    background-size: 400% 400%;             /* Aumenta o tamanho para criar movimento fluido */
+    animation: movingGradient 6s linear infinite; /* Animação do gradiente */
+}
+
+/* Animação de gradiente fluido e contínuo */
+@keyframes movingGradient {
+    0% {
+        background-position: 0% 0%;
+    }
+    25% {
+        background-position: 50% 50%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 50% 50%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+/* Brilho suave e moderno */
+.timer-container::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+    top: 0;
+    left: 0;
+    border-radius: 20px;
+    animation: shimmer 4s ease-in-out infinite; /* Acelera o brilho para ser mais perceptível */
+    opacity: 0.7; /* Aumenta a visibilidade do brilho */
+}
+
+/* Animação de brilho com leve escala */
+@keyframes shimmer {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+}
+
+/* Estilo do modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fundo escuro com transparência */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease; /* Animação suave */
+}
+
+.modal-content {
+    background: #ffffff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    width: 340px;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Cabeçalho de segurança */
+.security-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #1e3a8a;
+}
+
+.security-header i {
+    font-size: 24px;
+    color: #1e3a8a;
+}
+
+/* Texto descritivo */
+.modal-content p {
+    font-size: 14px;
+    color: #555555;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* Campos de senha */
+.password-fields {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.digit-field {
+    width: 55px;
+    height: 55px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.digit-field:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Rodapé de segurança */
+.security-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: #6c757d;
+    text-align: center;
+}
+
+.security-footer i {
+    font-size: 16px;
+    color: #3b82f6;
+}
+
+/* Botões */
+button.continue-button {
+    background: #1e3a8a;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2);
+}
+
+button.continue-button:hover {
+    background: #3b82f6;
+    box-shadow: 0 6px 15px rgba(30, 58, 138, 0.3);
+}
+
+button.cancel-button {
+    background: #e5e7eb;
+    color: #333333;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button.cancel-button:hover {
+    background: #d1d5db;
+    color: #111827;
+}
+
+/* Animação de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Container principal do spinner */
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    color: #ffffff;
+}
+
+/* Estrutura do spinner */
+.spinner {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    position: relative;
+    animation: spin 1.5s linear infinite;
+}
+
+/* Camada animada do spinner */
+.spinner-layer {
+    width: 100%;
+    height: 100%;
+    border: 8px solid transparent;
+    border-top: 8px solid #1e3a8a; /* Cor principal */
+    border-right: 8px solid #3b82f6; /* Cor secundária */
+    border-radius: 50%;
+    animation: rotate 1.5s linear infinite;
+}
+
+/* Texto de carregamento */
+.loading-text {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 20px;
+    animation: fadeInOut 2s ease-in-out infinite;
+    letter-spacing: 0.5px;
+}
+
+/* Animações */
+
+/* Rotação do spinner */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Rotação inversa para a camada */
+@keyframes rotate {
+    0% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* Fade in/out para o texto */
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+</style>
+
+<style>
+/* Estilo geral do botão "Confirmar" */
+button.continue-button {
+    background-color: #1e90ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Botão desativado */
+button.continue-button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Botão durante o carregamento */
+button.continue-button.loading {
+    pointer-events: none;
+    color: transparent; /* Esconde o texto do botão */
+}
+
+/* Spinner dentro do botão */
+button.continue-button.loading:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 3px solid transparent;
+    border-top: 3px solid white;
+    border-radius: 50%;
+    position: absolute;
+    animation: spin 1s linear infinite;
+}
+
+/* Animação de rotação do spinner */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Campos individuais de senha */
+input.digit-field {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 5px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Foco no campo */
+input.digit-field:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+}
+
+/* Botão "Cancelar" */
+button.cancel-button {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hover no botão "Cancelar" */
+button.cancel-button:hover {
+    background-color: #e60000;
+}
+
+/* 🔹 Fundo sutil para destacar o modal */
+#passwordModal, #processingModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(240, 242, 245, 0.85); /* Azul acinzentado muito claro */
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 🔹 Estrutura refinada do modal */
+.modal-content {
+    background: linear-gradient(135deg, #ffffff, #f7f9fc); /* Branco suave com azul acinzentado */
+    padding: 40px;
+    border-radius: 14px;
+    width: 95%;
+    max-width: 480px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    animation: scaleIn 0.3s ease-in-out;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    border-top: 5px solid #007bff; /* Destaque azul profissional */
+    border-bottom: 5px solid #007bff;
+}
+
+/* 🔹 Animação de fade-in */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 🔹 Animação de escala ao abrir o modal */
+@keyframes scaleIn {
+    from { transform: scale(0.96); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* 🔹 Cabeçalho do modal */
+.security-header, .processing-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 🔹 Ícone do cabeçalho */
+.security-header::before, .processing-header::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 22px;
+    margin-right: 8px;
+    color: #007bff;
+}
+
+.security-header::before {
+    content: "\f023"; /* 🔐 Ícone de cadeado */
+}
+
+.processing-header::before {
+    content: "\f110"; /* 🔄 Ícone de carregamento */
+    animation: spin 1s linear infinite;
+}
+
+/* 🔹 Texto do modal */
+.modal-content p {
+    font-size: 16px;
+    color: #555; /* Cinza escuro para contraste */
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* 🔹 Campos de senha refinados */
+.password-fields {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.password-fields input {
+    width: 55px;
+    height: 55px;
+    font-size: 22px;
+    text-align: center;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    background: #f8f9fa;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.password-fields input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+    outline: none;
+    background: #ffffff;
+}
+
+/* 🔹 Botão refinado */
+.modal-content button {
+    padding: 14px 22px;
+    font-size: 17px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 🔹 Botão "Confirmar" */
+.continue-button {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25);
+}
+
+/* Hover aprimorado */
+.continue-button:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 123, 255, 0.3);
+}
+
+/* 🔹 Overlay de carregamento */
+.password-loading-overlay, #processingModal .spinner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 🔹 Spinner atualizado */
+.password-loading-overlay .spinner, #processingModal .spinner {
+    width: 52px;
+    height: 52px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1.2s linear infinite;
+}
+
+/* 🔹 Texto de carregamento */
+.password-loading-overlay .loading-text, #processingModal .loading-text {
+    font-size: 16px;
+    color: #555;
+    font-weight: bold;
+}
+
+/* 🔹 Animação do spinner */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 🔹 Ícone de fechar */
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-modal:hover {
+    color: #007bff;
+}
+
+/* 🔹 Responsividade aprimorada */
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 30px;
+        border-radius: 12px;
+    }
+
+    .password-fields input {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .modal-content button {
+        font-size: 15px;
+        padding: 12px 18px;
+    }
+}
+</style><style>
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
+
+/* 🔹 Fundo semi-transparente com efeito de desfoque */
+#thankYouPage {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* 🔹 Estrutura refinada do modal */
+.thank-you-content {
+    text-align: center;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: scaleIn 0.3s ease-out;
+    max-width: 450px;
+    width: 90%;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+}
+
+/* 🔹 Ícone de sucesso */
+.icon-container {
+    font-size: 70px;
+    color: #28a745;
+    margin-bottom: 15px;
+    animation: bounceIn 0.6s ease-in-out;
+}
+
+/* 🔹 Título de sucesso */
+.thank-you-content h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* 🔹 Mensagem do usuário */
+.thank-you-content p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+
+/* 🐀𐀀񞐠𠡯tão estilizado */
+.thank-you-content button {
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: white;
+    border: none;
+    padding: 14px 22px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+    display: block;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.thank-you-content button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* 🔹 Efeito de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 🔹 Animação de escala ao abrir */
+@keyframes scaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* 🔹 Animação de bounce no ícone */
+@keyframes bounceIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* 🔹 Responsividade */
+@media (max-width: 480px) {
+    .thank-you-content {
+        padding: 30px;
+        border-radius: 12px;
+    }
+
+    .thank-you-content h1 {
+        font-size: 22px;
+    }
+
+    .thank-you-content button {
+        font-size: 14px;
+        padding: 12px 18px;
+    }
+}
+
+/* 🔹 Tela de carregamento refinada */
+#loadingScreen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #121212; /* 🔳 Preto neutro elegante e confortável aos olhos */
+    backdrop-filter: blur(4px); /* Sutil efeito de sofisticação */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 🔹 Container do spinner */
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+/* 🔹 Spinner refinado */
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(0, 123, 255, 0.1);
+    border-top: 4px solid #007bff; /* 🔵 Azul profundo para confiança */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* 🔹 Texto de carregamento */
+.loading-text {
+    font-size: 17px;
+    font-weight: 600;
+    color: #d1e3ff; /* 🔵 Azul claro para contraste elegante */
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+/* 🔹 Animação do spinner */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 🔹 Responsividade aprimorada */
+@media (max-width: 480px) {
+    .spinner {
+        width: 42px;
+        height: 42px;
+        border-width: 3px;
+    }
+
+    .loading-text {
+        font-size: 15px;
+    }
+}
+
+/* 🔹 Fundo do modal cobrindo tudo */
+.pix-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+/* 🔹 Conteúdo do modal */
+.pix-modal-content {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* 🔹 Cabeçalho do modal */
+.pix-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #2ecc71;
+    margin-bottom: 14px;
+}
+
+.pix-modal-header i {
+    font-size: 22px;
+}
+
+/* 🔹 Texto informativo */
+.pix-modal-text {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.5;
+    margin-bottom: 14px;
+}
+
+/* 🔹 Caixa das instruções */
+.pix-instructions-box {
+    background: #f9fafb;
+    padding: 14px;
+    border-radius: 8px;
+    text-align: left;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 16px;
+}
+
+/* 🔹 Lista de instruções */
+.pix-instructions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pix-instructions li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #555;
+    margin: 6px 0;
+}
+
+.pix-instructions i {
+    font-size: 16px;
+    color: #007bff;
+}
+
+/* 🔹 Bloco do Status de Pagamento */
+.payment-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 18px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e0e4e8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 350px; /* Ajusta ao conteúdo */
+}
+
+/* 🔹 Texto "Aguardando pagamento" */
+.waiting-text {
+    font-size: 14px;
+    color: #007bff;
+    font-weight: 500;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    margin-left: -10px; /* Ajuste o valor conforme necessário */
+}
+
+/* 🔹 Ícone de Verificação (agora contendo o spinner) */
+.status-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+/* 🔹 Spinner Circular Profissional */
+.pix-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(0, 123, 255, 0.3);
+    border-top: 2px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* 🔹 Animação do Spinner */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.pix-spinner {
+    display: block !important;
+    visibility: visible !important;
+    position: relative !important;
+    opacity: 1 !important;
+}
+
+/* 🔹 Botão de fechar */
+.pix-modal-close {
+    margin-top: 35px;
+    background: #2ecc71;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.pix-modal-close:hover {
+    background: #27ae60;
+}
+
+/* 🔹 Animação de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 🔹 Mostrar modal */
+.pix-modal.show {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+}
+
+@keyframes modalCloseOpen {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0; transform: scale(0.8); } /* Encolhe e desaparece */
+    100% { opacity: 1; transform: scale(1); } /* Volta ao tamanho normal */
+}
+
+.modal-reopen {
+    animation: modalCloseOpen 0.2s ease-in-out;
+}
+
+@keyframes modalCloseOpen {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0; transform: scale(0.8); } /* Encolhe e desaparece */
+    100% { opacity: 1; transform: scale(1); } /* Volta ao tamanho normal */
+}
+
+.modal-reopen {
+    animation: modalCloseOpen 0.5s ease-in-out;
+}
+
+#thankYouPage {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+</style>
+
+<style>
+/* Import único e mais recente do Font Awesome */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
+
+/* Botão geral "Confirmar" */
+button.continue-button {
+    background-color: #1e90ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: opacity 0.3s, background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Estado desativado do botão */
+button.continue-button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Spinner no botão de carregamento */
+button.continue-button.loading {
+    pointer-events: none;
+    color: transparent;
+}
+
+button.continue-button.loading::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 3px solid transparent;
+    border-top-color: white;
+    border-radius: 50%;
+    position: absolute;
+    animation: spin 1s linear infinite;
+}
+
+/* Animação geral do spinner */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Campos de senha individuais */
+input.digit-field {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 5px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input.digit-field:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 5px rgba(30,144,255,0.5);
+}
+
+/* Botão "Cancelar" */
+button.cancel-button {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+button.cancel-button:hover {
+    background-color: #e60000;
+}
+
+/* 🔹 Fundo Profissional e Moderno */
+#passwordModal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(12, 17, 27, 0.9); /* Fundo escuro sutil */
+    backdrop-filter: blur(12px); /* Efeito Glassmorphism */
+    z-index: 1000;
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+/* 🔹 Caixa do Modal – Clean e Sofisticado */
+.modal-content {
+    background: rgba(18, 22, 33, 0.95); /* Azul escuro com transparência */
+    padding: 24px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 360px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    animation: scaleIn 0.2s ease-in-out;
+    position: relative;
+    border: none; /* Sem bordas desnecessárias */
+}
+
+/* 🔹 Ícone de Segurança – Refinado */
+.modal-content .modal-icon {
+    font-size: 36px;
+    color: #22C55E; /* Verde Seguro */
+    margin-bottom: 12px;
+}
+
+/* 🔹 Título Moderno */
+.modal-content h3 {
+    font-size: 18px;
+    color: #F1F5F9; /* Branco gelo */
+    font-weight: 500;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+}
+
+/* 🔹 Texto Informativo Profissional */
+.modal-content p {
+    font-size: 14px;
+    color: #A3B5C5; /* Cinza elegante */
+    margin-bottom: 16px;
+    font-weight: 400;
+}
+
+/* 🔹 Botão Confirmar Seguro */
+button.continue-button {
+    background: linear-gradient(135deg, #2563EB, #1E40AF); /* Azul confiável */
+    color: #F1F5F9;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    width: 100%;
+    letter-spacing: 0.3px;
+}
+
+button.continue-button:hover {
+    background: #1E3A8A;
+    transform: scale(1.02);
+}
+
+/* 🔹 Botão "Cancelar" Elegante */
+button.cancel-button {
+    background: transparent;
+    color: #EF4444; /* Vermelho Profissional */
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+button.cancel-button:hover {
+    color: #DC2626;
+}
+
+/* 🔹 Animações Suaves */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Página de agradecimento */
+#thankYouPage {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1001;
+}
+
+.thank-you-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.thank-you-content h1 {
+    font-size: 24px;
+    color: #28a745;
+}
+
+.thank-you-content p {
+    font-size: 15px;
+    color: #333;
+    margin-top: 15px;
+}
+
+/* Configuração inicial do modal (escondido) */
+.pix-modal {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.9);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+/* Classe ativa que faz o modal aparecer suavemente */
+.pix-modal.show {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+/* Animação de fechamento e reabertura */
+.pix-modal.reopen {
+    animation: modalCloseOpen 0.3s ease-in-out;
+}
+
+/* Animação personalizada */
+@keyframes modalCloseOpen {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0; transform: scale(0.8); } /* Encolhe e desaparece */
+    100% { opacity: 1; transform: scale(1); } /* Volta ao tamanho normal */
+}
+
+.pix-code-container {
+    display: flex;
+    align-items: center;
+    background: #f8fafc; /* Azul acinzentado claro, profissional e elegante */
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-top: 12px;
+    border: 1px solid #cbd5e1; /* Cinza azulado para sofisticação */
+    transition: all 0.3s ease-in-out;
+}
+
+.pix-code-input {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151; /* Cinza escuro neutro para alta legibilidade */
+    width: 100%;
+    text-overflow: ellipsis;
+    outline: none;
+    cursor: default;
+}
+
+/* 🔹 Botão "Copiar novamente" refinado */
+.pix-copy-btn {
+    background: linear-gradient(135deg, #1E3A8A, #2563EB); /* Azul Profissional */
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    width: 150px; /* Mantém um tamanho fixo para alinhamento */
+    min-height: 40px; /* Garantindo altura padrão */
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 🔹 Ícone refinado */
+.pix-copy-btn i {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* 🔹 Hover - efeito mais suave */
+.pix-copy-btn:hover {
+    background: #1B2C7A;
+    transform: scale(1.03);
+}
+
+/* 🔹 Feedback ao copiar */
+.pix-copy-btn.copied {
+    background: #16A34A; /* Verde de sucesso */
+    width: 150px; /* Mantendo o tamanho fixo */
+}
+
+/* 🔹 Animação suave ao mudar texto */
+.pix-copy-btn.copied::before {
+    content: "";
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* 🔹 Retorno automático para "Copiar novamente" */
+.pix-copy-btn.copied::after {
+    content: " ";
+    animation: resetText 2s forwards;
+}
+
+/* 🔹 Animação para voltar ao texto original */
+@keyframes resetText {
+    0% { content: ""; }
+    100% { content: ""; }
+}
+
+/* 🔹 Responsividade */
+@media (max-width: 600px) {
+    .pix-copy-btn {
+        width: 140px;
+        font-size: 13px;
+    }
+}
+
+/* Estilização do Ícone de Menu */
+.menu-container {
+    position: absolute;
+    top: 11px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.menu-icon {
+    font-size: 18px;
+    color: #007bff;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.menu-icon:hover {
+    color: #007bff;
+}
+
+/* Estilização do Menu Suspenso */
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    width: 150px;
+    text-align: left;
+    z-index: 999;
+}
+
+.menu-dropdown a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #333;
+    transition: background 0.3s;
+}
+
+.menu-dropdown a i {
+    margin-right: 8px;
+}
+
+.menu-dropdown a:hover {
+    background: #f1f1f1;
+}
+
+/* 🔹 Botão "Entendi" com carregamento */
+.pix-modal-close {
+    background: linear-gradient(135deg, #1E3A8A, #2563EB);
+    color: white;
+    font-size: 14px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    width: 100%;
+    min-height: 40px;
+    cursor: pointer;
+}
+
+/* 🔹 Spinner de carregamento no botão */
+.pix-modal-close.loading {
+    pointer-events: none;
+    color: transparent;
+}
+
+.pix-modal-close.loading::after {
+    content: '';
+    width: 18px;
+    height: 18px;
+    border: 3px solid transparent;
+    border-top-color: white;
+    border-radius: 50%;
+    position: absolute;
+    animation: spin 1s linear infinite;
+}
+
+/* 🔹 Animação do spinner */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Efeito de carregamento no botão */
+button.continue-button.loading {
+    pointer-events: none;
+    color: transparent;
+}
+
+button.continue-button.loading::after {
+    content: '';
+    width: 18px;
+    height: 18px;
+    border: 3px solid transparent;
+    border-top-color: white;
+    border-radius: 50%;
+    position: absolute;
+    animation: spin 1s linear infinite;
+}
+
+/* Animação do spinner */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Barra de progresso das opções */
+.payment-progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 8px;
+    background-color: #e3eaf4;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Passos individuais da barra */
+.progress-step {
+    flex: 1;
+    text-align: center;
+    padding: 6px;
+    font-size: 13px;
+    color: #6b7280;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+/* Passo ativo */
+.progress-step.active {
+    background-color: #1e3a8a;
+    color: #ffffff;
+    font-weight: 600;
+}
+</style>
+
+<style>
+/* Import único e mais recente do Font Awesome */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
+
+/* Botão geral "Confirmar" */
+button.continue-button {
+    background-color: #1e90ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: opacity 0.3s, background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Estado desativado do botão */
+button.continue-button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Spinner no botão de carregamento */
+button.continue-button.loading {
+    pointer-events: none;
+    color: transparent;
+}
+
+button.continue-button.loading::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 3px solid transparent;
+    border-top-color: white;
+    border-radius: 50%;
+    position: absolute;
+    animation: spin 1s linear infinite;
+}
+
+/* Animação geral do spinner */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Campos de senha individuais */
+input.digit-field {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 5px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input.digit-field:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 5px rgba(30,144,255,0.5);
+}
+
+/* Botão "Cancelar" */
+button.cancel-button {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+button.cancel-button:hover {
+    background-color: #e60000;
+}
+
+/* 🔹 Fundo Profissional e Moderno */
+#passwordModal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(12, 17, 27, 0.9); /* Fundo escuro sutil */
+    backdrop-filter: blur(12px); /* Efeito Glassmorphism */
+    z-index: 1000;
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+/* 🔹 Caixa do Modal – Clean e Sofisticado */
+.modal-content {
+    background: rgba(18, 22, 33, 0.95); /* Azul escuro com transparência */
+    padding: 24px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 360px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    animation: scaleIn 0.2s ease-in-out;
+    position: relative;
+    border: none; /* Sem bordas desnecessárias */
+}
+
+/* 🔹 Ícone de Segurança – Refinado */
+.modal-content .modal-icon {
+    font-size: 36px;
+    color: #22C55E; /* Verde Seguro */
+    margin-bottom: 12px;
+}
+
+/* 🔹 Título Moderno */
+.modal-content h3 {
+    font-size: 18px;
+    color: #F1F5F9; /* Branco gelo */
+    font-weight: 500;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+}
+
+/* 🔹 Texto Informativo Profissional */
+.modal-content p {
+    font-size: 14px;
+    color: #A3B5C5; /* Cinza elegante */
+    margin-bottom: 16px;
+    font-weight: 400;
+}
+
+/* 🔹 Botão Confirmar Seguro */
+button.continue-button {
+    background: linear-gradient(135deg, #2563EB, #1E40AF); /* Azul confiável */
+    color: #F1F5F9;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    width: 100%;
+    letter-spacing: 0.3px;
+}
+
+button.continue-button:hover {
+    background: #1E3A8A;
+    transform: scale(1.02);
+}
+
+/* 🔹 Botão "Cancelar" Elegante */
+button.cancel-button {
+    background: transparent;
+    color: #EF4444; /* Vermelho Profissional */
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+button.cancel-button:hover {
+    color: #DC2626;
+}
+
+/* 🔹 Animações Suaves */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Página de agradecimento */
+#thankYouPage {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1001;
+}
+
+.thank-you-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.thank-you-content h1 {
+    font-size: 24px;
+    color: #28a745;
+}
+
+.thank-you-content p {
+    font-size: 15px;
+    color: #333;
+    margin-top: 15px;
+}
+
+/* Configuração inicial do modal (escondido) */
+.pix-modal {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.9);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+/* Classe ativa que faz o modal aparecer suavemente */
+.pix-modal.show {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+/* Animação de fechamento e reabertura */
+.pix-modal.reopen {
+    animation: modalCloseOpen 0.3s ease-in-out;
+}
+
+/* Animação personalizada */
+@keyframes modalCloseOpen {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0; transform: scale(0.8); } /* Encolhe e desaparece */
+    100% { opacity: 1; transform: scale(1); } /* Volta ao tamanho normal */
+}
+
+.pix-code-container {
+    display: flex;
+    align-items: center;
+    background: #f8fafc; /* Azul acinzentado claro, profissional e elegante */
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-top: 12px;
+    border: 1px solid #cbd5e1; /* Cinza azulado para sofisticação */
+    transition: all 0.3s ease-in-out;
+}
+
+.pix-code-input {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151; /* Cinza escuro neutro para alta legibilidade */
+    width: 100%;
+    text-overflow: ellipsis;
+    outline: none;
+    cursor: default;
+}
+
+/* 🔹 Botão "Copiar novamente" refinado */
+.pix-copy-btn {
+    background: linear-gradient(135deg, #1E3A8A, #2563EB); /* Azul Profissional */
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    width: 150px; /* Mantém um tamanho fixo para alinhamento */
+    min-height: 40px; /* Garantindo altura padrão */
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 🔹 Ícone refinado */
+.pix-copy-btn i {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* 🔹 Hover - efeito mais suave */
+.pix-copy-btn:hover {
+    background: #1B2C7A;
+    transform: scale(1.03);
+}
+
+/* 🔹 Feedback ao copiar */
+.pix-copy-btn.copied {
+    background: #16A34A; /* Verde de sucesso */
+    width: 150px; /* Mantendo o tamanho fixo */
+}
+
+/* 🔹 Animação suave ao mudar texto */
+.pix-copy-btn.copied::before {
+    content: "";
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* 🔹 Retorno automático para "Copiar novamente" */
+.pix-copy-btn.copied::after {
+    content: " ";
+    animation: resetText 2s forwards;
+}
+
+/* 🔹 Animação para voltar ao texto original */
+@keyframes resetText {
+    0% { content: ""; }
+    100% { content: ""; }
+}
+
+/* 🔹 Responsividade */
+@media (max-width: 600px) {
+    .pix-copy-btn {
+        width: 140px;
+        font-size: 13px;
+    }
+}
+
+/* Estilização do Ícone de Menu */
+.menu-container {
+    position: absolute;
+    top: 11px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.menu-icon {
+    font-size: 18px;
+    color: #007bff;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.menu-icon:hover {
+    color: #007bff;
+}
+
+/* Estilização do Menu Suspenso */
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    width: 150px;
+    text-align: left;
+    z-index: 999;
+}
+
+.menu-dropdown a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #333;
+    transition: background 0.3s;
+}
+
+.menu-dropdown a i {
+    margin-right: 8px;
+}
+
+.menu-dropdown a:hover {
+    background: #f1f1f1;
+}
+
+/* 🔹 Botão "Entendi" com carregamento */
+.pix-modal-close {
+    background: linear-gradient(135deg, #1E3A8A, #2563EB);
+    color: white;
+    font-size: 14px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    width: 100%;
+    min-height: 40px;
+    cursor: pointer;
+}
+
+/* 🔹 Spinner de carregamento no botão */
+.pix-modal-close.loading {
+    pointer-events: none;
+    color: transparent;
+}
+
+.pix-modal-close.loading::after {
+    content: '';
+    width: 18px;
+    height: 18px;
+    border: 3px solid transparent;
+    border-top-color: white;
+    border-radius: 50%;
+    position: absolute;
+    animation: spin 1s linear infinite;
+}
+
+/* 🔹 Animação do spinner */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Efeito de carregamento no botão */
+button.continue-button.loading {
+    pointer-events: none;
+    color: transparent;
+}
+
+button.continue-button.loading::after {
+    content: '';
+    width: 18px;
+    height: 18px;
+    border: 3px solid transparent;
+    border-top-color: white;
+    border-radius: 50%;
+    position: absolute;
+    animation: spin 1s linear infinite;
+}
+
+/* Animação do spinner */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+</style>
