@@ -317,148 +317,32 @@
         margin-top: 20px;
     }
     
-    /* DESIGN APRIMORADO APENAS PARA O BLOCO DE INFORMAÇÕES DO CNPJ */
     .empresa-info {
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-        border: 1px solid #e1e8ed;
-        border-radius: 12px;
-        padding: 28px;
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 6px;
         margin-bottom: 20px;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-        position: relative;
-        transition: all 0.3s ease;
-    }
-    
-    .empresa-info::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
-        border-radius: 12px 12px 0 0;
-    }
-    
-    .empresa-info:hover {
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        transform: translateY(-1px);
     }
     
     .empresa-info h4 {
-        color: #1a365d;
-        margin-bottom: 20px;
-        font-size: 20px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .empresa-info h4::before {
-        content: '\f1ad';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
         color: #007bff;
-        font-size: 18px;
-        background: rgba(0, 123, 255, 0.1);
-        padding: 6px;
-        border-radius: 6px;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        margin-bottom: 15px;
     }
     
     .info-row {
         display: flex;
-        margin-bottom: 12px;
-        padding: 12px 16px;
-        background: rgba(248, 249, 250, 0.5);
-        border: 1px solid #e9ecef;
-        border-radius: 8px;
-        transition: all 0.2s ease;
-        position: relative;
-    }
-    
-    .info-row::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 3px;
-        background: #007bff;
-        border-radius: 8px 0 0 8px;
-        opacity: 0;
-        transition: opacity 0.2s ease;
-    }
-    
-    .info-row:hover {
-        background: rgba(0, 123, 255, 0.03);
-        border-color: #007bff;
-        transform: translateX(2px);
-    }
-    
-    .info-row:hover::before {
-        opacity: 1;
+        margin-bottom: 8px;
     }
     
     .info-label {
         font-weight: 600;
         min-width: 120px;
-        color: #495057;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-    
-    .info-label::before {
-        content: '';
-        width: 4px;
-        height: 4px;
-        background: #007bff;
-        border-radius: 50%;
+        color: #555;
     }
     
     .info-value {
-        color: #212529;
-        font-weight: 500;
-        flex: 1;
-        font-size: 15px;
-        line-height: 1.4;
+        color: #333;
     }
-    
-    /* Responsividade para o bloco de informações */
-    @media (max-width: 768px) {
-        .empresa-info {
-            padding: 20px;
-        }
-        
-        .empresa-info h4 {
-            font-size: 18px;
-            margin-bottom: 16px;
-        }
-        
-        .info-row {
-            flex-direction: column;
-            gap: 4px;
-            padding: 12px;
-        }
-        
-        .info-label {
-            min-width: auto;
-            font-size: 13px;
-            margin-bottom: 2px;
-        }
-        
-        .info-value {
-            font-size: 14px;
-        }
-    }
-    /* FIM DO DESIGN APRIMORADO PARA O BLOCO DE INFORMAÇÕES DO CNPJ */
     
     .pendencias-section h4 {
         color: #dc3545;
@@ -577,179 +461,4 @@
         </div>
     </div>
 </header>
-
-<main id="main-content">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="br-breadcrumb">
-                    <ul class="crumb-list">
-                        <li class="crumb home"><a class="br-button circle" href="#"><span class="sr-only">Página inicial</span><i class="fas fa-home"></i></a></li>
-                        <li class="crumb"><i class="icon fas fa-chevron-right"></i><a href="#">Serviços</a></li>
-                        <li class="crumb"><i class="icon fas fa-chevron-right"></i><span>Consulta CNPJ</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-12">
-                <div class="br-card">
-                    <div class="card-header">
-                        <div class="d-flex">
-                            <div class="mr-auto">
-                                <div class="card-title">
-                                    <h1>Consulta de Pendências por CNPJ</h1>
-                                </div>
-                                <div class="card-info">
-                                    <span>Consulte pendências de trânsito da sua empresa</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <div class="consulta-cnpj">
-                            <div class="form-group">
-                                <label for="cnpj-input">CNPJ da Empresa:</label>
-                                <input type="text" id="cnpj-input" class="form-control" placeholder="00.000.000/0000-00" maxlength="18">
-                            </div>
-                            <button id="consultar-btn" class="btn-consultar">
-                                <i class="fas fa-search"></i> Consultar Pendências
-                            </button>
-                        </div>
-                        
-                        <div id="loading-consulta" class="loading-consulta">
-                            <div class="br-loading medium"></div>
-                            <p>Consultando dados da empresa...</p>
-                        </div>
-                        
-                        <div id="resultado-consulta" class="resultado-consulta">
-                            <div class="empresa-info">
-                                <h4>Informações da Empresa</h4>
-                                <div class="info-row">
-                                    <div class="info-label">Razão Social</div>
-                                    <div class="info-value" id="empresa-razao">-</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="info-label">Nome Fantasia</div>
-                                    <div class="info-value" id="empresa-fantasia">-</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="info-label">CNPJ</div>
-                                    <div class="info-value" id="empresa-cnpj">-</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="info-label">Situação</div>
-                                    <div class="info-value" id="empresa-situacao">-</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="info-label">Data de Abertura</div>
-                                    <div class="info-value" id="empresa-abertura">-</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="info-label">Endereço</div>
-                                    <div class="info-value" id="empresa-endereco">-</div>
-                                </div>
-                            </div>
-                            
-                            <div class="pendencias-section">
-                                <h4><i class="fas fa-exclamation-triangle"></i> Pendências Encontradas</h4>
-                                <div id="pendencias-lista"></div>
-                                <div id="sem-pendencias" class="sem-pendencias" style="display: none;">
-                                    <i class="fas fa-check-circle"></i>
-                                    Nenhuma pendência encontrada para esta empresa.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
-
-<footer id="site-footer">
-    <div class="br-footer">
-        <div class="container">
-            <div class="logo">
-                <img src="images/logo.png" alt="Logomarca GovBR">
-            </div>
-            <div class="br-list horizontal" data-toggle="data-toggle" data-sub="data-sub">
-                <div class="col-2">
-                    <a class="br-item header" href="#" role="button">
-                        <div class="content text-down-01 text-bold text-uppercase">Acesso à informação</div>
-                        <div class="support"><i class="fas fa-angle-down" aria-hidden="true"></i></div>
-                    </a>
-                    <div class="br-list">
-                        <a class="br-item" href="#">
-                            <div class="content">Institucional</div>
-                        </a>
-                        <a class="br-item" href="#">
-                            <div class="content">Ações e Programas</div>
-                        </a>
-                        <a class="br-item" href="#">
-                            <div class="content">Participação Social</div>
-                        </a>
-                        <a class="br-item" href="#">
-                            <div class="content">Auditorias</div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <a class="br-item header" href="#" role="button">
-                        <div class="content text-down-01 text-bold text-uppercase">Serviços</div>
-                        <div class="support"><i class="fas fa-angle-down" aria-hidden="true"></i></div>
-                    </a>
-                    <div class="br-list">
-                        <a class="br-item" href="#">
-                            <div class="content">Carteira de Identidade</div>
-                        </a>
-                        <a class="br-item" href="#">
-                            <div class="content">Carteira Nacional de Habilitação</div>
-                        </a>
-                        <a class="br-item" href="#">
-                            <div class="content">Consulta de Pendências</div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="br-divider my-3"></div>
-            <div class="row align-items-end justify-content-between">
-                <div class="col-auto">
-                    <div class="br-list horizontal">
-                        <div class="br-item">
-                            <div class="text-down-01 text-medium pb-3">Texto destinado a exibição de informações relacionadas à&nbsp;<strong>licença de uso.</strong></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="d-flex flex-column">
-                        <div class="br-list horizontal justify-content-end">
-                            <div class="br-item">
-                                <a class="br-button circle" href="#" aria-label="Compartilhar por Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-                            </div>
-                            <div class="br-item">
-                                <a class="br-button circle" href="#" aria-label="Compartilhar por Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-                            </div>
-                            <div class="br-item">
-                                <a class="br-button circle" href="#" aria-label="Compartilhar por Linkedin"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-                            </div>
-                            <div class="br-item">
-                                <a class="br-button circle" href="#" aria-label="Compartilhar por WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Scripts -->
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/toastify.min.js"></script>
-<script src="js/script.js"></script>
-
-</body>
-</html>
 
