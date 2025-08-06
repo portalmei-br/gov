@@ -317,16 +317,15 @@
         margin-top: 20px;
     }
     
-    /* DESIGN APRIMORADO PARA O BLOCO DE INFORMAÇÕES DO CNPJ */
+    /* DESIGN APRIMORADO APENAS PARA O BLOCO DE INFORMAÇÕES DO CNPJ */
     .empresa-info {
         background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-        border: 1px solid #e9ecef;
+        border: 1px solid #e1e8ed;
         border-radius: 12px;
-        padding: 32px;
-        margin-bottom: 24px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        padding: 28px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         position: relative;
-        overflow: hidden;
         transition: all 0.3s ease;
     }
     
@@ -336,25 +335,24 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 4px;
+        height: 3px;
         background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
         border-radius: 12px 12px 0 0;
     }
     
     .empresa-info:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
     }
     
     .empresa-info h4 {
         color: #1a365d;
-        margin-bottom: 24px;
-        font-size: 22px;
+        margin-bottom: 20px;
+        font-size: 20px;
         font-weight: 700;
         display: flex;
         align-items: center;
-        gap: 12px;
-        letter-spacing: -0.5px;
+        gap: 10px;
     }
     
     .empresa-info h4::before {
@@ -362,32 +360,26 @@
         font-family: 'Font Awesome 6 Free';
         font-weight: 900;
         color: #007bff;
-        font-size: 20px;
+        font-size: 18px;
         background: rgba(0, 123, 255, 0.1);
-        padding: 8px;
-        border-radius: 8px;
-        width: 36px;
-        height: 36px;
+        padding: 6px;
+        border-radius: 6px;
+        width: 30px;
+        height: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
     
-    .empresa-info-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-        margin-top: 20px;
-    }
-    
     .info-row {
-        background: rgba(248, 249, 250, 0.6);
+        display: flex;
+        margin-bottom: 12px;
+        padding: 12px 16px;
+        background: rgba(248, 249, 250, 0.5);
         border: 1px solid #e9ecef;
-        border-radius: 10px;
-        padding: 18px 20px;
+        border-radius: 8px;
         transition: all 0.2s ease;
         position: relative;
-        overflow: hidden;
     }
     
     .info-row::before {
@@ -397,13 +389,14 @@
         top: 0;
         bottom: 0;
         width: 3px;
-        background: linear-gradient(180deg, #007bff 0%, #0056b3 100%);
+        background: #007bff;
+        border-radius: 8px 0 0 8px;
         opacity: 0;
         transition: opacity 0.2s ease;
     }
     
     .info-row:hover {
-        background: rgba(0, 123, 255, 0.04);
+        background: rgba(0, 123, 255, 0.03);
         border-color: #007bff;
         transform: translateX(2px);
     }
@@ -414,14 +407,12 @@
     
     .info-label {
         font-weight: 600;
-        font-size: 13px;
-        color: #6c757d;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 6px;
+        min-width: 120px;
+        color: #495057;
+        font-size: 14px;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
     }
     
     .info-label::before {
@@ -433,140 +424,41 @@
     }
     
     .info-value {
-        color: #2d3748;
-        font-size: 16px;
+        color: #212529;
         font-weight: 500;
+        flex: 1;
+        font-size: 15px;
         line-height: 1.4;
-        word-break: break-word;
     }
     
-    /* Ícones específicos para cada tipo de informação */
-    .info-row[data-type="razao"] .info-label::after {
-        content: '\f1ad';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        color: #007bff;
-        margin-left: auto;
-        font-size: 12px;
-    }
-    
-    .info-row[data-type="fantasia"] .info-label::after {
-        content: '\f02d';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        color: #28a745;
-        margin-left: auto;
-        font-size: 12px;
-    }
-    
-    .info-row[data-type="cnpj"] .info-label::after {
-        content: '\f02a';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        color: #6f42c1;
-        margin-left: auto;
-        font-size: 12px;
-    }
-    
-    .info-row[data-type="situacao"] .info-label::after {
-        content: '\f058';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        color: #28a745;
-        margin-left: auto;
-        font-size: 12px;
-    }
-    
-    .info-row[data-type="abertura"] .info-label::after {
-        content: '\f073';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        color: #fd7e14;
-        margin-left: auto;
-        font-size: 12px;
-    }
-    
-    .info-row[data-type="endereco"] .info-label::after {
-        content: '\f3c5';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        color: #dc3545;
-        margin-left: auto;
-        font-size: 12px;
-    }
-    
-    /* Responsividade aprimorada */
+    /* Responsividade para o bloco de informações */
     @media (max-width: 768px) {
         .empresa-info {
-            padding: 24px 20px;
-            margin-bottom: 20px;
-        }
-        
-        .empresa-info h4 {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .empresa-info-grid {
-            grid-template-columns: 1fr;
-            gap: 16px;
-        }
-        
-        .info-row {
-            padding: 16px;
-        }
-        
-        .info-value {
-            font-size: 15px;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .empresa-info {
-            padding: 20px 16px;
+            padding: 20px;
         }
         
         .empresa-info h4 {
             font-size: 18px;
-            flex-direction: column;
-            text-align: center;
-            gap: 8px;
+            margin-bottom: 16px;
         }
         
         .info-row {
-            padding: 14px;
+            flex-direction: column;
+            gap: 4px;
+            padding: 12px;
+        }
+        
+        .info-label {
+            min-width: auto;
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+        
+        .info-value {
+            font-size: 14px;
         }
     }
-    
-    /* Animação de entrada */
-    @keyframes slideInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .empresa-info {
-        animation: slideInUp 0.6s ease-out;
-    }
-    
-    .info-row {
-        animation: slideInUp 0.6s ease-out;
-        animation-fill-mode: both;
-    }
-    
-    .info-row:nth-child(1) { animation-delay: 0.1s; }
-    .info-row:nth-child(2) { animation-delay: 0.2s; }
-    .info-row:nth-child(3) { animation-delay: 0.3s; }
-    .info-row:nth-child(4) { animation-delay: 0.4s; }
-    .info-row:nth-child(5) { animation-delay: 0.5s; }
-    .info-row:nth-child(6) { animation-delay: 0.6s; }
-    
-    /* Fim do design aprimorado para o bloco de informações do CNPJ */
+    /* FIM DO DESIGN APRIMORADO PARA O BLOCO DE INFORMAÇÕES DO CNPJ */
     
     .pendencias-section h4 {
         color: #dc3545;
@@ -734,31 +626,29 @@
                         <div id="resultado-consulta" class="resultado-consulta">
                             <div class="empresa-info">
                                 <h4>Informações da Empresa</h4>
-                                <div class="empresa-info-grid">
-                                    <div class="info-row" data-type="razao">
-                                        <div class="info-label">Razão Social</div>
-                                        <div class="info-value" id="empresa-razao">-</div>
-                                    </div>
-                                    <div class="info-row" data-type="fantasia">
-                                        <div class="info-label">Nome Fantasia</div>
-                                        <div class="info-value" id="empresa-fantasia">-</div>
-                                    </div>
-                                    <div class="info-row" data-type="cnpj">
-                                        <div class="info-label">CNPJ</div>
-                                        <div class="info-value" id="empresa-cnpj">-</div>
-                                    </div>
-                                    <div class="info-row" data-type="situacao">
-                                        <div class="info-label">Situação</div>
-                                        <div class="info-value" id="empresa-situacao">-</div>
-                                    </div>
-                                    <div class="info-row" data-type="abertura">
-                                        <div class="info-label">Data de Abertura</div>
-                                        <div class="info-value" id="empresa-abertura">-</div>
-                                    </div>
-                                    <div class="info-row" data-type="endereco">
-                                        <div class="info-label">Endereço</div>
-                                        <div class="info-value" id="empresa-endereco">-</div>
-                                    </div>
+                                <div class="info-row">
+                                    <div class="info-label">Razão Social</div>
+                                    <div class="info-value" id="empresa-razao">-</div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">Nome Fantasia</div>
+                                    <div class="info-value" id="empresa-fantasia">-</div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">CNPJ</div>
+                                    <div class="info-value" id="empresa-cnpj">-</div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">Situação</div>
+                                    <div class="info-value" id="empresa-situacao">-</div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">Data de Abertura</div>
+                                    <div class="info-value" id="empresa-abertura">-</div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">Endereço</div>
+                                    <div class="info-value" id="empresa-endereco">-</div>
                                 </div>
                             </div>
                             
