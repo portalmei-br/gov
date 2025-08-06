@@ -1,303 +1,662 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta de Pendências MEI</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome para ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<section id="inicio">
     <style>
+        /* Padrão Digital de Governo - Cores e Estilos Oficiais */
+        :root {
+            /* Cores principais do governo */
+            --blue-warm-vivid-70: #1351B4;
+            --blue-warm-vivid-60: #2670E8;
+            --blue-warm-vivid-50: #4A90E2;
+            --blue-warm-vivid-20: #C5D4EB;
+            --blue-warm-vivid-10: #E2EBF7;
+            --blue-warm-vivid-5: #F1F5FC;
+            
+            /* Cores de feedback */
+            --green-cool-vivid-50: #00A86B;
+            --green-cool-vivid-10: #E7F6ED;
+            --yellow-vivid-20: #FDD835;
+            --yellow-vivid-5: #FEF7E0;
+            --red-vivid-50: #E52207;
+            --red-vivid-10: #F8E1E1;
+            
+            /* Cores neutras */
+            --gray-80: #1B1B1B;
+            --gray-70: #454545;
+            --gray-60: #757575;
+            --gray-50: #A8A8A8;
+            --gray-30: #D6D6D6;
+            --gray-20: #E6E6E6;
+            --gray-10: #F5F5F5;
+            --gray-5: #FAFAFA;
+            --pure-0: #FFFFFF;
+            
+            /* Tipografia */
+            --font-family-sans: 'Rawline', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-size-scale-up-05: 1.125rem; /* 18px */
+            --font-size-scale-base: 1rem; /* 16px */
+            --font-size-scale-down-01: 0.875rem; /* 14px */
+            --font-size-scale-down-02: 0.75rem; /* 12px */
+            
+            /* Espaçamento */
+            --spacing-scale-2x: 0.5rem; /* 8px */
+            --spacing-scale-3x: 0.75rem; /* 12px */
+            --spacing-scale-4x: 1rem; /* 16px */
+            --spacing-scale-5x: 1.25rem; /* 20px */
+            --spacing-scale-6x: 1.5rem; /* 24px */
+            --spacing-scale-8x: 2rem; /* 32px */
+            --spacing-scale-10x: 2.5rem; /* 40px */
+            --spacing-scale-12x: 3rem; /* 48px */
+            
+            /* Bordas */
+            --border-radius-sm: 0.25rem; /* 4px */
+            --border-radius-md: 0.5rem; /* 8px */
+            --border-radius-lg: 0.75rem; /* 12px */
+            
+            /* Sombras */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+            font-family: var(--font-family-sans);
+            font-size: var(--font-size-scale-base);
+            line-height: 1.5;
+            color: var(--gray-80);
+            background-color: var(--gray-5);
+            margin: 0;
+            padding: 0;
         }
+        
         .container {
-            max-width: 960px;
-            margin-top: 40px;
-            margin-bottom: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-scale-8x) var(--spacing-scale-4x);
         }
-        h2 {
-            color: #0056b3;
+        
+        /* Cabeçalho da seção */
+        .section-header {
+            background: linear-gradient(135deg, var(--blue-warm-vivid-70) 0%, var(--blue-warm-vivid-60) 100%);
+            color: var(--pure-0);
+            padding: var(--spacing-scale-12x) 0;
+            margin-bottom: var(--spacing-scale-10x);
             text-align: center;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-        .card-consulta, .card-como {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-            padding: 30px;
-            margin-bottom: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card-consulta:hover, .card-como:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-        }
-        .card-consulta h3, .card-como h3 {
-            color: #007bff;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-        .form-group label {
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #555;
-        }
-        .form-control {
-            border-radius: 8px;
-            border: 1px solid #ced4da;
-            padding: 10px 15px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-        .form-control:focus {
-            border-color: #80bdff;
-            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            border-radius: 8px;
-            padding: 10px 25px;
-            font-weight: 600;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-        #resultadoConsulta {
-            background-color: #e9f7ef;
-            border-left: 5px solid #28a745;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 25px;
-        }
-        #resultadoConsulta h4 {
-            color: #28a745;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        #resultadoConsulta p strong {
-            color: #555;
-        }
-        #listaPendencias {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        #listaPendencias li {
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 10px 15px;
-            margin-bottom: 8px;
-            border-radius: 6px;
-            color: #856404;
-            font-size: 0.95em;
-        }
-        #listaPendencias li:last-child {
-            margin-bottom: 0;
-        }
-        #listaPendencias li:contains("Nenhuma pendência") {
-            background-color: #d4edda;
-            border-left-color: #28a745;
-            color: #155724;
-        }
-        .como-solicitar .card-como .icone {
-            font-size: 3em;
-            color: #007bff;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .como-solicitar .card-como h3 {
-            text-align: center;
-            font-size: 1.3em;
-            margin-bottom: 15px;
-        }
-        .como-solicitar .card-como p {
-            font-size: 0.95em;
-            line-height: 1.6;
-            color: #666;
-        }
-        .duvidas .duvida {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 15px;
+            position: relative;
             overflow: hidden;
         }
-        .duvidas .duvida h4 {
-            padding: 18px 25px;
+        
+        .section-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .section-header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
             margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-header .subtitle {
+            font-size: var(--font-size-scale-up-05);
+            margin-top: var(--spacing-scale-4x);
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Brasão do governo */
+        .gov-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--pure-0);
+            color: var(--blue-warm-vivid-70);
+            padding: var(--spacing-scale-2x) var(--spacing-scale-4x);
+            border-radius: var(--border-radius-md);
+            font-size: var(--font-size-scale-down-01);
+            font-weight: 600;
+            margin-bottom: var(--spacing-scale-6x);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .gov-badge::before {
+            content: '🇧🇷';
+            margin-right: var(--spacing-scale-2x);
+        }
+        
+        /* Card principal de consulta */
+        .consulta-card {
+            background: var(--pure-0);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-scale-10x);
+            margin-bottom: var(--spacing-scale-10x);
+            border-top: 4px solid var(--blue-warm-vivid-70);
+        }
+        
+        .consulta-card h2 {
+            color: var(--blue-warm-vivid-70);
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 0 0 var(--spacing-scale-6x) 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .consulta-card h2::before {
+            content: '🔍';
+            margin-right: var(--spacing-scale-3x);
+        }
+        
+        /* Formulário */
+        .form-group {
+            margin-bottom: var(--spacing-scale-6x);
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--gray-80);
+            margin-bottom: var(--spacing-scale-2x);
+            font-size: var(--font-size-scale-base);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-scale-4x);
+            border: 2px solid var(--gray-30);
+            border-radius: var(--border-radius-md);
+            font-size: var(--font-size-scale-base);
+            transition: all 0.2s ease;
+            background: var(--pure-0);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--blue-warm-vivid-60);
+            box-shadow: 0 0 0 3px var(--blue-warm-vivid-20);
+        }
+        
+        .form-input::placeholder {
+            color: var(--gray-50);
+        }
+        
+        /* Botão principal */
+        .btn-primary {
+            background: var(--blue-warm-vivid-70);
+            color: var(--pure-0);
+            border: none;
+            padding: var(--spacing-scale-4x) var(--spacing-scale-8x);
+            border-radius: var(--border-radius-md);
+            font-size: var(--font-size-scale-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-scale-2x);
+        }
+        
+        .btn-primary:hover {
+            background: var(--blue-warm-vivid-60);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        /* Resultado da consulta */
+        .resultado-consulta {
+            background: var(--green-cool-vivid-10);
+            border: 2px solid var(--green-cool-vivid-50);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-scale-8x);
+            margin-top: var(--spacing-scale-8x);
+            display: none;
+        }
+        
+        .resultado-consulta h3 {
+            color: var(--green-cool-vivid-50);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0 0 var(--spacing-scale-4x) 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .resultado-consulta h3::before {
+            content: '✅';
+            margin-right: var(--spacing-scale-2x);
+        }
+        
+        .dados-empresa {
+            background: var(--pure-0);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-scale-6x);
+            margin-bottom: var(--spacing-scale-6x);
+            border-left: 4px solid var(--blue-warm-vivid-70);
+        }
+        
+        .dados-empresa .campo {
+            display: flex;
+            margin-bottom: var(--spacing-scale-3x);
+        }
+        
+        .dados-empresa .campo:last-child {
+            margin-bottom: 0;
+        }
+        
+        .dados-empresa .label {
+            font-weight: 600;
+            color: var(--gray-70);
+            min-width: 140px;
+        }
+        
+        .dados-empresa .valor {
+            color: var(--gray-80);
+        }
+        
+        /* Pendências */
+        .pendencias-section h4 {
+            color: var(--gray-80);
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin: 0 0 var(--spacing-scale-4x) 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pendencias-section h4::before {
+            content: '⚠️';
+            margin-right: var(--spacing-scale-2x);
+        }
+        
+        .pendencias-lista {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .pendencia-item {
+            background: var(--yellow-vivid-5);
+            border: 1px solid var(--yellow-vivid-20);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-scale-4x);
+            margin-bottom: var(--spacing-scale-3x);
+            display: flex;
+            align-items: center;
+            color: var(--gray-80);
+        }
+        
+        .pendencia-item::before {
+            content: '🔸';
+            margin-right: var(--spacing-scale-3x);
+        }
+        
+        .pendencia-item.sem-pendencia {
+            background: var(--green-cool-vivid-10);
+            border-color: var(--green-cool-vivid-50);
+        }
+        
+        .pendencia-item.sem-pendencia::before {
+            content: '✅';
+        }
+        
+        /* Seções informativas */
+        .info-section {
+            background: var(--pure-0);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-scale-8x);
+            margin-bottom: var(--spacing-scale-8x);
+        }
+        
+        .info-section h2 {
+            color: var(--blue-warm-vivid-70);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 var(--spacing-scale-6x) 0;
+            text-align: center;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-scale-6x);
+        }
+        
+        .info-card {
+            background: var(--blue-warm-vivid-5);
+            border: 1px solid var(--blue-warm-vivid-20);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-scale-6x);
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .info-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-scale-4x);
+        }
+        
+        .info-card h3 {
+            color: var(--blue-warm-vivid-70);
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin: 0 0 var(--spacing-scale-3x) 0;
+        }
+        
+        .info-card p {
+            color: var(--gray-70);
+            font-size: var(--font-size-scale-down-01);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        /* FAQ */
+        .faq-item {
+            background: var(--pure-0);
+            border: 1px solid var(--gray-20);
+            border-radius: var(--border-radius-md);
+            margin-bottom: var(--spacing-scale-4x);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            background: var(--gray-10);
+            border: none;
+            width: 100%;
+            padding: var(--spacing-scale-5x);
+            text-align: left;
+            font-size: var(--font-size-scale-base);
+            font-weight: 600;
+            color: var(--gray-80);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: #333;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.2s ease;
         }
-        .duvidas .duvida h4:hover {
-            background-color: #f8f9fa;
+        
+        .faq-question:hover {
+            background: var(--blue-warm-vivid-5);
         }
-        .duvidas .duvida h4 i {
-            transition: transform 0.3s ease;
+        
+        .faq-question::after {
+            content: '▼';
+            font-size: var(--font-size-scale-down-01);
+            transition: transform 0.2s ease;
         }
-        .duvidas .duvida h4[aria-expanded="true"] i {
+        
+        .faq-question.active::after {
             transform: rotate(180deg);
         }
-        .duvidas .duvida p {
-            padding: 0 25px 20px;
+        
+        .faq-answer {
+            padding: 0 var(--spacing-scale-5x);
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-answer.active {
+            padding: var(--spacing-scale-5x);
+            max-height: 200px;
+        }
+        
+        .faq-answer p {
+            color: var(--gray-70);
+            line-height: 1.6;
             margin: 0;
-            color: #555;
-            line-height: 1.7;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--spacing-scale-4x) var(--spacing-scale-3x);
+            }
+            
+            .section-header h1 {
+                font-size: 2rem;
+            }
+            
+            .consulta-card,
+            .info-section {
+                padding: var(--spacing-scale-6x);
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
-</head>
-<body>
-
-<section id="inicio">
+    
+    <div class="section-header">
+        <div class="container">
+            <div class="gov-badge">Governo Federal</div>
+            <h1>Consulta de Pendências MEI</h1>
+            <p class="subtitle">Sistema oficial para consulta de pendências do Microempreendedor Individual</p>
+        </div>
+    </div>
+    
     <div class="container">
-        <div class="consulta-mei">
-            <h2>Consulta de Pendências MEI</h2>
-            <div class="card-consulta">
-                <div class="content-card">
-                    <h3>Digite o CNPJ para consultar as pendências:</h3>
-                    <div class="form-group">
-                        <label for="cnpjInput">CNPJ:</label>
-                        <input type="text" class="form-control" id="cnpjInput" placeholder="Ex: 00.000.000/0001-00">
+        <div class="consulta-card">
+            <h2>Consultar CNPJ</h2>
+            <p>Digite o CNPJ do MEI para verificar a situação cadastral e pendências ativas.</p>
+            
+            <div class="form-group">
+                <label for="cnpjInput" class="form-label">CNPJ do MEI:</label>
+                <input type="text" class="form-input" id="cnpjInput" placeholder="00.000.000/0001-00" maxlength="18">
+            </div>
+            
+            <button type="button" class="btn-primary" id="consultarCnpj">
+                🔍 Consultar
+            </button>
+            
+            <div id="resultadoConsulta" class="resultado-consulta">
+                <h3>Dados Encontrados</h3>
+                
+                <div class="dados-empresa">
+                    <div class="campo">
+                        <span class="label">Razão Social:</span>
+                        <span class="valor" id="razaoSocial"></span>
                     </div>
-                    <button type="button" class="btn btn-primary mt-3" id="consultarCnpj">Consultar</button>
-                    <div id="resultadoConsulta" class="mt-4" style="display:none;">
-                        <h4>Dados do CNPJ:</h4>
-                        <p><strong>Razão Social:</strong> <span id="razaoSocial"></span></p>
-                        <p><strong>Nome Fantasia:</strong> <span id="nomeFantasia"></span></p>
-                        <p><strong>Situação Cadastral:</strong> <span id="situacaoCadastral"></span></p>
-                        <h4>Pendências Ativas:</h4>
-                        <ul id="listaPendencias"></ul>
+                    <div class="campo">
+                        <span class="label">Nome Fantasia:</span>
+                        <span class="valor" id="nomeFantasia"></span>
                     </div>
+                    <div class="campo">
+                        <span class="label">Situação Cadastral:</span>
+                        <span class="valor" id="situacaoCadastral"></span>
+                    </div>
+                </div>
+                
+                <div class="pendencias-section">
+                    <h4>Pendências Ativas</h4>
+                    <ul id="listaPendencias" class="pendencias-lista"></ul>
                 </div>
             </div>
         </div>
-        <div class="como-solicitar">
+        
+        <div class="info-section">
             <h2>Como solicitar o agendamento online?</h2>
-            <div class="cards-como d-flex align-items-stretch justify-content-between flex-wrap">
-                <div class="card-como col-md-4">
-                    <div class="content-card">
-                        <div class="icone"><i class="fa-solid fa-user-tie"></i></div>
-                        <h3>Preencha o formulário</h3>
-                        <p>Clique no botão inicial para ter acesso ao formulário. Preencha seus dados até o fim para chegar na tela de pagamento.</p>
-                    </div>
+            <div class="cards-grid">
+                <div class="info-card">
+                    <div class="icon">📝</div>
+                    <h3>Preencha o formulário</h3>
+                    <p>Clique no botão inicial para ter acesso ao formulário. Preencha seus dados até o fim para chegar na tela de pagamento.</p>
                 </div>
-                <div class="card-como col-md-4">
-                    <div class="content-card">
-                        <div class="icone"><i class="fa-solid fa-money-bill-wave"></i></div>
-                        <h3>Realize o pagamento</h3>
-                        <p>Realize o pagamento do pedido. Após compensado o pagamento, ir receber um e-mail de confirmação.</p>
-                    </div>
+                <div class="info-card">
+                    <div class="icon">💳</div>
+                    <h3>Realize o pagamento</h3>
+                    <p>Realize o pagamento do pedido. Após compensado o pagamento, irá receber um e-mail de confirmação.</p>
                 </div>
-                <div class="card-como col-md-4">
-                    <div class="content-card">
-                        <div class="icone"><i class="fa-solid fa-envelope"></i></div>
-                        <h3>Receba tudo por e-mail</h3>
-                        <p>Após o confirmado seu pagamento, iremos entrar em contato por e-mail em até 5 dias úteis.</p>
-                    </div>
+                <div class="info-card">
+                    <div class="icon">📧</div>
+                    <h3>Receba tudo por e-mail</h3>
+                    <p>Após confirmado seu pagamento, iremos entrar em contato por e-mail em até 5 dias úteis.</p>
                 </div>
             </div>
         </div>
-        <div class="duvidas">
+        
+        <div class="info-section">
             <h2>Dúvidas frequentes</h2>
-            <div class="duvida">
-                <h4 data-bs-toggle="collapse" href="#collapse01" role="button" aria-expanded="false" aria-controls="collapse01">Quanto tempo demora para receber a confirmação do protocolo de agendamento por e-mail?<i class="fa-solid fa-chevron-down"></i></h4>
-                <p class="collapse" id="collapse01">O e-mail com a confirmação do protocolo de seu atendimento chega em até 48 horas após a confirmação de pagamento.</p>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Quanto tempo demora para receber a confirmação do protocolo de agendamento por e-mail?
+                </button>
+                <div class="faq-answer">
+                    <p>O e-mail com a confirmação do protocolo de seu atendimento chega em até 48 horas após a confirmação de pagamento.</p>
+                </div>
             </div>
-            <div class="duvida">
-                <h4 data-bs-toggle="collapse" href="#collapse02" role="button" aria-expanded="false" aria-controls="collapse02">Depois que agendei já posso ir ao posto de atendimento?<i class="fa-solid fa-chevron-down"></i></h4>
-                <p class="collapse" id="collapse02">Não. Só vá ao posto de atendimento com o protocolo de atendimento que enviaremos ao seu e-mail. Este protocolo é a confirmação de que o dia e horário desejado foi devidamente agendado com o posto.</p>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Depois que agendei já posso ir ao posto de atendimento?
+                </button>
+                <div class="faq-answer">
+                    <p>Não. Só vá ao posto de atendimento com o protocolo de atendimento que enviaremos ao seu e-mail. Este protocolo é a confirmação de que o dia e horário desejado foi devidamente agendado com o posto.</p>
+                </div>
             </div>
-            <div class="duvida">
-                <h4 data-bs-toggle="collapse" href="#collapse03" role="button" aria-expanded="false" aria-controls="collapse03">Além da taxa de serviço será cobrado mais algum valor?<i class="fa-solid fa-chevron-down"></i></h4>
-                <p class="collapse" id="collapse03">Para emissão de 1ª via não há outras taxas. Entretanto, se for emissão de 2ª via do documento, será cobrado uma taxa de emissão.</p>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Além da taxa de serviço será cobrado mais algum valor?
+                </button>
+                <div class="faq-answer">
+                    <p>Para emissão de 1ª via não há outras taxas. Entretanto, se for emissão de 2ª via do documento, será cobrado uma taxa de emissão.</p>
+                </div>
             </div>
-            <div class="duvida">
-                <h4 data-bs-toggle="collapse" href="#collapse04" role="button" aria-expanded="false" aria-controls="collapse04">Posso desistir após pagar?<i class="fa-solid fa-chevron-down"></i></h4>
-                <p class="collapse" id="collapse04">Sim! Caso o serviço ainda não tenha sido realizado, basta entrar em contato em nossos canais de atendimento que faremos o estorno.</p>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Posso desistir após pagar?
+                </button>
+                <div class="faq-answer">
+                    <p>Sim! Caso o serviço ainda não tenha sido realizado, basta entrar em contato em nossos canais de atendimento que faremos o estorno.</p>
+                </div>
             </div>
-            <div class="duvida">
-                <h4 class="collapse" data-bs-toggle="collapse" href="#collapse05" role="button" aria-expanded="false" aria-controls="collapse05">Posso realizar o agendamento sem a assessoria do site?<i class="fa-solid fa-chevron-down"></i></h4>
-                <p class="collapse" id="collapse05">Não. Este é o único canal oficial para realizar o agendamento dos seus documentos. Para sua segurança e garantia do serviço, realize o agendamento somente através deste portal governamental.</p>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Posso realizar o agendamento sem a assessoria do site?
+                </button>
+                <div class="faq-answer">
+                    <p>Não. Este é o único canal oficial para realizar o agendamento dos seus documentos. Para sua segurança e garantia do serviço, realize o agendamento somente através deste portal governamental.</p>
+                </div>
             </div>
         </div>
     </div>
-</section>
-
-<!-- Bootstrap JS e dependências -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-<script>
-    document.getElementById("consultarCnpj").addEventListener("click", function() {
-        const cnpj = document.getElementById("cnpjInput").value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
-
-        if (cnpj.length !== 14) {
-            alert("Por favor, digite um CNPJ válido com 14 dígitos.");
-            return;
-        }
-
-        // Simulação de busca de dados
-        const dadosCnpj = {
-            "00000000000100": {
-                razaoSocial: "EMPRESA TESTE LTDA",
-                nomeFantasia: "TESTE MEI",
-                situacaoCadastral: "Ativa",
-                pendencias: ["DAS em atraso (01/2024)", "Declaração Anual não entregue (2023)"]
-            },
-            "11111111111111": {
-                razaoSocial: "OUTRA EMPRESA LTDA",
-                nomeFantasia: "OUTRO MEI",
-                situacaoCadastral: "Ativa",
-                pendencias: []
-            },
-            "22222222222222": {
-                razaoSocial: "EMPRESA COM PENDENCIA",
-                nomeFantasia: "MEI PENDENTE",
-                situacaoCadastral: "Ativa",
-                pendencias: ["DAS em atraso (02/2024)"]
+    
+    <script>
+        // Máscara para CNPJ
+        document.getElementById('cnpjInput').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+            value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+            value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+            value = value.replace(/(\d{4})(\d)/, '$1-$2');
+            e.target.value = value;
+        });
+        
+        // Função de consulta CNPJ
+        document.getElementById('consultarCnpj').addEventListener('click', function() {
+            const cnpj = document.getElementById('cnpjInput').value.replace(/[^0-9]/g, '');
+            
+            if (cnpj.length !== 14) {
+                alert('Por favor, digite um CNPJ válido com 14 dígitos.');
+                return;
             }
-        };
-
-        const resultado = dadosCnpj[cnpj];
-        const resultadoConsultaDiv = document.getElementById("resultadoConsulta");
-        const listaPendenciasUl = document.getElementById("listaPendencias");
-
-        if (resultado) {
-            document.getElementById("razaoSocial").textContent = resultado.razaoSocial;
-            document.getElementById("nomeFantasia").textContent = resultado.nomeFantasia;
-            document.getElementById("situacaoCadastral").textContent = resultado.situacaoCadastral;
-
-            listaPendenciasUl.innerHTML = ""; // Clear previous pendencies
-            if (resultado.pendencias.length > 0) {
-                resultado.pendencias.forEach(pendencia => {
-                    const li = document.createElement("li");
-                    li.textContent = pendencia;
-                    listaPendenciasUl.appendChild(li);
-                });
+            
+            // Simulação de busca de dados
+            const dadosCnpj = {
+                '00000000000100': {
+                    razaoSocial: 'EMPRESA TESTE LTDA',
+                    nomeFantasia: 'TESTE MEI',
+                    situacaoCadastral: 'Ativa',
+                    pendencias: ['DAS em atraso (01/2024)', 'Declaração Anual não entregue (2023)']
+                },
+                '11111111111111': {
+                    razaoSocial: 'OUTRA EMPRESA LTDA',
+                    nomeFantasia: 'OUTRO MEI',
+                    situacaoCadastral: 'Ativa',
+                    pendencias: []
+                },
+                '22222222222222': {
+                    razaoSocial: 'EMPRESA COM PENDENCIA',
+                    nomeFantasia: 'MEI PENDENTE',
+                    situacaoCadastral: 'Ativa',
+                    pendencias: ['DAS em atraso (02/2024)']
+                }
+            };
+            
+            const resultado = dadosCnpj[cnpj];
+            const resultadoDiv = document.getElementById('resultadoConsulta');
+            const listaPendencias = document.getElementById('listaPendencias');
+            
+            if (resultado) {
+                document.getElementById('razaoSocial').textContent = resultado.razaoSocial;
+                document.getElementById('nomeFantasia').textContent = resultado.nomeFantasia;
+                document.getElementById('situacaoCadastral').textContent = resultado.situacaoCadastral;
+                
+                listaPendencias.innerHTML = '';
+                if (resultado.pendencias.length > 0) {
+                    resultado.pendencias.forEach(pendencia => {
+                        const li = document.createElement('li');
+                        li.className = 'pendencia-item';
+                        li.textContent = pendencia;
+                        listaPendencias.appendChild(li);
+                    });
+                } else {
+                    const li = document.createElement('li');
+                    li.className = 'pendencia-item sem-pendencia';
+                    li.textContent = 'Nenhuma pendência ativa encontrada.';
+                    listaPendencias.appendChild(li);
+                }
+                
+                resultadoDiv.style.display = 'block';
+                resultadoDiv.scrollIntoView({ behavior: 'smooth' });
             } else {
-                const li = document.createElement("li");
-                li.textContent = "Nenhuma pendência ativa encontrada.";
-                listaPendenciasUl.appendChild(li);
+                alert('CNPJ não encontrado na base de dados simulada. Tente 00.000.000/0001-00, 11.111.111/1111-11 ou 22.222.222/2222-22.');
+                resultadoDiv.style.display = 'none';
             }
-            resultadoConsultaDiv.style.display = "block";
-        } else {
-            alert("CNPJ não encontrado na base de dados simulada. Tente 00.000.000/0001-00, 11.111.111/1111-11 ou 22.222.222/2222-22.");
-            resultadoConsultaDiv.style.display = "none";
+        });
+        
+        // Função para FAQ
+        function toggleFaq(button) {
+            const answer = button.nextElementSibling;
+            const isActive = button.classList.contains('active');
+            
+            // Fechar todas as outras FAQs
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.classList.remove('active');
+                q.nextElementSibling.classList.remove('active');
+            });
+            
+            // Abrir/fechar a FAQ clicada
+            if (!isActive) {
+                button.classList.add('active');
+                answer.classList.add('active');
+            }
         }
-    });
-</script>
-
-</body>
-</html>
-
+    </script>
+</section>
 
