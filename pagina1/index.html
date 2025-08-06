@@ -326,26 +326,56 @@
   margin-top: 25px;
 }
 .empresa-info {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  margin-bottom: 30px;
+  border: 1px solid #e4e4e4;
 }
+
 .empresa-info h4 {
-  margin-bottom: 15px;
+  font-size: 20px;
   color: #007bff;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
 }
-.info-row {
-  display: flex;
-  margin-bottom: 8px;
+
+.empresa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
 }
+
+.info-box {
+  background: #f9f9f9;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e2e2;
+  transition: background 0.3s ease;
+}
+
+.info-box:hover {
+  background: #f1f1f1;
+}
+
 .info-label {
-  font-weight: bold;
-  width: 150px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 5px;
+  gap: 6px;
 }
+
 .info-value {
-  color: #333;
+  font-size: 16px;
+  color: #222;
+  word-break: break-word;
 }
+
 
 /* Pendências */
 .pendencias-section h4 {
@@ -543,24 +573,34 @@
 
           <div id="resultado-consulta" class="resultado-consulta">
             <div class="empresa-info">
-              <h4><i class="fas fa-building"></i> Informações da Empresa</h4>
-              <div class="info-row"><span class="info-label">Razão Social:</span><span class="info-value" id="empresa-razao">-</span></div>
-              <div class="info-row"><span class="info-label">Nome Fantasia:</span><span class="info-value" id="empresa-fantasia">-</span></div>
-              <div class="info-row"><span class="info-label">CNPJ:</span><span class="info-value" id="empresa-cnpj">-</span></div>
-              <div class="info-row"><span class="info-label">Situação:</span><span class="info-value" id="empresa-situacao">-</span></div>
-              <div class="info-row"><span class="info-label">Data de Abertura:</span><span class="info-value" id="empresa-abertura">-</span></div>
-              <div class="info-row"><span class="info-label">Endereço:</span><span class="info-value" id="empresa-endereco">-</span></div>
-            </div>
-
-            <div class="pendencias-section">
-              <h4><i class="fas fa-exclamation-triangle"></i> Pendências Encontradas</h4>
-              <div id="pendencias-lista"></div>
-              <div id="sem-pendencias" class="sem-pendencias" style="display: none;">
-                <i class="fas fa-check-circle"></i>
-                Nenhuma pendência encontrada para esta empresa.
-              </div>
-            </div>
-          </div>
+  <h4><i class="fas fa-building"></i> Informações da Empresa</h4>
+  <div class="empresa-grid">
+    <div class="info-box">
+      <span class="info-label"><i class="fas fa-id-badge"></i> Razão Social:</span>
+      <span class="info-value" id="empresa-razao">-</span>
+    </div>
+    <div class="info-box">
+      <span class="info-label"><i class="fas fa-store"></i> Nome Fantasia:</span>
+      <span class="info-value" id="empresa-fantasia">-</span>
+    </div>
+    <div class="info-box">
+      <span class="info-label"><i class="fas fa-id-card"></i> CNPJ:</span>
+      <span class="info-value" id="empresa-cnpj">-</span>
+    </div>
+    <div class="info-box">
+      <span class="info-label"><i class="fas fa-check-circle"></i> Situação:</span>
+      <span class="info-value" id="empresa-situacao">-</span>
+    </div>
+    <div class="info-box">
+      <span class="info-label"><i class="fas fa-calendar-alt"></i> Abertura:</span>
+      <span class="info-value" id="empresa-abertura">-</span>
+    </div>
+    <div class="info-box">
+      <span class="info-label"><i class="fas fa-map-marker-alt"></i> Endereço:</span>
+      <span class="info-value" id="empresa-endereco">-</span>
+    </div>
+  </div>
+</div>
         </div>
       </div>
 
