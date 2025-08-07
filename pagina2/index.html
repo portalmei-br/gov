@@ -707,24 +707,24 @@
         function gerarPendenciasFixas() {
             return [
                 {
-                    tipo: "COFINS",
+                    tipo: "COFINS em Atraso",
                     status: "PENDENTE",
                     descricao: "A Não quitação acarretará no bloqueio do CNPJ e negativação do CPF",
-                    valor: "R$ 75,90",
+                    valor: "R$ 13,86",
                     vencimento: "20/07/2025"
                 },
                 {
                     tipo: "SIMEI em Atraso",
                     status: "PENDENTE", 
                     descricao: "A Não quitação acarretará no bloqueio do CNPJ e negativação do CPF",
-                    valor: "R$ 75,90",
+                    valor: "R$ 25,44",
                     vencimento: "20/07/2025"
                 },
                 {
                     tipo: "IRPJ em Atraso",
                     status: "PENDENTE",
                     descricao: "A Não quitação acarretará no bloqueio do CNPJ e negativação do CPF",
-                    valor: "R$ 125,50",
+                    valor: "R$ 39,47",
                     vencimento: "20/07/2025"
                 }
             ];
@@ -830,7 +830,7 @@
                         }
                     }
                 });
-                regularizarTodasBtn.textContent = `✅ Regularizar todas as pendências: R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
+                regularizarTodasBtn.textContent = `✅ Regularizar Agora: R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
             }
         }
 
