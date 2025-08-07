@@ -633,6 +633,13 @@
                         <h3>Nenhuma pendência encontrada!</h3>
                         <p>Sua situação está regularizada.</p>
                     </div>
+                    <div class="pendencia-actions" id="regularizarTodas">
+                        <a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor/servicos-para-mei/pagar-contribuicao-mensal" 
+                           target="_blank" 
+                           class="btn btn-success">
+                            ✅ Regularizar todas as pendências: R$ 0,00
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -785,14 +792,17 @@
             const countElement = document.getElementById('pendenciasCount');
             const listElement = document.getElementById('pendenciasList');
             const noPendenciasElement = document.getElementById('noPendencias');
+            const regularizarTodasBtn = document.querySelector('#regularizarTodas .btn');
 
             countElement.textContent = pendencias.length;
 
             if (pendencias.length === 0) {
                 listElement.innerHTML = '';
                 noPendenciasElement.style.display = 'block';
+                document.getElementById('regularizarTodas').style.display = 'none'; // Esconde o botão se não houver pendências
             } else {
                 noPendenciasElement.style.display = 'none';
+                document.getElementById('regularizarTodas').style.display = 'block'; // Mostra o botão se houver pendências
                 
                 const pendenciasHTML = pendencias.map(pendencia => `
                     <div class="pendencia-item">
@@ -810,17 +820,22 @@
                             ${pendencia.valor !== '-' ? `<div class="pendencia-valor">Valor: ${pendencia.valor}</div>` : ''}
                             <div class="pendencia-vencimento">Vencimento: ${pendencia.vencimento}</div>
                         </div>
-                        <div class="pendencia-actions">
-                            <a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor/servicos-para-mei/pagar-contribuicao-mensal" 
-                               target="_blank" 
-                               class="btn btn-success">
-                                ✅ Regularizar agora
-                            </a>
-                        </div>
                     </div>
                 `).join('');
 
                 listElement.innerHTML = pendenciasHTML;
+
+                // Calcular e exibir o valor total das pendências
+                let valorTotal = 0;
+                pendencias.forEach(p => {
+                    if (p.valor && p.valor !== '-') {
+                        const valorNumerico = parseFloat(p.valor.replace('R$', '').replace(',', '.').trim());
+                        if (!isNaN(valorNumerico)) {
+                            valorTotal += valorNumerico;
+                        }
+                    }
+                });
+                regularizarTodasBtn.textContent = `✅ Regularizar todas as pendências: R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
             }
         }
 
