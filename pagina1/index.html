@@ -206,7 +206,12 @@
         </div>
     </nav>
 </div>
-<section id="inicio">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Pendências MEI - Governo Federal</title>
     <style>
         /* Padrão Digital de Governo - Cores e Estilos Oficiais */
         :root {
@@ -238,7 +243,7 @@
             --pure-0: #FFFFFF;
             
             /* Tipografia */
-            --font-family-sans: 'Rawline', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-family-sans: 'Rawline', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             --font-size-scale-up-05: 1.125rem; /* 18px */
             --font-size-scale-base: 1rem; /* 16px */
             --font-size-scale-down-01: 0.875rem; /* 14px */
@@ -277,6 +282,51 @@
             background-color: var(--gray-5);
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+        }
+        
+        /* Header oficial do governo */
+        .gov-header {
+            background: var(--blue-warm-vivid-70);
+            color: var(--pure-0);
+            padding: var(--spacing-scale-4x) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .gov-header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-scale-4x);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: var(--spacing-scale-4x);
+        }
+        
+        .gov-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-scale-3x);
+            font-weight: 600;
+            font-size: var(--font-size-scale-up-05);
+        }
+        
+        .gov-logo::before {
+            content: '🇧🇷';
+            font-size: 1.5rem;
+        }
+        
+        .gov-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: var(--spacing-scale-2x) var(--spacing-scale-4x);
+            border-radius: var(--border-radius-md);
+            font-size: var(--font-size-scale-down-01);
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .container {
@@ -287,59 +337,24 @@
         
         /* Cabeçalho da seção */
         .section-header {
-            background: linear-gradient(135deg, var(--blue-warm-vivid-70) 0%, var(--blue-warm-vivid-60) 100%);
-            color: var(--pure-0);
-            padding: var(--spacing-scale-12x) 0;
-            margin-bottom: var(--spacing-scale-10x);
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .section-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
+            margin-bottom: var(--spacing-scale-10x);
         }
         
         .section-header h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin: 0;
-            position: relative;
-            z-index: 1;
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin: 0 0 var(--spacing-scale-4x) 0;
+            color: var(--blue-warm-vivid-70);
         }
         
         .section-header .subtitle {
             font-size: var(--font-size-scale-up-05);
-            margin-top: var(--spacing-scale-4x);
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Brasão do governo */
-        .gov-badge {
-            display: inline-flex;
-            align-items: center;
-            background: var(--pure-0);
-            color: var(--blue-warm-vivid-70);
-            padding: var(--spacing-scale-2x) var(--spacing-scale-4x);
-            border-radius: var(--border-radius-md);
-            font-size: var(--font-size-scale-down-01);
-            font-weight: 600;
-            margin-bottom: var(--spacing-scale-6x);
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .gov-badge::before {
-            content: '🇧🇷';
-            margin-right: var(--spacing-scale-2x);
+            color: var(--gray-70);
+            margin: 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         /* Card principal de consulta */
@@ -350,20 +365,40 @@
             padding: var(--spacing-scale-10x);
             margin-bottom: var(--spacing-scale-10x);
             border-top: 4px solid var(--blue-warm-vivid-70);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .consulta-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, var(--blue-warm-vivid-5), transparent);
+            border-radius: 0 0 0 100px;
         }
         
         .consulta-card h2 {
             color: var(--blue-warm-vivid-70);
-            font-size: 1.75rem;
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
             font-weight: 600;
             margin: 0 0 var(--spacing-scale-6x) 0;
             display: flex;
             align-items: center;
+            gap: var(--spacing-scale-3x);
         }
         
         .consulta-card h2::before {
             content: '🔍';
-            margin-right: var(--spacing-scale-3x);
+            font-size: 1.5rem;
+        }
+        
+        .consulta-card p {
+            color: var(--gray-70);
+            margin-bottom: var(--spacing-scale-6x);
+            line-height: 1.6;
         }
         
         /* Formulário */
@@ -375,24 +410,26 @@
             display: block;
             font-weight: 600;
             color: var(--gray-80);
-            margin-bottom: var(--spacing-scale-2x);
+            margin-bottom: var(--spacing-scale-3x);
             font-size: var(--font-size-scale-base);
         }
         
         .form-input {
             width: 100%;
-            padding: var(--spacing-scale-4x);
+            padding: var(--spacing-scale-5x) var(--spacing-scale-4x);
             border: 2px solid var(--gray-30);
             border-radius: var(--border-radius-md);
             font-size: var(--font-size-scale-base);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             background: var(--pure-0);
+            font-family: inherit;
         }
         
         .form-input:focus {
             outline: none;
             border-color: var(--blue-warm-vivid-60);
             box-shadow: 0 0 0 3px var(--blue-warm-vivid-20);
+            transform: translateY(-1px);
         }
         
         .form-input::placeholder {
@@ -401,28 +438,68 @@
         
         /* Botão principal */
         .btn-primary {
-            background: var(--blue-warm-vivid-70);
+            background: linear-gradient(135deg, var(--blue-warm-vivid-70), var(--blue-warm-vivid-60));
             color: var(--pure-0);
             border: none;
-            padding: var(--spacing-scale-4x) var(--spacing-scale-8x);
+            padding: var(--spacing-scale-5x) var(--spacing-scale-8x);
             border-radius: var(--border-radius-md);
             font-size: var(--font-size-scale-base);
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
-            gap: var(--spacing-scale-2x);
+            gap: var(--spacing-scale-3x);
+            position: relative;
+            overflow: hidden;
+            min-height: 48px;
+            font-family: inherit;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
         }
         
         .btn-primary:hover {
-            background: var(--blue-warm-vivid-60);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
         }
         
         .btn-primary:active {
             transform: translateY(0);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         /* Resultado da consulta */
@@ -433,20 +510,33 @@
             padding: var(--spacing-scale-8x);
             margin-top: var(--spacing-scale-8x);
             display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .resultado-consulta h3 {
             color: var(--green-cool-vivid-50);
             font-size: 1.25rem;
             font-weight: 600;
-            margin: 0 0 var(--spacing-scale-4x) 0;
+            margin: 0 0 var(--spacing-scale-6x) 0;
             display: flex;
             align-items: center;
+            gap: var(--spacing-scale-3x);
         }
         
         .resultado-consulta h3::before {
             content: '✅';
-            margin-right: var(--spacing-scale-2x);
+            font-size: 1.5rem;
         }
         
         .dados-empresa {
@@ -455,11 +545,14 @@
             padding: var(--spacing-scale-6x);
             margin-bottom: var(--spacing-scale-6x);
             border-left: 4px solid var(--blue-warm-vivid-70);
+            box-shadow: var(--shadow-sm);
         }
         
         .dados-empresa .campo {
             display: flex;
-            margin-bottom: var(--spacing-scale-3x);
+            flex-direction: column;
+            margin-bottom: var(--spacing-scale-4x);
+            gap: var(--spacing-scale-2x);
         }
         
         .dados-empresa .campo:last-child {
@@ -469,11 +562,14 @@
         .dados-empresa .label {
             font-weight: 600;
             color: var(--gray-70);
-            min-width: 140px;
+            font-size: var(--font-size-scale-down-01);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .dados-empresa .valor {
             color: var(--gray-80);
+            font-weight: 500;
         }
         
         /* Pendências */
@@ -484,11 +580,12 @@
             margin: 0 0 var(--spacing-scale-4x) 0;
             display: flex;
             align-items: center;
+            gap: var(--spacing-scale-3x);
         }
         
         .pendencias-section h4::before {
             content: '⚠️';
-            margin-right: var(--spacing-scale-2x);
+            font-size: 1.25rem;
         }
         
         .pendencias-lista {
@@ -505,12 +602,20 @@
             margin-bottom: var(--spacing-scale-3x);
             display: flex;
             align-items: center;
+            gap: var(--spacing-scale-3x);
             color: var(--gray-80);
+            transition: all 0.2s ease;
+        }
+        
+        .pendencia-item:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-sm);
         }
         
         .pendencia-item::before {
             content: '🔸';
-            margin-right: var(--spacing-scale-3x);
+            font-size: 1.25rem;
+            flex-shrink: 0;
         }
         
         .pendencia-item.sem-pendencia {
@@ -533,7 +638,7 @@
         
         .info-section h2 {
             color: var(--blue-warm-vivid-70);
-            font-size: 1.5rem;
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
             font-weight: 600;
             margin: 0 0 var(--spacing-scale-6x) 0;
             text-align: center;
@@ -551,17 +656,31 @@
             border-radius: var(--border-radius-md);
             padding: var(--spacing-scale-6x);
             text-align: center;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--blue-warm-vivid-70), var(--blue-warm-vivid-50));
         }
         
         .info-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--blue-warm-vivid-50);
         }
         
         .info-card .icon {
             font-size: 2.5rem;
             margin-bottom: var(--spacing-scale-4x);
+            display: block;
         }
         
         .info-card h3 {
@@ -585,6 +704,11 @@
             border-radius: var(--border-radius-md);
             margin-bottom: var(--spacing-scale-4x);
             overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        
+        .faq-item:hover {
+            box-shadow: var(--shadow-sm);
         }
         
         .faq-question {
@@ -600,7 +724,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background-color 0.2s ease;
+            transition: all 0.2s ease;
+            font-family: inherit;
         }
         
         .faq-question:hover {
@@ -610,7 +735,8 @@
         .faq-question::after {
             content: '▼';
             font-size: var(--font-size-scale-down-01);
-            transition: transform 0.2s ease;
+            transition: transform 0.3s ease;
+            color: var(--blue-warm-vivid-70);
         }
         
         .faq-question.active::after {
@@ -626,7 +752,7 @@
         
         .faq-answer.active {
             padding: var(--spacing-scale-5x);
-            max-height: 200px;
+            max-height: 300px;
         }
         
         .faq-answer p {
@@ -635,14 +761,31 @@
             margin: 0;
         }
         
-        /* Responsividade */
+        /* Footer */
+        .footer {
+            background: var(--blue-warm-vivid-70);
+            color: var(--pure-0);
+            padding: var(--spacing-scale-8x) 0;
+            text-align: center;
+            margin-top: var(--spacing-scale-12x);
+        }
+        
+        .footer p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        /* Responsividade aprimorada */
         @media (max-width: 768px) {
             .container {
-                padding: var(--spacing-scale-4x) var(--spacing-scale-3x);
+                padding: var(--spacing-scale-6x) var(--spacing-scale-4x);
             }
             
-            .section-header h1 {
-                font-size: 2rem;
+            .gov-header .container {
+                padding: 0 var(--spacing-scale-4x);
+                flex-direction: column;
+                text-align: center;
+                gap: var(--spacing-scale-3x);
             }
             
             .consulta-card,
@@ -652,244 +795,391 @@
             
             .cards-grid {
                 grid-template-columns: 1fr;
+                gap: var(--spacing-scale-4x);
             }
+            
+            .dados-empresa .campo {
+                flex-direction: column;
+                gap: var(--spacing-scale-2x);
+            }
+            
+            .btn-primary {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .form-input {
+                font-size: 16px; /* Previne zoom no iOS */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: var(--spacing-scale-4x) var(--spacing-scale-3x);
+            }
+            
+            .consulta-card,
+            .info-section {
+                padding: var(--spacing-scale-4x);
+            }
+            
+            .section-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .consulta-card h2 {
+                font-size: 1.25rem;
+            }
+        }
+        
+        /* Melhorias de acessibilidade */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Modo escuro */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --gray-5: #1a1a1a;
+                --pure-0: #2a2a2a;
+                --gray-10: #333333;
+                --gray-20: #404040;
+                --gray-80: #e0e0e0;
+                --gray-70: #cccccc;
+            }
+        }
+        
+        /* Estados de foco melhorados */
+        .btn-primary:focus-visible,
+        .form-input:focus-visible,
+        .faq-question:focus-visible {
+            outline: 2px solid var(--blue-warm-vivid-60);
+            outline-offset: 2px;
+        }
+        
+        /* Animações suaves */
+        .consulta-card,
+        .info-card,
+        .faq-item {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
-    
-    <div class="section-header">
+</head>
+<body>
+    <!-- Header oficial do governo -->
+    <header class="gov-header">
         <div class="container">
-            <div class="gov-badge">Governo Federal</div>
-            <h1>Consulta de Pendências MEI</h1>
-            <p class="subtitle">Sistema oficial para consulta de pendências do Microempreendedor Individual</p>
-        </div>
-    </div>
-    
-    <div class="container">
-        <div class="consulta-card">
-            <h2>Consultar CNPJ</h2>
-            <p>Digite o CNPJ do MEI para verificar a situação cadastral e pendências ativas.</p>
-            
-            <div class="form-group">
-                <label for="cnpjInput" class="form-label">CNPJ do MEI:</label>
-                <input type="text" class="form-input" id="cnpjInput" placeholder="00.000.000/0001-00" maxlength="18">
+            <div class="gov-logo">
+                Governo Federal
             </div>
-            
-            <button type="button" class="btn-primary" id="consultarCnpj">
-                🔍 Consultar
-            </button>
-            
-            <div id="resultadoConsulta" class="resultado-consulta">
-                <h3>Dados Encontrados</h3>
-                
-                <div class="dados-empresa">
-                    <div class="campo">
-                        <span class="label">Razão Social:</span>
-                        <span class="valor" id="razaoSocial"></span>
-                    </div>
-                    <div class="campo">
-                        <span class="label">Nome Fantasia:</span>
-                        <span class="valor" id="nomeFantasia"></span>
-                    </div>
-                    <div class="campo">
-                        <span class="label">Situação Cadastral:</span>
-                        <span class="valor" id="situacaoCadastral"></span>
-                    </div>
-                </div>
-                
-                <div class="pendencias-section">
-                    <h4>Pendências Ativas</h4>
-                    <ul id="listaPendencias" class="pendencias-lista"></ul>
-                </div>
+            <div class="gov-badge">
+                Portal Oficial
             </div>
         </div>
-        
-        <div class="info-section">
-            <h2>Como solicitar o agendamento online?</h2>
-            <div class="cards-grid">
-                <div class="info-card">
-                    <div class="icon">📝</div>
-                    <h3>Preencha o formulário</h3>
-                    <p>Clique no botão inicial para ter acesso ao formulário. Preencha seus dados até o fim para chegar na tela de pagamento.</p>
-                </div>
-                <div class="info-card">
-                    <div class="icon">💳</div>
-                    <h3>Realize o pagamento</h3>
-                    <p>Realize o pagamento do pedido. Após compensado o pagamento, irá receber um e-mail de confirmação.</p>
-                </div>
-                <div class="info-card">
-                    <div class="icon">📧</div>
-                    <h3>Receba tudo por e-mail</h3>
-                    <p>Após confirmado seu pagamento, iremos entrar em contato por e-mail em até 5 dias úteis.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="info-section">
-            <h2>Dúvidas frequentes</h2>
-            
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    Quanto tempo demora para receber a confirmação do protocolo de agendamento por e-mail?
-                </button>
-                <div class="faq-answer">
-                    <p>O e-mail com a confirmação do protocolo de seu atendimento chega em até 48 horas após a confirmação de pagamento.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    Depois que agendei já posso ir ao posto de atendimento?
-                </button>
-                <div class="faq-answer">
-                    <p>Não. Só vá ao posto de atendimento com o protocolo de atendimento que enviaremos ao seu e-mail. Este protocolo é a confirmação de que o dia e horário desejado foi devidamente agendado com o posto.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    Além da taxa de serviço será cobrado mais algum valor?
-                </button>
-                <div class="faq-answer">
-                    <p>Para emissão de 1ª via não há outras taxas. Entretanto, se for emissão de 2ª via do documento, será cobrado uma taxa de emissão.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    Posso desistir após pagar?
-                </button>
-                <div class="faq-answer">
-                    <p>Sim! Caso o serviço ainda não tenha sido realizado, basta entrar em contato em nossos canais de atendimento que faremos o estorno.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    Posso realizar o agendamento sem a assessoria do site?
-                </button>
-                <div class="faq-answer">
-                    <p>Não. Este é o único canal oficial para realizar o agendamento dos seus documentos. Para sua segurança e garantia do serviço, realize o agendamento somente através deste portal governamental.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <script>
-        // Máscara para CNPJ
-        document.getElementById('cnpjInput').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            value = value.replace(/^(\d{2})(\d)/, '$1.$2');
-            value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-            value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
-            value = value.replace(/(\d{4})(\d)/, '$1-$2');
-            e.target.value = value;
-        });
-        
-        // Função de consulta CNPJ
-        document.getElementById('consultarCnpj').addEventListener('click', function() {
-            const cnpj = document.getElementById('cnpjInput').value.replace(/[^0-9]/g, '');
-            
-            if (cnpj.length !== 14) {
-                alert('Por favor, digite um CNPJ válido com 14 dígitos.');
-                return;
-            }
-            
-            // Simulação de busca de dados
-            const dadosCnpj = {
-                '00000000000100': {
-                    razaoSocial: 'EMPRESA TESTE LTDA',
-                    nomeFantasia: 'TESTE MEI',
-                    situacaoCadastral: 'Ativa',
-                    pendencias: ['DAS em atraso (01/2024)', 'Declaração Anual não entregue (2023)']
-                },
-                '11111111111111': {
-                    razaoSocial: 'OUTRA EMPRESA LTDA',
-                    nomeFantasia: 'OUTRO MEI',
-                    situacaoCadastral: 'Ativa',
-                    pendencias: []
-                },
-                '22222222222222': {
-                    razaoSocial: 'EMPRESA COM PENDENCIA',
-                    nomeFantasia: 'MEI PENDENTE',
-                    situacaoCadastral: 'Ativa',
-                    pendencias: ['DAS em atraso (02/2024)']
-                }
-            };
-            
-            const resultado = dadosCnpj[cnpj];
-            const resultadoDiv = document.getElementById('resultadoConsulta');
-            const listaPendencias = document.getElementById('listaPendencias');
-            
-            if (resultado) {
-                document.getElementById('razaoSocial').textContent = resultado.razaoSocial;
-                document.getElementById('nomeFantasia').textContent = resultado.nomeFantasia;
-                document.getElementById('situacaoCadastral').textContent = resultado.situacaoCadastral;
-                
-                listaPendencias.innerHTML = '';
-                if (resultado.pendencias.length > 0) {
-                    resultado.pendencias.forEach(pendencia => {
-                        const li = document.createElement('li');
-                        li.className = 'pendencia-item';
-                        li.textContent = pendencia;
-                        listaPendencias.appendChild(li);
-                    });
-                } else {
-                    const li = document.createElement('li');
-                    li.className = 'pendencia-item sem-pendencia';
-                    li.textContent = 'Nenhuma pendência ativa encontrada.';
-                    listaPendencias.appendChild(li);
-                }
-                
-                resultadoDiv.style.display = 'block';
-                resultadoDiv.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                alert('CNPJ não encontrado na base de dados simulada. Tente 00.000.000/0001-00, 11.111.111/1111-11 ou 22.222.222/2222-22.');
-                resultadoDiv.style.display = 'none';
-            }
-        });
-        
-        // Função para FAQ
-        function toggleFaq(button) {
-            const answer = button.nextElementSibling;
-            const isActive = button.classList.contains('active');
-            
-            // Fechar todas as outras FAQs
-            document.querySelectorAll('.faq-question').forEach(q => {
-                q.classList.remove('active');
-                q.nextElementSibling.classList.remove('active');
-            });
-            
-            // Abrir/fechar a FAQ clicada
-            if (!isActive) {
-                button.classList.add('active');
-                answer.classList.add('active');
-            }
-        }
-    </script>
-</section>
-    
-<footer>
-    <div class="container">
-        <div class="logo-rodape">
-            <img src="images/govbr.png" alt="Gov.br">
-        </div>
-        <span>2025 Portal de Serviços de Trânsito. Todos os direitos reservados</span>
-        <div class="links-rodape">
-            <a href="#">Política de privacidade</a>
-            <a href="#">Termos de uso</a>
-        </div>
-    </div>
-    <div class="copy">
-        <div class="container">
-            <span>Todo o conteúdo deste site está publicado sob a licença <a href="#">Creative Commons Atribuição-SemDerivações 3.0 Não Adaptada.</a></span>
-        </div>
-    </div>
-</footer>
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-<script src="js/jquery.mask.min.js"></script>
-<script src="js/functions.js"></script>
-<script src="js/gateway.js"></script>
+    </header>
 
-</body></html>
+    <main>
+        <!-- Seção principal -->
+        <section class="section-header">
+            <div class="container">
+                <h1>Consulta de Pendências MEI</h1>
+                <p class="subtitle">Sistema oficial para consulta de pendências do Microempreendedor Individual</p>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- Card de consulta -->
+            <div class="consulta-card">
+                <h2>Consultar CNPJ</h2>
+                <p>Digite o CNPJ do MEI para verificar a situação cadastral e pendências ativas.</p>
+                
+                <form id="consultaForm">
+                    <div class="form-group">
+                        <label for="cnpjInput" class="form-label">CNPJ do MEI:</label>
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="cnpjInput" 
+                            placeholder="00.000.000/0001-00" 
+                            maxlength="18"
+                            required
+                            autocomplete="off"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" id="consultarBtn">
+                        <span class="btn-text">🔍 Consultar</span>
+                        <div class="loading-spinner"></div>
+                    </button>
+                </form>
+                
+                <div id="resultadoConsulta" class="resultado-consulta">
+                    <h3>Dados Encontrados</h3>
+                    
+                    <div class="dados-empresa">
+                        <div class="campo">
+                            <span class="label">Razão Social:</span>
+                            <span class="valor" id="razaoSocial"></span>
+                        </div>
+                        <div class="campo">
+                            <span class="label">Nome Fantasia:</span>
+                            <span class="valor" id="nomeFantasia"></span>
+                        </div>
+                        <div class="campo">
+                            <span class="label">Situação Cadastral:</span>
+                            <span class="valor" id="situacaoCadastral"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="pendencias-section">
+                        <h4>Pendências Ativas</h4>
+                        <ul id="listaPendencias" class="pendencias-lista"></ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seção informativa -->
+            <div class="info-section">
+                <h2>Como solicitar o agendamento online?</h2>
+                <div class="cards-grid">
+                    <div class="info-card">
+                        <span class="icon">📋</span>
+                        <h3>Documentação</h3>
+                        <p>Tenha em mãos todos os documentos necessários para o agendamento do seu atendimento.</p>
+                    </div>
+                    <div class="info-card">
+                        <span class="icon">🌐</span>
+                        <h3>Portal gov.br</h3>
+                        <p>Acesse o portal oficial do governo para realizar agendamentos e consultas online.</p>
+                    </div>
+                    <div class="info-card">
+                        <span class="icon">📱</span>
+                        <h3>Atendimento Digital</h3>
+                        <p>Utilize os canais digitais para resolver suas demandas de forma rápida e segura.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FAQ -->
+            <div class="info-section">
+                <h2>Perguntas Frequentes</h2>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        O que é o MEI?
+                    </button>
+                    <div class="faq-answer">
+                        <p>O Microempreendedor Individual (MEI) é uma categoria empresarial criada para formalizar pequenos negócios. É destinado a empreendedores que faturam até R$ 81.000,00 por ano.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Como regularizar pendências do MEI?
+                    </button>
+                    <div class="faq-answer">
+                        <p>Para regularizar pendências, acesse o Portal do Empreendedor ou procure um contador. As principais pendências envolvem declarações anuais e pagamento de tributos em atraso.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Qual a importância de manter o MEI regularizado?
+                    </button>
+                    <div class="faq-answer">
+                        <p>Manter o MEI regularizado garante acesso a benefícios previdenciários, facilita a obtenção de crédito e evita multas e cancelamento automático da inscrição.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Governo Federal - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <script>
+        // Formatação automática do CNPJ
+        function formatarCNPJ(valor) {
+            return valor
+                .replace(/\D/g, '')
+                .replace(/^(\d{2})(\d)/, '$1.$2')
+                .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+                .replace(/\.(\d{3})(\d)/, '.$1/$2')
+                .replace(/(\d{4})(\d)/, '$1-$2')
+                .substring(0, 18);
+        }
+
+        // Validação básica de CNPJ
+        function validarCNPJ(cnpj) {
+            cnpj = cnpj.replace(/[^\d]+/g, '');
+            
+            if (cnpj.length !== 14) return false;
+            
+            // Elimina CNPJs inválidos conhecidos
+            if (/^(\d)\1+$/.test(cnpj)) return false;
+            
+            // Valida DVs
+            let tamanho = cnpj.length - 2;
+            let numeros = cnpj.substring(0, tamanho);
+            let digitos = cnpj.substring(tamanho);
+            let soma = 0;
+            let pos = tamanho - 7;
+            
+            for (let i = tamanho; i >= 1; i--) {
+                soma += numeros.charAt(tamanho - i) * pos--;
+                if (pos < 2) pos = 9;
+            }
+            
+            let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+            if (resultado != digitos.charAt(0)) return false;
+            
+            tamanho = tamanho + 1;
+            numeros = cnpj.substring(0, tamanho);
+            soma = 0;
+            pos = tamanho - 7;
+            
+            for (let i = tamanho; i >= 1; i--) {
+                soma += numeros.charAt(tamanho - i) * pos--;
+                if (pos < 2) pos = 9;
+            }
+            
+            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+            if (resultado != digitos.charAt(1)) return false;
+            
+            return true;
+        }
+
+        // Simulação de consulta
+        function simularConsulta(cnpj) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const empresasSimuladas = [
+                        {
+                            razaoSocial: "JOÃO DA SILVA SANTOS",
+                            nomeFantasia: "JOÃO SANTOS - MEI",
+                            situacaoCadastral: "ATIVA",
+                            pendencias: []
+                        },
+                        {
+                            razaoSocial: "MARIA OLIVEIRA SOUZA",
+                            nomeFantasia: "MARIA SOUZA CONFEITARIA",
+                            situacaoCadastral: "ATIVA",
+                            pendencias: [
+                                "Declaração Anual DASN-SIMEI 2023 em atraso",
+                                "DAS em atraso - Competência 11/2024"
+                            ]
+                        }
+                    ];
+                    
+                    const empresa = empresasSimuladas[Math.floor(Math.random() * empresasSimuladas.length)];
+                    resolve(empresa);
+                }, 2000);
+            });
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            const cnpjInput = document.getElementById('cnpjInput');
+            const consultaForm = document.getElementById('consultaForm');
+            const consultarBtn = document.getElementById('consultarBtn');
+            const resultadoDiv = document.getElementById('resultadoConsulta');
+            const loadingSpinner = consultarBtn.querySelector('.loading-spinner');
+            const btnText = consultarBtn.querySelector('.btn-text');
+
+            // Formatação do CNPJ
+            cnpjInput.addEventListener('input', function(e) {
+                e.target.value = formatarCNPJ(e.target.value);
+            });
+
+            // Submissão do formulário
+            consultaForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const cnpj = cnpjInput.value;
+                
+                if (!validarCNPJ(cnpj)) {
+                    alert('Por favor, digite um CNPJ válido.');
+                    cnpjInput.focus();
+                    return;
+                }
+
+                // Estado de loading
+                consultarBtn.disabled = true;
+                btnText.style.display = 'none';
+                loadingSpinner.style.display = 'block';
+                resultadoDiv.style.display = 'none';
+
+                try {
+                    const resultado = await simularConsulta(cnpj);
+                    
+                    // Preenche os dados
+                    document.getElementById('razaoSocial').textContent = resultado.razaoSocial;
+                    document.getElementById('nomeFantasia').textContent = resultado.nomeFantasia;
+                    document.getElementById('situacaoCadastral').textContent = resultado.situacaoCadastral;
+                    
+                    // Preenche as pendências
+                    const listaPendencias = document.getElementById('listaPendencias');
+                    listaPendencias.innerHTML = '';
+                    
+                    if (resultado.pendencias.length === 0) {
+                        const li = document.createElement('li');
+                        li.className = 'pendencia-item sem-pendencia';
+                        li.textContent = 'Nenhuma pendência encontrada';
+                        listaPendencias.appendChild(li);
+                    } else {
+                        resultado.pendencias.forEach(pendencia => {
+                            const li = document.createElement('li');
+                            li.className = 'pendencia-item';
+                            li.textContent = pendencia;
+                            listaPendencias.appendChild(li);
+                        });
+                    }
+                    
+                    // Mostra o resultado
+                    resultadoDiv.style.display = 'block';
+                    resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                } catch (error) {
+                    alert('Erro ao consultar CNPJ. Tente novamente.');
+                } finally {
+                    // Remove estado de loading
+                    consultarBtn.disabled = false;
+                    btnText.style.display = 'flex';
+                    loadingSpinner.style.display = 'none';
+                }
+            });
+
+            // FAQ accordion
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const isActive = this.classList.contains('active');
+                    
+                    // Fecha todas as outras
+                    faqQuestions.forEach(q => {
+                        q.classList.remove('active');
+                        q.nextElementSibling.classList.remove('active');
+                    });
+                    
+                    // Abre/fecha a atual
+                    if (!isActive) {
+                        this.classList.add('active');
+                        answer.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
