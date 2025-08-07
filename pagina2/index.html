@@ -180,7 +180,7 @@
             background: #1565c0;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 88px;
             font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
@@ -730,60 +730,55 @@
             ];
         }
 
-        // Consultar CNPJ (sempre retorna dados fixos)
+        // Consultar CNPJ (agora puxa dados da API e mantém pendências fixas)
         async function consultarCNPJ(cnpj) {
-            // Simular delay de consulta
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            // Sempre retorna os mesmos dados, independente do CNPJ
-            const resultado = {
-                cnpj: cnpj,
-                razaoSocial: "JOÃO DA SILVA SANTOS",
-                nomeFantasia: "JOÃO DA SILVA SANTOS - MEI",
-                situacao: "ATIVA",
-                dataAbertura: "15/03/2020",
-                naturezaJuridica: "213-5 - Empresário (Individual)",
-                atividadePrincipal: "4781-4/00 - Comércio varejista de artigos do vestuário e acessórios",
-                endereco: {
-                    logradouro: "RUA DAS FLORES, 123",
-                    bairro: "CENTRO",
-                    cidade: "SÃO PAULO",
-                    uf: "SP",
-                    cep: "01234-567"
-                },
-                telefone: "(11) 99999-9999",
-                email: "joao.silva@email.com",
-                pendencias: gerarPendenciasFixas()
-            };
+            const cleanedCnpj = cnpj.replace(/\D/g, '');
+            const apiUrl = `https://publica.cnpj.ws/cnpj/${cleanedCnpj}`;
 
-            return resultado;
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`Erro ao consultar CNPJ: ${response.statusText}`);
+                }
+                const data = await response.json();
+                console.log('Dados da API:', data); // Adicionado para depuração
+                return data; // Retorna os dados brutos da API para a função de exibição
+
+            } catch (error) {
+                console.error('Erro na consulta da API:', error);
+                throw new Error('Não foi possível consultar os dados do CNPJ. Tente novamente mais tarde.');
+            }
         }
 
         // Exibir dados da empresa
         function exibirDadosEmpresa(dados) {
-            document.getElementById('dadosCnpj').textContent = dados.cnpj;
-            document.getElementById('dadosRazaoSocial').textContent = dados.razaoSocial;
-            document.getElementById('dadosNomeFantasia').textContent = dados.nomeFantasia;
+            document.getElementById('dadosCnpj').textContent = formatCNPJ(dados.estabelecimento.cnpj) || 'Não informado';
+            document.getElementById('dadosRazaoSocial').textContent = dados.razao_social || 'Não informado';
+            document.getElementById('dadosNomeFantasia').textContent = dados.estabelecimento.nome_fantasia || dados.razao_social || 'Não informado';
             
             const situacaoElement = document.getElementById('dadosSituacao');
-            situacaoElement.innerHTML = `<span class="badge ${dados.situacao === 'ATIVA' ? 'success' : 'danger'}">${dados.situacao}</span>`;
+            situacaoElement.innerHTML = `<span class="badge ${dados.estabelecimento.situacao_cadastral === 'ATIVA' ? 'success' : 'danger'}">${dados.estabelecimento.situacao_cadastral || 'Não informado'}</span>`;
             
-            document.getElementById('dataAberturaTexto').textContent = dados.dataAbertura;
-            document.getElementById('dadosNaturezaJuridica').textContent = dados.naturezaJuridica;
-            document.getElementById('dadosAtividadePrincipal').textContent = dados.atividadePrincipal;
+            document.getElementById('dataAberturaTexto').textContent = dados.estabelecimento.data_inicio_atividade ? new Date(dados.estabelecimento.data_inicio_atividade).toLocaleDateString('pt-BR') : 'Não informado';
+            document.getElementById('dadosNaturezaJuridica').textContent = dados.natureza_juridica ? `${dados.natureza_juridica.codigo} - ${dados.natureza_juridica.descricao}` : 'Não informado';
+            document.getElementById('dadosAtividadePrincipal').textContent = dados.estabelecimento.atividade_principal ? `${dados.estabelecimento.atividade_principal.id} - ${dados.estabelecimento.atividade_principal.descricao}` : 'Não informado';
             
-            const enderecoTexto = `${dados.endereco.logradouro}\n${dados.endereco.bairro} - ${dados.endereco.cidade}/${dados.endereco.uf}\nCEP: ${dados.endereco.cep}`;
+            const enderecoTexto = `${dados.estabelecimento.tipo_logradouro || ''} ${dados.estabelecimento.logradouro || ''}, ${dados.estabelecimento.numero || ''}\n${dados.estabelecimento.bairro || ''} - ${dados.estabelecimento.cidade.nome || ''}/${dados.estabelecimento.estado.sigla || ''}\nCEP: ${dados.estabelecimento.cep || ''}`;
             document.getElementById('enderecoTexto').innerHTML = enderecoTexto.replace(/\n/g, '<br>');
             
             const telefoneElement = document.getElementById('telefoneTexto');
             const emailElement = document.getElementById('emailTexto');
             
-            if (dados.telefone) {
-                telefoneElement.innerHTML = `<span class="icon-phone"></span> ${dados.telefone}`;
+            if (dados.estabelecimento.ddd1 && dados.estabelecimento.telefone1) {
+                telefoneElement.innerHTML = `<span class="icon-phone"></span> (${dados.estabelecimento.ddd1}) ${dados.estabelecimento.telefone1}`;
+            } else {
+                telefoneElement.innerHTML = 'Não informado';
             }
             
-            if (dados.email) {
-                emailElement.innerHTML = `<span class="icon-email"></span> ${dados.email}`;
+            if (dados.estabelecimento.email) {
+                emailElement.innerHTML = `<span class="icon-email"></span> ${dados.estabelecimento.email}`;
+            } else {
+                emailElement.innerHTML = 'Não informado';
             }
         }
 
@@ -892,11 +887,11 @@
                 results.classList.remove('show');
 
                 try {
-                    const dados = await consultarCNPJ(cnpj);
+                    const data = await consultarCNPJ(cnpj); // Agora retorna os dados brutos
                     
                     // Exibir resultados
-                    exibirDadosEmpresa(dados);
-                    exibirPendencias(dados.pendencias);
+                    exibirDadosEmpresa(data); // Passa os dados brutos para a função de exibição
+                    exibirPendencias(gerarPendenciasFixas()); // Mantém as pendências fixas
                     
                     results.classList.add('show');
                     
