@@ -3,353 +3,922 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Consulta oficial de pendências MEI - Governo Federal. Verifique a situação do seu Microempreendedor Individual de forma rápida e segura.">
-    <meta name="keywords" content="MEI, pendências, CNPJ, governo federal, microempreendedor individual">
-    <title>Consulta de Pendências MEI - Portal Oficial do Governo Federal</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Consulta de Pendências MEI - Governo Federal</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a73e8; /* Azul Google */
+            --primary-dark: #0d47a1;
+            --secondary-color: #34a853; /* Verde Google */
+            --text-color: #3c4043; /* Cinza escuro */
+            --light-text-color: #5f6368;
+            --background-light: #f8f9fa;
+            --background-gradient-start: #e3f2fd;
+            --background-gradient-end: #e8f5e8;
+            --card-background: #ffffff;
+            --border-color: #dadce0;
+            --error-color: #ea4335; /* Vermelho Google */
+            --success-color: #34a853;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--background-gradient-start) 0%, var(--background-gradient-end) 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Governamental */
+        .header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 10px var(--shadow-light);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px var(--shadow-light);
+        }
+
+        .header-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .header-text p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: var(--background-light);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 0;
+        }
+
+        .breadcrumb-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            font-size: 0.875rem;
+            color: var(--light-text-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Content */
+        .main {
+            flex-grow: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title h2 {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .page-title p {
+            color: var(--light-text-color);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-background);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px var(--shadow-light);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px var(--shadow-medium);
+        }
+
+        .card-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--background-light);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            color: var(--light-text-color);
+            font-size: 0.95rem;
+        }
+
+        .card-content {
+            padding: 2rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+        }
+
+        .form-input::placeholder {
+            color: #b0b0b0;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.2);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-decoration: none; /* Para o botão de regularizar */
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(26, 115, 232, 0.3);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background: #2e8b57;
+            box-shadow: 0 6px 16px rgba(52, 168, 83, 0.3);
+        }
+
+        /* Error Message */
+        .error-message {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Results Section */
+        .results {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .results.show {
+            display: block;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .data-item {
+            margin-bottom: 1.2rem;
+        }
+
+        .data-label {
+            font-size: 0.9rem;
+            color: var(--light-text-color);
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+        }
+
+        .data-value {
+            font-size: 1.05rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .data-value.large {
+            font-size: 1.2rem;
+            font-family: 'Inter', sans-serif; /* Mantendo a fonte principal */
+            font-weight: 600;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.success {
+            background: #e6f4ea;
+            color: var(--success-color);
+        }
+
+        .badge.danger {
+            background: #fce8e6;
+            color: var(--error-color);
+        }
+
+        /* Pendências */
+        .pendencias-section {
+            margin-top: 3rem;
+        }
+
+        .pendencias-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pendencias-count {
+            background: var(--error-color);
+            color: white;
+            padding: 0.3rem 0.7rem;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pendencia-item {
+            background: #fff5f5; /* Light red background */
+            border: 1px solid #fccac7; /* Light red border */
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .pendencia-header-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .pendencia-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
+            color: var(--error-color);
+            font-size: 1.1rem;
+        }
+
+        .pendencia-description {
+            color: var(--light-text-color);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .pendencia-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .pendencia-valor {
+            font-weight: 700;
+            color: var(--error-color);
+            font-size: 1rem;
+        }
+
+        .pendencia-vencimento {
+            color: var(--light-text-color);
+        }
+
+        .total-pendencias {
+            background: var(--error-color);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(234, 67, 53, 0.4);
+        }
+
+        .total-pendencias span {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        /* No Pendências */
+        .no-pendencias {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--success-color);
+            background: #e6f4ea;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .no-pendencias-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .no-pendencias h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .no-pendencias p {
+            color: var(--light-text-color);
+        }
+
+        /* Footer */
+        .footer {
+            background: #202124; /* Cinza escuro Google */
+            color: white;
+            margin-top: 4rem;
+            padding: 3rem 0 1.5rem 0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.2rem;
+            font-size: 1.15rem;
+            color: #e8eaed;
+        }
+
+        .footer-section p,
+        .footer-section li {
+            color: #bdc1c6;
+            font-size: 0.875rem;
+            line-height: 1.7;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-section a {
+            color: #bdc1c6;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #3c4043;
+            padding: 1.5rem 2rem 0 2rem;
+            margin-top: 2rem;
+            text-align: center;
+            color: #9aa0a6;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content,
+            .breadcrumb-content,
+            .main,
+            .footer-content {
+                padding: 0 1rem;
+            }
+
+            .page-title h2 {
+                font-size: 2.2rem;
+            }
+
+            .card-content {
+                padding: 1.5rem;
+            }
+
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pendencia-header-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .pendencia-details {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .total-pendencias {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Icons usando Unicode */
+        .icon-building::before { content: "🏢"; }
+        .icon-search::before { content: "🔍"; }
+        .icon-warning::before { content: "⚠️"; }
+        .icon-check::before { content: "✅"; }
+        .icon-calendar::before { content: "📅"; }
+        .icon-location::before { content: "📍"; }
+        .icon-phone::before { content: "📞"; }
+        .icon-email::before { content: "📧"; }
+        .icon-document::before { content: "📄"; }
+        .icon-money::before { content: "💰"; }
+        .icon-info::before { content: "ℹ️"; }
+    </style>
 </head>
 <body>
-    <!-- Barra de Acessibilidade -->
-    <div class="accessibility-bar">
-        <div class="accessibility-content">
-            <button class="accessibility-btn" onclick="increaseFontSize()">A+</button>
-            <button class="accessibility-btn" onclick="decreaseFontSize()">A-</button>
-            <button class="accessibility-btn" onclick="toggleHighContrast()">Alto Contraste</button>
-        </div>
-    </div>
-
     <!-- Header Governamental -->
-    <header class="header" role="banner">
-        <div class="header-top">
-            <div class="container">
-                <div class="gov-info">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0iIzAwNzk0MyIvPgo8cGF0aCBkPSJNMTYgOEwxOSAxMkgxN1YyMEgxNVYxMkgxM0wxNiA4WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+" alt="Brasão da República" class="gov-logo">
-                    <div class="gov-text">
-                        <h1>Governo Federal</h1>
-                        <p>Ministério do Desenvolvimento, Indústria e Comércio Exterior</p>
-                    </div>
-                </div>
-                <div class="header-actions">
-                    <button class="header-btn">Entrar</button>
-                    <button class="header-btn">Cadastrar</button>
-                </div>
-            </div>
-        </div>
-        <div class="header-main">
-            <div class="container">
-                <nav class="main-nav" role="navigation" aria-label="Navegação principal">
-                    <ul>
-                        <li><a href="#" aria-current="page">Início</a></li>
-                        <li><a href="#">Serviços</a></li>
-                        <li><a href="#">MEI</a></li>
-                        <li><a href="#">Suporte</a></li>
-                        <li><a href="#">Contato</a></li>
-                    </ul>
-                </nav>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-icon">🏛️</div>
+            <div class="header-text">
+                <h1>Governo Federal</h1>
+                <p>Ministério do Desenvolvimento, Indústria e Comércio Exterior</p>
             </div>
         </div>
     </header>
 
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Você está aqui">
-        <div class="container">
-            <ol class="breadcrumb-list">
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Serviços</a></li>
-                <li><a href="#">MEI</a></li>
-                <li aria-current="page">Consulta de Pendências</li>
-            </ol>
+    <nav class="breadcrumb">
+        <div class="breadcrumb-content">
+            <a href="#">Início</a> &gt; <a href="#">Serviços</a> &gt; <strong>Consulta de Pendências MEI</strong>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="main" role="main">
-        <div class="container">
-            <!-- Hero Section -->
-            <section class="hero">
-                <div class="hero-content">
-                    <h1 class="hero-title">Consulta de Pendências MEI</h1>
-                    <p class="hero-description">
-                        Consulte de forma oficial e segura as pendências do seu Microempreendedor Individual (MEI). 
-                        Mantenha sua situação regularizada e evite problemas futuros com a Receita Federal.
-                    </p>
-                    <div class="hero-badges">
-                        <span class="badge badge-security">🔒 Consulta Segura</span>
-                        <span class="badge badge-official">✓ Portal Oficial</span>
-                        <span class="badge badge-free">💰 Gratuito</span>
-                    </div>
-                </div>
-            </section>
+    <main class="main">
+        <!-- Título da Página -->
+        <div class="page-title">
+            <h2>Consulta de Pendências MEI</h2>
+            <p>Consulte as pendências do seu Microempreendedor Individual (MEI) informando o CNPJ. Mantenha sua situação regularizada para evitar problemas futuros.</p>
+        </div>
 
-            <!-- Formulário de Consulta -->
-            <section class="consultation-section">
-                <div class="consultation-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21 21L16.514 16.506M19 10.5C19 15.194 15.194 19 10.5 19S2 15.194 2 10.5 5.806 2 10.5 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <div class="card-title-group">
-                            <h2 class="card-title">Consultar CNPJ</h2>
-                            <p class="card-subtitle">Digite o CNPJ do MEI para verificar pendências</p>
+        <!-- Formulário de Consulta -->
+        <div class="card" style="max-width: 500px; margin: 0 auto 2rem auto;">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="icon-search"></span>
+                    Consultar CNPJ
+                </div>
+                <div class="card-description">
+                    Digite o CNPJ do MEI para consultar as pendências
+                </div>
+            </div>
+            <div class="card-content">
+                <form id="consultaForm">
+                    <div class="form-group">
+                        <label for="cnpj" class="form-label">CNPJ</label>
+                        <input 
+                            type="text" 
+                            id="cnpj" 
+                            class="form-input" 
+                            placeholder="00.000.000/0000-00"
+                            maxlength="18"
+                        >
+                        <div id="errorMessage" class="error-message" style="display: none;">
+                            <span class="icon-warning"></span>
+                            <span id="errorText"></span>
                         </div>
                     </div>
-                    <form id="consultaForm" class="consultation-form" novalidate>
-                        <div class="form-group">
-                            <label for="cnpj" class="form-label">
-                                CNPJ do MEI
-                                <span class="required" aria-label="Campo obrigatório">*</span>
-                            </label>
-                            <div class="input-wrapper">
-                                <input 
-                                    type="text" 
-                                    id="cnpj" 
-                                    name="cnpj"
-                                    class="form-input" 
-                                    placeholder="00.000.000/0000-00"
-                                    maxlength="18"
-                                    autocomplete="off"
-                                    aria-describedby="cnpj-help cnpj-error"
-                                    required
-                                >
-                                <div class="input-icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div id="cnpj-help" class="form-help">
-                                Digite apenas os números do CNPJ. A formatação será aplicada automaticamente.
-                            </div>
-                            <div id="cnpj-error" class="form-error" role="alert" aria-live="polite"></div>
-                        </div>
-                        <button type="submit" id="consultarBtn" class="btn btn-primary">
-                            <span class="btn-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M21 21L16.514 16.506M19 10.5C19 15.194 15.194 19 10.5 19S2 15.194 2 10.5 5.806 2 10.5 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span id="btnText">Consultar Pendências</span>
-                            <div class="spinner" style="display: none;"></div>
-                        </button>
-                    </form>
-                </div>
-            </section>
+                    <button type="submit" id="consultarBtn" class="btn">
+                        <span class="icon-search"></span>
+                        <span id="btnText">Consultar</span>
+                    </button>
+                </form>
+            </div>
+        </div>
 
-            <!-- Resultados da Consulta -->
-            <section id="results" class="results-section" style="display: none;" aria-live="polite">
-                <!-- Dados da Empresa -->
-                <div class="result-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 21H21M5 21V7L13 2L21 7V21M9 9H15M9 13H15M9 17H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <div class="card-title-group">
-                            <h2 class="card-title">Dados da Empresa</h2>
-                            <p class="card-subtitle">Informações cadastrais do MEI</p>
-                        </div>
+        <!-- Resultados da Consulta -->
+        <div id="results" class="results">
+            <!-- Dados da Empresa -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon-building"></span>
+                        Dados da Empresa
                     </div>
-                    <div class="card-content">
-                        <div class="data-grid">
-                            <div class="data-column">
-                                <div class="data-item">
-                                    <dt class="data-label">CNPJ</dt>
-                                    <dd id="dadosCnpj" class="data-value data-value-large"></dd>
-                                </div>
-                                <div class="data-item">
-                                    <dt class="data-label">Razão Social</dt>
-                                    <dd id="dadosRazaoSocial" class="data-value"></dd>
-                                </div>
-                                <div class="data-item">
-                                    <dt class="data-label">Nome Fantasia</dt>
-                                    <dd id="dadosNomeFantasia" class="data-value"></dd>
-                                </div>
-                                <div class="data-item">
-                                    <dt class="data-label">Situação Cadastral</dt>
-                                    <dd id="dadosSituacao" class="data-value"></dd>
+                </div>
+                <div class="card-content">
+                    <div class="data-grid">
+                        <div>
+                            <div class="data-item">
+                                <div class="data-label">CNPJ</div>
+                                <div id="dadosCnpj" class="data-value large"></div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Razão Social</div>
+                                <div id="dadosRazaoSocial" class="data-value"></div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Nome Fantasia</div>
+                                <div id="dadosNomeFantasia" class="data-value"></div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Situação</div>
+                                <div id="dadosSituacao" class="data-value"></div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Data de Abertura</div>
+                                <div id="dadosDataAbertura" class="data-value">
+                                    <span class="icon-calendar"></span>
+                                    <span id="dataAberturaTexto"></span>
                                 </div>
                             </div>
-                            <div class="data-column">
-                                <div class="data-item">
-                                    <dt class="data-label">Data de Abertura</dt>
-                                    <dd id="dadosDataAbertura" class="data-value">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-                                            <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
-                                            <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
-                                            <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
-                                        </svg>
-                                        <span id="dataAberturaTexto"></span>
-                                    </dd>
+                        </div>
+                        <div>
+                            <div class="data-item">
+                                <div class="data-label">Natureza Jurídica</div>
+                                <div id="dadosNaturezaJuridica" class="data-value"></div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Atividade Principal</div>
+                                <div id="dadosAtividadePrincipal" class="data-value"></div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Endereço</div>
+                                <div id="dadosEndereco" class="data-value">
+                                    <span class="icon-location"></span>
+                                    <span id="enderecoTexto"></span>
                                 </div>
-                                <div class="data-item">
-                                    <dt class="data-label">Natureza Jurídica</dt>
-                                    <dd id="dadosNaturezaJuridica" class="data-value"></dd>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Telefone</div>
+                                <div id="dadosTelefone" class="data-value">
+                                    <span class="icon-phone"></span>
+                                    <span id="telefoneTexto"></span>
                                 </div>
-                                <div class="data-item">
-                                    <dt class="data-label">Atividade Principal</dt>
-                                    <dd id="dadosAtividadePrincipal" class="data-value"></dd>
-                                </div>
-                                <div class="data-item">
-                                    <dt class="data-label">Endereço</dt>
-                                    <dd id="dadosEndereco" class="data-value">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z" stroke="currentColor" stroke-width="2"/>
-                                            <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
-                                        </svg>
-                                        <span id="enderecoTexto"></span>
-                                    </dd>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Email</div>
+                                <div id="dadosEmail" class="data-value">
+                                    <span class="icon-email"></span>
+                                    <span id="emailTexto"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Pendências -->
-                <div class="result-card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <div class="card-title-group">
-                            <h2 class="card-title">
-                                Pendências Encontradas
-                                <span id="pendenciasCount" class="count-badge">0</span>
-                            </h2>
-                            <p class="card-subtitle">Débitos e obrigações em aberto</p>
-                        </div>
+            <!-- Seção de Pendências -->
+            <div class="card pendencias-section">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon-document"></span>
+                        Pendências Encontradas
+                        <span id="pendenciasCount" class="pendencias-count">0</span>
                     </div>
-                    <div class="card-content">
-                        <div id="pendenciasList" class="pendencias-list"></div>
-                        <div id="noPendencias" class="no-pendencias" style="display: none;">
-                            <div class="no-pendencias-icon">
-                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.7088 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4905 2.02168 11.3363C2.16356 9.18203 2.99721 7.13214 4.39828 5.49883C5.79935 3.86553 7.69279 2.72636 9.79619 2.24223C11.8996 1.75809 14.1003 1.95185 16.07 2.79999" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M22 4L12 14.01L9 11.01" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
+                    <div class="card-description">
+                        Detalhes das suas pendências como Microempreendedor Individual.
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div id="pendenciasList">
+                        <!-- Exemplo de Pendência (será preenchido via JS) -->
+                        <!--
+                        <div class="pendencia-item">
+                            <div class="pendencia-header-item">
+                                <div class="pendencia-title">
+                                    <span class="icon-warning"></span>
+                                    DAS - Documento de Arrecadação do Simples Nacional
+                                </div>
+                                <div class="badge danger">Vencido</div>
                             </div>
-                            <h3>Nenhuma Pendência Encontrada</h3>
-                            <p>Parabéns! Seu MEI está em dia com suas obrigações.</p>
+                            <div class="pendencia-description">
+                                Pagamento referente ao período de apuração de Janeiro/2024.
+                            </div>
+                            <div class="pendencia-details">
+                                <div class="data-item">
+                                    <div class="data-label">Valor</div>
+                                    <div class="data-value pendencia-valor">R$ 66,10</div>
+                                </div>
+                                <div class="data-item">
+                                    <div class="data-label">Vencimento</div>
+                                    <div class="data-value pendencia-vencimento">20/02/2024</div>
+                                </div>
+                            </div>
                         </div>
+                        -->
                     </div>
-                </div>
-            </section>
 
-            <!-- Informações Importantes -->
-            <section class="info-section">
-                <div class="info-grid">
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                                <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <h3>Consulta em Tempo Real</h3>
-                        <p>Os dados são atualizados diretamente da Receita Federal, garantindo informações sempre precisas e atuais.</p>
+                    <div id="noPendencias" class="no-pendencias" style="display: none;">
+                        <div class="no-pendencias-icon">✅</div>
+                        <h3>Parabéns! Nenhuma pendência encontrada.</h3>
+                        <p>Sua situação como MEI está regularizada.</p>
                     </div>
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-                                <circle cx="12" cy="16" r="1" stroke="currentColor" stroke-width="2"/>
-                                <path d="M7 11V7C7 5.67392 7.52678 4.40215 8.46447 3.46447C9.40215 2.52678 10.6739 2 12 2C13.3261 2 14.5979 2.52678 15.5355 3.46447C16.4732 4.40215 17 5.67392 17 7V11" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                        </div>
-                        <h3>Segurança Garantida</h3>
-                        <p>Utilizamos protocolos de segurança avançados para proteger seus dados durante a consulta.</p>
+
+                    <div id="totalPendencias" class="total-pendencias" style="display: none;">
+                        <span>Valor Total das Pendências:</span>
+                        R$ 0,00
                     </div>
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <h3>Portal Oficial</h3>
-                        <p>Este é o canal oficial do Governo Federal para consulta de pendências MEI, sem custos adicionais.</p>
-                    </div>
+
+                    <a href="https://www.gov.br/pt-br/servicos/regularizar-mei" target="_blank" id="regularizarBtn" class="btn btn-secondary" style="margin-top: 2rem; display: none;">
+                        <span class="icon-check"></span>
+                        Regularizar Pendências
+                    </a>
                 </div>
-            </section>
+            </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Governo Federal</h3>
-                    <p>Portal oficial para consulta de pendências do Microempreendedor Individual (MEI).</p>
-                    <div class="footer-badges">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjMwIiB2aWV3Qm94PSIwIDAgMTAwIDMwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjMwIiByeD0iNCIgZmlsbD0iIzAwNzk0MyIvPgo8dGV4dCB4PSI1MCIgeT0iMTkiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkdvdi5icjwvdGV4dD4KPC9zdmc+" alt="Gov.br" class="footer-badge">
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Serviços</h3>
-                    <ul>
-                        <li><a href="#">Consulta MEI</a></li>
-                        <li><a href="#">Emissão de DAS</a></li>
-                        <li><a href="#">Declaração Anual</a></li>
-                        <li><a href="#">Alteração de Dados</a></li>
-                        <li><a href="#">Baixa do MEI</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Suporte</h3>
-                    <ul>
-                        <li><a href="#">Central de Ajuda</a></li>
-                        <li><a href="#">Perguntas Frequentes</a></li>
-                        <li><a href="#">Tutoriais</a></li>
-                        <li><a href="#">Fale Conosco</a></li>
-                        <li><a href="#">Ouvidoria</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contato</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M22 16.92V19.92C22.0011 20.1985 21.9441 20.4742 21.8325 20.7293C21.7209 20.9845 21.5573 21.2136 21.3521 21.4019C21.1468 21.5901 20.9046 21.7335 20.6407 21.8227C20.3769 21.9119 20.0974 21.9451 19.82 21.92C16.7428 21.5856 13.787 20.5341 11.19 18.85C8.77382 17.3147 6.72533 15.2662 5.18999 12.85C3.49997 10.2412 2.44824 7.27099 2.11999 4.18C2.095 3.90347 2.12787 3.62476 2.21649 3.36162C2.30512 3.09849 2.44756 2.85669 2.63476 2.65162C2.82196 2.44655 3.0498 2.28271 3.30379 2.17052C3.55777 2.05833 3.83233 2.00026 4.10999 2H7.10999C7.59531 1.99522 8.06579 2.16708 8.43376 2.48353C8.80173 2.79999 9.04207 3.23945 9.10999 3.72C9.23662 4.68007 9.47144 5.62273 9.80999 6.53C9.94454 6.88792 9.97366 7.27691 9.8939 7.65088C9.81415 8.02485 9.62886 8.36811 9.35999 8.64L8.08999 9.91C9.51355 12.4135 11.5865 14.4864 14.09 15.91L15.36 14.64C15.6319 14.3711 15.9751 14.1858 16.3491 14.1061C16.7231 14.0263 17.1121 14.0555 17.47 14.19C18.3773 14.5286 19.3199 14.7634 20.28 14.89C20.7658 14.9585 21.2094 15.2032 21.5265 15.5775C21.8437 15.9518 22.0122 16.4296 22 16.92Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>0800 570 0000</span>
-                        </div>
-                        <div class="contact-item">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>mei@economia.gov.br</span>
-                        </div>
-                    </div>
-                </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Sobre o MEI</h3>
+                <p>O Microempreendedor Individual (MEI) é a pessoa que trabalha por conta própria e se legaliza como pequeno empresário.</p>
             </div>
-            <div class="footer-bottom">
-                <div class="footer-bottom-content">
-                    <p>&copy; 2024 Governo Federal. Todos os direitos reservados.</p>
-                    <div class="footer-links">
-                        <a href="#">Política de Privacidade</a>
-                        <a href="#">Termos de Uso</a>
-                        <a href="#">Acessibilidade</a>
-                        <a href="#">Mapa do Site</a>
-                    </div>
-                </div>
+            <div class="footer-section">
+                <h3>Links Úteis</h3>
+                <ul>
+                    <li><a href="#">Portal do Empreendedor</a></li>
+                    <li><a href="#">Declaração Anual</a></li>
+                    <li><a href="#">Emissão de DAS</a></li>
+                    <li><a href="#">Baixa de MEI</a></li>
+                </ul>
             </div>
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <p><span class="icon-location"></span> Esplanada dos Ministérios, Bloco J, Brasília - DF</p>
+                <p><span class="icon-phone"></span> (61) 2027-0000</p>
+                <p><span class="icon-email"></span> contato@gov.br</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 Governo Federal. Todos os direitos reservados.
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const consultaForm = document.getElementById('consultaForm');
+            const cnpjInput = document.getElementById('cnpj');
+            const consultarBtn = document.getElementById('consultarBtn');
+            const btnText = document.getElementById('btnText');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const resultsDiv = document.getElementById('results');
+            const pendenciasList = document.getElementById('pendenciasList');
+            const pendenciasCount = document.getElementById('pendenciasCount');
+            const noPendencias = document.getElementById('noPendencias');
+            const totalPendenciasDiv = document.getElementById('totalPendencias');
+            const regularizarBtn = document.getElementById('regularizarBtn');
+
+            // Função para formatar CNPJ
+            cnpjInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 14) value = value.slice(0, 14);
+                if (value.length > 12) {
+                    value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+                } else if (value.length > 8) {
+                    value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})$/, '$1.$2.$3/$4');
+                } else if (value.length > 5) {
+                    value = value.replace(/^(\d{2})(\d{3})(\d{3})$/, '$1.$2.$3');
+                } else if (value.length > 2) {
+                    value = value.replace(/^(\d{2})(\d{3})$/, '$1.$2');
+                }
+                e.target.value = value;
+            });
+
+            consultaForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const cnpj = cnpjInput.value.replace(/\D/g, '');
+
+                if (cnpj.length !== 14) {
+                    errorMessage.style.display = 'flex';
+                    errorText.textContent = 'Por favor, digite um CNPJ válido com 14 dígitos.';
+                    resultsDiv.classList.remove('show');
+                    return;
+                }
+
+                errorMessage.style.display = 'none';
+                consultarBtn.disabled = true;
+                btnText.innerHTML = '<span class="spinner"></span> Consultando...';
+
+                // Simulação de chamada API
+                setTimeout(() => {
+                    consultarBtn.disabled = false;
+                    btnText.innerHTML = '<span class="icon-search"></span> Consultar';
+                    resultsDiv.classList.add('show');
+
+                    // Preencher dados da empresa (exemplo)
+                    document.getElementById('dadosCnpj').textContent = cnpjInput.value;
+                    document.getElementById('dadosRazaoSocial').textContent = 'EMPRESA EXEMPLO LTDA';
+                    document.getElementById('dadosNomeFantasia').textContent = 'EXEMPLO MEI';
+                    document.getElementById('dadosSituacao').innerHTML = '<span class="badge success">Ativa</span>';
+                    document.getElementById('dataAberturaTexto').textContent = '01/01/2020';
+                    document.getElementById('dadosNaturezaJuridica').textContent = '213-5 - Empresário Individual';
+                    document.getElementById('dadosAtividadePrincipal').textContent = 'Comércio varejista de artigos do vestuário e acessórios';
+                    document.getElementById('enderecoTexto').textContent = 'Rua Exemplo, 123, Centro, Cidade - UF, 12345-678';
+                    document.getElementById('telefoneTexto').textContent = '(99) 99999-9999';
+                    document.getElementById('emailTexto').textContent = 'contato@exemplo.com';
+
+                    // Simular pendências
+                    const pendencias = [
+                        {
+                            title: 'DAS - Documento de Arrecadação do Simples Nacional',
+                            description: 'Pagamento referente ao período de apuração de Janeiro/2024.',
+                            value: 66.10,
+                            dueDate: '20/02/2024'
+                        },
+                        {
+                            title: 'DAS - Documento de Arrecadação do Simples Nacional',
+                            description: 'Pagamento referente ao período de apuração de Fevereiro/2024.',
+                            value: 66.10,
+                            dueDate: '20/03/2024'
+                        },
+                        {
+                            title: 'Declaração Anual Simplificada para o Microempreendedor Individual (DASN-SIMEI) - Ano-calendário 2023',
+                            description: 'Declaração anual de faturamento pendente.',
+                            value: 0.00, // Declaração não tem valor monetário direto, mas pode gerar multa
+                            dueDate: '31/05/2024'
+                        }
+                    ];
+
+                    pendenciasList.innerHTML = ''; // Limpa pendências anteriores
+                    let totalValue = 0;
+
+                    if (pendencias.length > 0) {
+                        pendencias.forEach(p => {
+                            const pendenciaItem = document.createElement('div');
+                            pendenciaItem.classList.add('pendencia-item');
+                            pendenciaItem.innerHTML = `
+                                <div class="pendencia-header-item">
+                                    <div class="pendencia-title">
+                                        <span class="icon-warning"></span>
+                                        ${p.title}
+                                    </div>
+                                    <div class="badge danger">Vencido</div>
+                                </div>
+                                <div class="pendencia-description">
+                                    ${p.description}
+                                </div>
+                                <div class="pendencia-details">
+                                    <div class="data-item">
+                                        <div class="data-label">Valor</div>
+                                        <div class="data-value pendencia-valor">R$ ${p.value.toFixed(2).replace('.', ',')}</div>
+                                    </div>
+                                    <div class="data-item">
+                                        <div class="data-label">Vencimento</div>
+                                        <div class="data-value pendencia-vencimento">${p.dueDate}</div>
+                                    </div>
+                                </div>
+                            `;
+                            pendenciasList.appendChild(pendenciaItem);
+                            totalValue += p.value;
+                        });
+                        pendenciasCount.textContent = pendencias.length;
+                        noPendencias.style.display = 'none';
+                        totalPendenciasDiv.style.display = 'block';
+                        totalPendenciasDiv.innerHTML = `
+                            <span>Valor Total das Pendências:</span>
+                            R$ ${totalValue.toFixed(2).replace('.', ',')}
+                        `;
+                        regularizarBtn.style.display = 'flex'; // Mostra o botão Regularizar
+                    } else {
+                        pendenciasCount.textContent = '0';
+                        noPendencias.style.display = 'block';
+                        totalPendenciasDiv.style.display = 'none';
+                        regularizarBtn.style.display = 'none';
+                    }
+
+                }, 1500);
+            });
+        });
+    </script>
 </body>
 </html>
+
 
