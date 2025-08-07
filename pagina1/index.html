@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta de Pendências MEI - Governo Federal</title>
+    <title>Consulta de Pendências MEI - Portal Oficial do Governo Federal</title>
     <style>
-        /* Padrão Digital de Governo - Cores e Estilos Oficiais */
+        /* Padrão Digital de Governo - Design System Oficial */
         :root {
             /* Cores principais do governo */
             --blue-warm-vivid-70: #1351B4;
@@ -15,51 +15,43 @@
             --blue-warm-vivid-10: #E2EBF7;
             --blue-warm-vivid-5: #F1F5FC;
             
-            /* Cores de feedback */
-            --green-cool-vivid-50: var(--blue-warm-vivid-60); /* Substituído por azul */
-            --green-cool-vivid-10: var(--blue-warm-vivid-10); /* Substituído por azul */
-            --yellow-vivid-20: var(--blue-warm-vivid-20); /* Substituído por azul */
-            --yellow-vivid-5: var(--blue-warm-vivid-5); /* Substituído por azul */
-            --red-vivid-50: var(--blue-warm-vivid-70); /* Substituído por azul */
-            --red-vivid-10: var(--blue-warm-vivid-10); /* Substituído por azul */
-            
             /* Cores neutras - Apenas tons de branco e azul */
-            --gray-80: #0A1C2C; /* Azul muito escuro para texto principal */
-            --gray-70: #1A3C5C; /* Azul escuro para texto secundário */
+            --gray-80: #0A1C2C;
+            --gray-70: #1A3C5C;
             --gray-60: #2A5C8C;
             --gray-50: #4A7CAE;
             --gray-30: #6AAED0;
             --gray-20: #8ACFEF;
             --gray-10: #ADDFFF;
-            --gray-5: #E0F2FF; /* Azul muito claro, quase branco */
-            --pure-0: #FFFFFF; /* Branco puro */
+            --gray-5: #E0F2FF;
+            --pure-0: #FFFFFF;
             
-            /* Tipografia */
-            --font-family-sans: 'Rawline', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            --font-size-scale-up-05: 1.125rem; /* 18px */
-            --font-size-scale-base: 1rem; /* 16px */
-            --font-size-scale-down-01: 0.875rem; /* 14px */
-            --font-size-scale-down-02: 0.75rem; /* 12px */
+            /* Tipografia oficial */
+            --font-family-sans: 'Rawline', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-size-scale-up-05: 1.125rem;
+            --font-size-scale-base: 1rem;
+            --font-size-scale-down-01: 0.875rem;
+            --font-size-scale-down-02: 0.75rem;
             
             /* Espaçamento */
-            --spacing-scale-2x: 0.5rem; /* 8px */
-            --spacing-scale-3x: 0.75rem; /* 12px */
-            --spacing-scale-4x: 1rem; /* 16px */
-            --spacing-scale-5x: 1.25rem; /* 20px */
-            --spacing-scale-6x: 1.5rem; /* 24px */
-            --spacing-scale-8x: 2rem; /* 32px */
-            --spacing-scale-10x: 2.5rem; /* 40px */
-            --spacing-scale-12x: 3rem; /* 48px */
+            --spacing-scale-2x: 0.5rem;
+            --spacing-scale-3x: 0.75rem;
+            --spacing-scale-4x: 1rem;
+            --spacing-scale-5x: 1.25rem;
+            --spacing-scale-6x: 1.5rem;
+            --spacing-scale-8x: 2rem;
+            --spacing-scale-10x: 2.5rem;
+            --spacing-scale-12x: 3rem;
             
             /* Bordas */
-            --border-radius-sm: 0.25rem; /* 4px */
-            --border-radius-md: 0.5rem; /* 8px */
-            --border-radius-lg: 0.75rem; /* 12px */
+            --border-radius-sm: 0.25rem;
+            --border-radius-md: 0.5rem;
+            --border-radius-lg: 0.75rem;
             
             /* Sombras */
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px rgba(19, 81, 180, 0.12), 0 1px 2px rgba(19, 81, 180, 0.24);
+            --shadow-md: 0 4px 6px rgba(19, 81, 180, 0.07), 0 2px 4px rgba(19, 81, 180, 0.06);
+            --shadow-lg: 0 10px 15px rgba(19, 81, 180, 0.1), 0 4px 6px rgba(19, 81, 180, 0.05);
         }
         
         * {
@@ -76,24 +68,67 @@
             padding: 0;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: var(--spacing-scale-8x) var(--spacing-scale-4x);
+        /* Barra superior oficial do governo */
+        .gov-header {
+            background: var(--gray-80);
+            color: var(--pure-0);
+            padding: var(--spacing-scale-2x) 0;
+            font-size: var(--font-size-scale-down-01);
         }
         
-        /* Cabeçalho da seção */
-        .section-header {
+        .gov-header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-scale-4x);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .gov-header .gov-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-scale-4x);
+        }
+        
+        .gov-header .gov-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-scale-2x);
+            font-weight: 600;
+        }
+        
+        .gov-header .gov-logo::before {
+            content: '🇧🇷';
+            font-size: 1.2em;
+        }
+        
+        .gov-header .accessibility-links {
+            display: flex;
+            gap: var(--spacing-scale-4x);
+        }
+        
+        .gov-header a {
+            color: var(--pure-0);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        
+        .gov-header a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Cabeçalho principal */
+        .main-header {
             background: linear-gradient(135deg, var(--blue-warm-vivid-70) 0%, var(--blue-warm-vivid-60) 100%);
             color: var(--pure-0);
             padding: var(--spacing-scale-12x) 0;
-            margin-bottom: var(--spacing-scale-10x);
             text-align: center;
             position: relative;
             overflow: hidden;
         }
         
-        .section-header::before {
+        .main-header::before {
             content: '';
             position: absolute;
             top: 0;
@@ -104,39 +139,89 @@
             opacity: 0.3;
         }
         
-        .section-header h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin: 0;
+        .main-header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-scale-4x);
             position: relative;
             z-index: 1;
         }
         
-        .section-header .subtitle {
-            font-size: var(--font-size-scale-up-05);
-            margin-top: var(--spacing-scale-4x);
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Brasão do governo */
-        .gov-badge {
+        .main-header .gov-badge {
             display: inline-flex;
             align-items: center;
             background: var(--pure-0);
             color: var(--blue-warm-vivid-70);
-            padding: var(--spacing-scale-2x) var(--spacing-scale-4x);
+            padding: var(--spacing-scale-3x) var(--spacing-scale-6x);
             border-radius: var(--border-radius-md);
             font-size: var(--font-size-scale-down-01);
-            font-weight: 600;
-            margin-bottom: var(--spacing-scale-6x);
+            font-weight: 700;
+            margin-bottom: var(--spacing-scale-8x);
             box-shadow: var(--shadow-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
-        .gov-badge::before {
-            content: '🇧🇷';
+        .main-header .gov-badge::before {
+            content: '🏛️';
             margin-right: var(--spacing-scale-2x);
+        }
+        
+        .main-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0 0 var(--spacing-scale-4x) 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .main-header .subtitle {
+            font-size: var(--font-size-scale-up-05);
+            margin: 0;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+        
+        /* Container principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-scale-10x) var(--spacing-scale-4x);
+        }
+        
+        /* Breadcrumb oficial */
+        .breadcrumb {
+            background: var(--pure-0);
+            border-bottom: 1px solid var(--gray-20);
+            padding: var(--spacing-scale-4x) 0;
+        }
+        
+        .breadcrumb .container {
+            padding: 0 var(--spacing-scale-4x);
+        }
+        
+        .breadcrumb nav {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-scale-2x);
+            font-size: var(--font-size-scale-down-01);
+        }
+        
+        .breadcrumb a {
+            color: var(--blue-warm-vivid-70);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumb .separator {
+            color: var(--gray-50);
+        }
+        
+        .breadcrumb .current {
+            color: var(--gray-70);
+            font-weight: 600;
         }
         
         /* Card principal de consulta */
@@ -144,148 +229,200 @@
             background: var(--pure-0);
             border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-lg);
-            padding: var(--spacing-scale-10x);
+            padding: var(--spacing-scale-12x);
             margin-bottom: var(--spacing-scale-10x);
-            border-top: 4px solid var(--blue-warm-vivid-70);
+            border-top: 6px solid var(--blue-warm-vivid-70);
+            position: relative;
+        }
+        
+        .consulta-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--blue-warm-vivid-70) 0%, var(--blue-warm-vivid-60) 100%);
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+        }
+        
+        .consulta-card .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-scale-8x);
+        }
+        
+        .consulta-card .card-icon {
+            background: var(--blue-warm-vivid-10);
+            color: var(--blue-warm-vivid-70);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: var(--spacing-scale-6x);
         }
         
         .consulta-card h2 {
             color: var(--blue-warm-vivid-70);
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin: 0 0 var(--spacing-scale-6x) 0;
-            display: flex;
-            align-items: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
         }
         
-        .consulta-card h2::before {
-            content: '🔍';
-            margin-right: var(--spacing-scale-3x);
+        .consulta-card .description {
+            color: var(--gray-70);
+            font-size: var(--font-size-scale-up-05);
+            margin-bottom: var(--spacing-scale-8x);
+            line-height: 1.6;
         }
         
         /* Formulário */
         .form-group {
-            margin-bottom: var(--spacing-scale-6x);
+            margin-bottom: var(--spacing-scale-8x);
         }
         
         .form-label {
             display: block;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--gray-80);
-            margin-bottom: var(--spacing-scale-2x);
-            font-size: var(--font-size-scale-base);
+            margin-bottom: var(--spacing-scale-3x);
+            font-size: var(--font-size-scale-up-05);
         }
         
         .form-input {
             width: 100%;
-            padding: var(--spacing-scale-4x);
+            padding: var(--spacing-scale-5x);
             border: 2px solid var(--gray-30);
             border-radius: var(--border-radius-md);
-            font-size: var(--font-size-scale-base);
-            transition: all 0.2s ease;
+            font-size: var(--font-size-scale-up-05);
+            transition: all 0.3s ease;
             background: var(--pure-0);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
         }
         
         .form-input:focus {
             outline: none;
             border-color: var(--blue-warm-vivid-60);
-            box-shadow: 0 0 0 3px var(--blue-warm-vivid-20);
+            box-shadow: 0 0 0 4px var(--blue-warm-vivid-20);
+            transform: translateY(-1px);
         }
         
         .form-input::placeholder {
             color: var(--gray-50);
+            font-family: var(--font-family-sans);
+            letter-spacing: normal;
         }
         
         /* Botão principal */
         .btn-primary {
-            background: var(--blue-warm-vivid-70);
+            background: linear-gradient(135deg, var(--blue-warm-vivid-70) 0%, var(--blue-warm-vivid-60) 100%);
             color: var(--pure-0);
             border: none;
-            padding: var(--spacing-scale-4x) var(--spacing-scale-8x);
+            padding: var(--spacing-scale-5x) var(--spacing-scale-10x);
             border-radius: var(--border-radius-md);
-            font-size: var(--font-size-scale-base);
-            font-weight: 600;
+            font-size: var(--font-size-scale-up-05);
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
-            gap: var(--spacing-scale-2x);
+            gap: var(--spacing-scale-3x);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: var(--shadow-md);
         }
         
         .btn-primary:hover {
-            background: var(--blue-warm-vivid-60);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
         
         .btn-primary:active {
             transform: translateY(0);
         }
         
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
         /* Resultado da consulta */
         .resultado-consulta {
-            background: var(--green-cool-vivid-10);
-            border: 2px solid var(--green-cool-vivid-50);
+            background: var(--blue-warm-vivid-10);
+            border: 2px solid var(--blue-warm-vivid-60);
             border-radius: var(--border-radius-lg);
-            padding: var(--spacing-scale-8x);
-            margin-top: var(--spacing-scale-8x);
+            padding: var(--spacing-scale-10x);
+            margin-top: var(--spacing-scale-10x);
             display: none;
         }
         
         .resultado-consulta h3 {
-            color: var(--green-cool-vivid-50);
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0 0 var(--spacing-scale-4x) 0;
+            color: var(--blue-warm-vivid-70);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 0 var(--spacing-scale-6x) 0;
             display: flex;
             align-items: center;
         }
         
         .resultado-consulta h3::before {
             content: '✅';
-            margin-right: var(--spacing-scale-2x);
+            margin-right: var(--spacing-scale-3x);
+            font-size: 1.2em;
         }
         
         .dados-empresa {
             background: var(--pure-0);
             border-radius: var(--border-radius-md);
-            padding: var(--spacing-scale-6x);
-            margin-bottom: var(--spacing-scale-6x);
-            border-left: 4px solid var(--blue-warm-vivid-70);
+            padding: var(--spacing-scale-8x);
+            margin-bottom: var(--spacing-scale-8x);
+            border-left: 6px solid var(--blue-warm-vivid-70);
+            box-shadow: var(--shadow-sm);
         }
         
         .dados-empresa .campo {
             display: flex;
-            margin-bottom: var(--spacing-scale-3x);
+            margin-bottom: var(--spacing-scale-4x);
+            padding: var(--spacing-scale-3x) 0;
+            border-bottom: 1px solid var(--gray-10);
         }
         
         .dados-empresa .campo:last-child {
             margin-bottom: 0;
+            border-bottom: none;
         }
         
         .dados-empresa .label {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--gray-70);
-            min-width: 140px;
+            min-width: 160px;
+            font-size: var(--font-size-scale-base);
         }
         
         .dados-empresa .valor {
             color: var(--gray-80);
+            font-weight: 600;
+            font-size: var(--font-size-scale-base);
         }
         
         /* Pendências */
         .pendencias-section h4 {
             color: var(--gray-80);
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin: 0 0 var(--spacing-scale-4x) 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 var(--spacing-scale-6x) 0;
             display: flex;
             align-items: center;
         }
         
         .pendencias-section h4::before {
             content: '⚠️';
-            margin-right: var(--spacing-scale-2x);
+            margin-right: var(--spacing-scale-3x);
         }
         
         .pendencias-lista {
@@ -295,24 +432,26 @@
         }
         
         .pendencia-item {
-            background: var(--yellow-vivid-5);
-            border: 1px solid var(--yellow-vivid-20);
+            background: var(--blue-warm-vivid-5);
+            border: 2px solid var(--blue-warm-vivid-20);
             border-radius: var(--border-radius-md);
-            padding: var(--spacing-scale-4x);
-            margin-bottom: var(--spacing-scale-3x);
+            padding: var(--spacing-scale-5x);
+            margin-bottom: var(--spacing-scale-4x);
             display: flex;
             align-items: center;
             color: var(--gray-80);
+            font-weight: 600;
         }
         
         .pendencia-item::before {
             content: '🔸';
-            margin-right: var(--spacing-scale-3x);
+            margin-right: var(--spacing-scale-4x);
+            font-size: 1.2em;
         }
         
         .pendencia-item.sem-pendencia {
-            background: var(--green-cool-vivid-10);
-            border-color: var(--green-cool-vivid-50);
+            background: var(--blue-warm-vivid-10);
+            border-color: var(--blue-warm-vivid-60);
         }
         
         .pendencia-item.sem-pendencia::before {
@@ -324,80 +463,104 @@
             background: var(--pure-0);
             border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-md);
-            padding: var(--spacing-scale-8x);
-            margin-bottom: var(--spacing-scale-8x);
+            padding: var(--spacing-scale-10x);
+            margin-bottom: var(--spacing-scale-10x);
         }
         
         .info-section h2 {
             color: var(--blue-warm-vivid-70);
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 0 0 var(--spacing-scale-6x) 0;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 0 var(--spacing-scale-8x) 0;
             text-align: center;
         }
         
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--spacing-scale-6x);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-scale-8x);
         }
         
         .info-card {
             background: var(--blue-warm-vivid-5);
-            border: 1px solid var(--blue-warm-vivid-20);
+            border: 2px solid var(--blue-warm-vivid-20);
             border-radius: var(--border-radius-md);
-            padding: var(--spacing-scale-6x);
+            padding: var(--spacing-scale-8x);
             text-align: center;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
         
         .info-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--blue-warm-vivid-60);
         }
         
         .info-card .icon {
-            font-size: 2.5rem;
-            margin-bottom: var(--spacing-scale-4x);
+            font-size: 3rem;
+            margin-bottom: var(--spacing-scale-6x);
+            display: block;
         }
         
         .info-card h3 {
             color: var(--blue-warm-vivid-70);
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin: 0 0 var(--spacing-scale-3x) 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 var(--spacing-scale-4x) 0;
         }
         
         .info-card p {
             color: var(--gray-70);
-            font-size: var(--font-size-scale-down-01);
+            font-size: var(--font-size-scale-base);
             line-height: 1.6;
             margin: 0;
         }
         
         /* FAQ */
-        .faq-item {
+        .faq-section {
             background: var(--pure-0);
-            border: 1px solid var(--gray-20);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-scale-10x);
+            margin-bottom: var(--spacing-scale-10x);
+        }
+        
+        .faq-section h2 {
+            color: var(--blue-warm-vivid-70);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 0 var(--spacing-scale-8x) 0;
+            text-align: center;
+        }
+        
+        .faq-item {
+            background: var(--gray-5);
+            border: 2px solid var(--gray-20);
             border-radius: var(--border-radius-md);
-            margin-bottom: var(--spacing-scale-4x);
+            margin-bottom: var(--spacing-scale-5x);
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            border-color: var(--blue-warm-vivid-20);
         }
         
         .faq-question {
             background: var(--gray-10);
             border: none;
             width: 100%;
-            padding: var(--spacing-scale-5x);
+            padding: var(--spacing-scale-6x);
             text-align: left;
-            font-size: var(--font-size-scale-base);
-            font-weight: 600;
+            font-size: var(--font-size-scale-up-05);
+            font-weight: 700;
             color: var(--gray-80);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background-color 0.2s ease;
+            transition: all 0.3s ease;
         }
         
         .faq-question:hover {
@@ -406,8 +569,9 @@
         
         .faq-question::after {
             content: '▼';
-            font-size: var(--font-size-scale-down-01);
-            transition: transform 0.2s ease;
+            font-size: var(--font-size-scale-base);
+            transition: transform 0.3s ease;
+            color: var(--blue-warm-vivid-70);
         }
         
         .faq-question.active::after {
@@ -415,64 +579,174 @@
         }
         
         .faq-answer {
-            padding: 0 var(--spacing-scale-5x);
+            padding: 0 var(--spacing-scale-6x);
             max-height: 0;
             overflow: hidden;
             transition: all 0.3s ease;
+            background: var(--pure-0);
         }
         
         .faq-answer.active {
-            padding: var(--spacing-scale-5x);
-            max-height: 200px;
+            padding: var(--spacing-scale-6x);
+            max-height: 300px;
         }
         
         .faq-answer p {
             color: var(--gray-70);
             line-height: 1.6;
             margin: 0;
+            font-size: var(--font-size-scale-base);
+        }
+        
+        /* Footer oficial */
+        .gov-footer {
+            background: var(--gray-80);
+            color: var(--pure-0);
+            padding: var(--spacing-scale-10x) 0;
+            margin-top: var(--spacing-scale-12x);
+        }
+        
+        .gov-footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-scale-4x);
+            text-align: center;
+        }
+        
+        .gov-footer .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-scale-4x);
+        }
+        
+        .gov-footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-scale-6x);
+            margin-bottom: var(--spacing-scale-6x);
+            flex-wrap: wrap;
+        }
+        
+        .gov-footer a {
+            color: var(--pure-0);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        
+        .gov-footer a:hover {
+            opacity: 0.8;
+        }
+        
+        .gov-footer .copyright {
+            font-size: var(--font-size-scale-down-01);
+            opacity: 0.8;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--pure-0);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         /* Responsividade */
         @media (max-width: 768px) {
             .container {
-                padding: var(--spacing-scale-4x) var(--spacing-scale-3x);
+                padding: var(--spacing-scale-6x) var(--spacing-scale-3x);
             }
             
-            .section-header h1 {
-                font-size: 2rem;
+            .main-header h1 {
+                font-size: 2.5rem;
             }
             
             .consulta-card,
-            .info-section {
-                padding: var(--spacing-scale-6x);
+            .info-section,
+            .faq-section {
+                padding: var(--spacing-scale-8x);
             }
             
             .cards-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .gov-header .container {
+                flex-direction: column;
+                gap: var(--spacing-scale-2x);
+            }
+            
+            .gov-footer .footer-links {
+                flex-direction: column;
+                gap: var(--spacing-scale-3x);
+            }
         }
     </style>
-    
-    <div class="section-header">
+</head>
+<body>
+    <!-- Barra superior oficial do governo -->
+    <div class="gov-header">
         <div class="container">
-            <div class="gov-badge">Governo Federal</div>
+            <div class="gov-info">
+                <div class="gov-logo">Governo Federal</div>
+                <span>Portal Oficial</span>
+            </div>
+            <div class="accessibility-links">
+                <a href="#" aria-label="Alto contraste">Alto Contraste</a>
+                <a href="#" aria-label="Acessibilidade">Acessibilidade</a>
+                <a href="#" aria-label="Mapa do site">Mapa do Site</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cabeçalho principal -->
+    <div class="main-header">
+        <div class="container">
+            <div class="gov-badge">Portal Oficial</div>
             <h1>Consulta de Pendências MEI</h1>
             <p class="subtitle">Sistema oficial para consulta de pendências do Microempreendedor Individual</p>
         </div>
     </div>
-    
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <nav aria-label="Navegação estrutural">
+                <a href="#">Início</a>
+                <span class="separator">></span>
+                <a href="#">Serviços</a>
+                <span class="separator">></span>
+                <a href="#">MEI</a>
+                <span class="separator">></span>
+                <span class="current">Consulta de Pendências</span>
+            </nav>
+        </div>
+    </div>
+
     <div class="container">
+        <!-- Card principal de consulta -->
         <div class="consulta-card">
-            <h2>Consultar CNPJ</h2>
-            <p>Digite o CNPJ do MEI para verificar a situação cadastral e pendências ativas.</p>
+            <div class="card-header">
+                <div class="card-icon">🔍</div>
+                <h2>Consultar CNPJ</h2>
+            </div>
+            <p class="description">Digite o CNPJ do MEI para verificar a situação cadastral e pendências ativas no sistema oficial do Governo Federal.</p>
             
             <div class="form-group">
                 <label for="cnpjInput" class="form-label">CNPJ do MEI:</label>
-                <input type="text" class="form-input" id="cnpjInput" placeholder="00.000.000/0001-00" maxlength="18">
+                <input type="text" class="form-input" id="cnpjInput" placeholder="00.000.000/0001-00" maxlength="18" aria-describedby="cnpj-help">
+                <small id="cnpj-help" style="color: var(--gray-60); font-size: var(--font-size-scale-down-01); margin-top: var(--spacing-scale-2x); display: block;">Digite apenas os números do CNPJ</small>
             </div>
             
             <button type="button" class="btn-primary" id="consultarCnpj">
-                🔍 Consultar
+                <span>🔍</span>
+                Consultar
             </button>
             
             <div id="resultadoConsulta" class="resultado-consulta">
@@ -500,6 +774,7 @@
             </div>
         </div>
         
+        <!-- Seção informativa -->
         <div class="info-section">
             <h2>Como solicitar o agendamento online?</h2>
             <div class="cards-grid">
@@ -521,7 +796,8 @@
             </div>
         </div>
         
-        <div class="info-section">
+        <!-- FAQ -->
+        <div class="faq-section">
             <h2>Perguntas Frequentes (FAQ)</h2>
             <div class="faq-item">
                 <button class="faq-question">
@@ -554,6 +830,25 @@
                 <div class="faq-answer">
                     <p>Após a consulta, o sistema indicará as pendências. Para regularizá-las, você pode emitir o DAS complementar, enviar declarações em atraso ou buscar orientação em um posto de atendimento.</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer oficial -->
+    <div class="gov-footer">
+        <div class="container">
+            <div class="footer-logo">🇧🇷 Governo Federal</div>
+            <div class="footer-links">
+                <a href="#">Sobre o Gov.br</a>
+                <a href="#">Acesso à Informação</a>
+                <a href="#">Legislação</a>
+                <a href="#">Acessibilidade</a>
+                <a href="#">Privacidade</a>
+                <a href="#">Imprensa</a>
+                <a href="#">Fale Conosco</a>
+            </div>
+            <div class="copyright">
+                © 2025 Governo Federal. Todos os direitos reservados.
             </div>
         </div>
     </div>
@@ -612,7 +907,7 @@
                     // Simula uma chamada de API
                     setTimeout(() => {
                         consultarCnpjBtn.disabled = false;
-                        consultarCnpjBtn.innerHTML = '🔍 Consultar';
+                        consultarCnpjBtn.innerHTML = '<span>🔍</span> Consultar';
 
                         // Dados simulados
                         const dadosSimulados = {
@@ -655,27 +950,19 @@
                                     li.textContent = pendencia;
                                     listaPendenciasUl.appendChild(li);
                                 });
-                                // Ajusta a cor do cabeçalho de pendências para vermelho (agora azul)
-                                resultadoConsultaDiv.style.backgroundColor = 'var(--red-vivid-10)';
-                                resultadoConsultaDiv.style.borderColor = 'var(--red-vivid-50)';
-                                resultadoConsultaDiv.querySelector('h3').style.color = 'var(--red-vivid-50)';
                                 resultadoConsultaDiv.querySelector('h3').innerHTML = '⚠️ Pendências Encontradas';
                             } else {
                                 const li = document.createElement('li');
                                 li.className = 'pendencia-item sem-pendencia';
                                 li.textContent = 'Nenhuma pendência ativa encontrada.';
                                 listaPendenciasUl.appendChild(li);
-                                // Ajusta a cor do cabeçalho de pendências para verde (agora azul)
-                                resultadoConsultaDiv.style.backgroundColor = 'var(--green-cool-vivid-10)';
-                                resultadoConsultaDiv.style.borderColor = 'var(--green-cool-vivid-50)';
-                                resultadoConsultaDiv.querySelector('h3').style.color = 'var(--green-cool-vivid-50)';
                                 resultadoConsultaDiv.querySelector('h3').innerHTML = '✅ Sem Pendências';
                             }
                             resultadoConsultaDiv.style.display = 'block';
                         } else {
                             alert('CNPJ não encontrado ou inválido.');
                         }
-                    }, 1500);
+                    }, 2000);
                 } else {
                     alert('Por favor, digite um CNPJ válido com 14 dígitos.');
                 }
@@ -691,6 +978,6 @@
             });
         });
     </script>
-</section>
-
+</body>
+</html>
 
