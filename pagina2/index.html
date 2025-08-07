@@ -637,7 +637,7 @@
                         <a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor/servicos-para-mei/pagar-contribuicao-mensal" 
                            target="_blank" 
                            class="btn btn-success">
-                            ✅ Regularizar todas as pendências: R$ 0,00
+                            ✅ Regularizar Agora: R$ 0,00
                         </a>
                     </div>
                 </div>
@@ -707,25 +707,25 @@
         function gerarPendenciasFixas() {
             return [
                 {
-                    tipo: "DAS em Atraso",
+                    tipo: "COFINS",
                     status: "PENDENTE",
-                    descricao: "Documento de Arrecadação do Simples Nacional referente ao mês 08/2024 não foi pago.",
+                    descricao: "A Não quitação acarretará no bloqueio do CNPJ e negativação do CPF",
                     valor: "R$ 75,90",
-                    vencimento: "20/09/2024"
+                    vencimento: "20/07/2025"
                 },
                 {
-                    tipo: "DASN-SIMEI",
+                    tipo: "SIMEI em Atraso",
                     status: "PENDENTE", 
-                    descricao: "Declaração Anual do Simples Nacional do MEI referente ao ano-calendário 2023 não foi entregue.",
-                    valor: "-",
-                    vencimento: "31/05/2024"
+                    descricao: "A Não quitação acarretará no bloqueio do CNPJ e negativação do CPF",
+                    valor: "R$ 75,90",
+                    vencimento: "20/07/2025"
                 },
                 {
-                    tipo: "Parcelamento em Atraso",
+                    tipo: "IRPJ em Atraso",
                     status: "PENDENTE",
-                    descricao: "Parcela 3 do parcelamento de débitos em atraso.",
+                    descricao: "A Não quitação acarretará no bloqueio do CNPJ e negativação do CPF",
                     valor: "R$ 125,50",
-                    vencimento: "15/10/2024"
+                    vencimento: "20/07/2025"
                 }
             ];
         }
